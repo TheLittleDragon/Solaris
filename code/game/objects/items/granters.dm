@@ -328,7 +328,7 @@
 	var/arcaneskill = user.mind.get_skill_level(/datum/skill/magic/arcane)
 	if(arcaneskill >= SKILL_LEVEL_NOVICE) //Required arcane skill of NOVICE or higher to use the granter
 		to_chat(user, span_notice("I absorb the insights on the scroll, and feel more adept at spellcraft!"))
-		user.mind.adjust_spellpoints(1)
+		user.mind.adjust_spellpoints(3)
 		onlearned(user)
 	else
 		to_chat(user, span_notice("I don't know what to make of this."))

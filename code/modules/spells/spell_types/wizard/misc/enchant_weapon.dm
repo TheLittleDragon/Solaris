@@ -24,7 +24,7 @@
 	xp_gain = TRUE
 
 	charging_slowdown = 3
-	cost = 1
+	cost = 2
 	spell_tier = 2 // Spellblade tier.
 
 	invocation = "Gladius Incantatus"

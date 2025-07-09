@@ -18,7 +18,7 @@
 	movement_interrupt = TRUE
 	antimagic_allowed = FALSE
 	charging_slowdown = 3
-	cost = 1
+	cost = 2
 	xp_gain = TRUE
 	spell_tier = 1
 

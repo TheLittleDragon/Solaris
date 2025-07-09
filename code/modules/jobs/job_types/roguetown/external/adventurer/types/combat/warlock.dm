@@ -22,7 +22,7 @@
 		ADD_TRAIT(human, TRAIT_MAGEARMOR, TRAIT_GENERIC)
 	backr = /obj/item/storage/backpack/rogue/satchel
 	neck = null
-	human.mind.adjust_spellpoints(2)
+	human.mind.adjust_spellpoints(6)
 	human.mind.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 	human.mind.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 1, TRUE)
 	human.mind.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 1, TRUE)
@@ -92,12 +92,12 @@
 			human.set_blindness(0)
 		if("Secrets best left buried") //Pact of the Tome
 			human.put_in_hands(givebook(patronchoice, human), FALSE)
-			human.mind.adjust_spellpoints(1)
+			human.mind.adjust_spellpoints(3)
 			human.mind.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 		if("A name the world must fear") //empowered eldritch blast
 			human.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/projectile/eldritchblast)
 			human.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/eldritchblast/empowered)
-			human.change_stat("intelligence", 1)
+			human.mind.adjust_spellpoints(3)
 		if("A body that won't break") //make healthier
 			givehealing(human, patronchoice)
 			human.change_stat("constitution", 1)
@@ -144,7 +144,7 @@
 	ADD_TRAIT(human, TRAIT_WILDMAGIC, TRAIT_GENERIC)
 	ADD_TRAIT(human, TRAIT_WILDMAGIC_BENEFIC, TRAIT_GENERIC)
 	ADD_TRAIT(human, TRAIT_ARCANE_T3, TRAIT_GENERIC) //Caster Subclass
-	human.mind.adjust_spellpoints(2) //Caster subclass
+	human.mind.adjust_spellpoints(6) //Caster subclass
 
 	human.visible_message(span_info("I brushed against the glimmering court beneath leaf and moon, and it whispered secrets into my soul."))
 
@@ -169,7 +169,7 @@
 
 	givehealing(human, patronchoice, TRUE)
 	ADD_TRAIT(human, TRAIT_ARCANE_T3, TRAIT_GENERIC) //Caster subclass
-	human.mind.adjust_spellpoints(2) //Caster subclass
+	human.mind.adjust_spellpoints(6) //Caster subclass
 
 	human.visible_message(span_info("Something bright found me in the dark. It left a spark that hasn't gone out."))
 
@@ -239,7 +239,7 @@
 	ADD_TRAIT(human, TRAIT_NOFIRE, TRAIT_GENERIC)
 	ADD_TRAIT(human, TRAIT_FIENDKISS, TRAIT_GENERIC)
 	ADD_TRAIT(human, TRAIT_ARCANE_T3, TRAIT_GENERIC) //Caster subclass
-	human.mind.adjust_spellpoints(2) //Caster subclass
+	human.mind.adjust_spellpoints(6) //Caster subclass
 
 	human.visible_message(span_info("I reached into a cold fire that never dies. It remembers me now."))
 
@@ -301,7 +301,7 @@
 	human.change_stat("constitution", 1)
 
 	ADD_TRAIT(human, TRAIT_ARCANE_T3, TRAIT_GENERIC) //Caster subclass
-	human.mind.adjust_spellpoints(2) //Caster subclass
+	human.mind.adjust_spellpoints(6) //Caster subclass
 
 	human.visible_message(span_info("I heard a silence too loud to bear. Now it's inside me, humming."))
 

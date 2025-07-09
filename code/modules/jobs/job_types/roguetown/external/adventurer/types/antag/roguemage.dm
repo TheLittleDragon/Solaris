@@ -56,5 +56,5 @@
 		H.change_stat("endurance", -1)
 		H.change_stat("fortune", 2)
 		H.change_stat("speed", 1) //ohhh sweetie this is NOT gonna help
-		H.mind.adjust_spellpoints(7)
+		H.mind.adjust_spellpoints(21)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)

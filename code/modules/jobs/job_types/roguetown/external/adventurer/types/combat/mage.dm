@@ -53,7 +53,7 @@
 			H.change_stat("perception", 1)
 			H.change_stat("speed", 1)
 			H.change_stat("endurance", 1)
-			H.mind.adjust_spellpoints(7)
+			H.mind.adjust_spellpoints(21)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 			ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_ARCANE_T3, TRAIT_GENERIC)
@@ -96,7 +96,7 @@
 			H.change_stat("intelligence", 2)
 			H.change_stat("endurance", 1)
 			H.change_stat("speed", 2)
-			H.mind.adjust_spellpoints(5)
+			H.mind.adjust_spellpoints(15)
 			H.cmode_music = 'sound/music/combat_bard.ogg'
 			ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC)

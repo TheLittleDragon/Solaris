@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/ensnare
 	name = "Ensnare"
 	desc = "Tendrils of arcane force hold anyone in a small area in place for a short while."
-	cost = 1
+	cost = 3
 	xp_gain = TRUE
 	releasedrain = 20
 	chargedrain = 1

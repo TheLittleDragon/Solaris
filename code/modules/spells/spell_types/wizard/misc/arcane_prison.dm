@@ -10,7 +10,7 @@
 	glow_color = GLOW_COLOR_ARCANE
 	glow_intensity = GLOW_INTENSITY_HIGH
 	wall_type = /obj/structure/forcefield_weak/arcane_prison
-	cost = 2
+	cost = 6
 	xp_gain = TRUE
 
 /obj/effect/proc_holder/spell/invoked/forcewall/arcane_prison/cast(list/targets,mob/user = usr)

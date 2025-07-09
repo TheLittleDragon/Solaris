@@ -1,7 +1,7 @@
 /datum/virtue/combat/magical_potential
 	name = "Arcane Potential"
 	desc = "Either by natural talent or limited formal training, I posess a modicum sum of Arcane knowledge, which aids me on my day to day chores."
-	custom_text = "+1 to Arcane, Up to Legendary. if they don't have any Arcane prior, they get 2 spell points and access to Tier 1 spells. If they do, they get +1 Intelligence. "
+	custom_text = "+1 to Arcane, Up to Legendary. if they don't have any Arcane prior, they get 6 spell points and access to Tier 1 spells. If they do, they get +1 Intelligence. "
 	added_skills = list(list(/datum/skill/magic/arcane, 1, 6))
 
 /datum/virtue/combat/magical_potential/apply_to_human(mob/living/carbon/human/recipient)
@@ -9,7 +9,7 @@
 		recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	if (!is_arcane(recipient)) // we can do this because apply_to is always called first
 		ADD_TRAIT(recipient, TRAIT_MAGIC_TALENT, TRAIT_GENERIC)
-		recipient.mind?.adjust_spellpoints(2)
+		recipient.mind?.adjust_spellpoints(6)
 	else
 		recipient.change_stat("intelligence", 1)
 

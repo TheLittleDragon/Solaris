@@ -2,7 +2,7 @@
 	name = "Hawk's Eyes"
 	overlay_state = "hawks_eyes"
 	desc = "Sharpens the target's vision. (+3 Perception)"
-	cost = 1
+	cost = 2
 	xp_gain = TRUE
 	releasedrain = 60
 	chargedrain = 1

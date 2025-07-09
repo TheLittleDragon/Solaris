@@ -202,7 +202,7 @@
 	ADD_TRAIT(H, TRAIT_DEATHSIGHT, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC) //needs ritualist if it's gonna get ritechalk
 	ADD_TRAIT(H, TRAIT_ARCANE_T1, TRAIT_GENERIC)
-	H.mind.adjust_spellpoints(2)
+	H.mind.adjust_spellpoints(6)
 
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stave_the_dying)

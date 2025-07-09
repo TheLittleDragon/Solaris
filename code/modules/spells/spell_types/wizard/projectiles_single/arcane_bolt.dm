@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/projectile/arcanebolt //makes you confused for 2 seconds,
 	name = "Arcane Bolt"
-	desc = "Shoot out a rapid bolt of arcane magic that hits on impact. Little damage, but disorienting."
+	desc = "Shoot out a rapid bolt of arcane magic that hits on impact. Little damage, but disorienting. \n\
+	Damage is increased by 50% versus soulless creatures."
 	clothes_req = FALSE
 	range = 12
 	projectile_type = /obj/projectile/energy/rogue3
@@ -23,7 +24,7 @@
 	charging_slowdown = 3
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
-	cost = 2
+	cost = 3
 	xp_gain = TRUE
 
 	ignore_fiendkiss = FALSE
@@ -31,10 +32,11 @@
 /obj/projectile/energy/rogue3
 	name = "Arcane Bolt"
 	icon_state = "arcane_barrage"
-	damage = 25
+	damage = 40
 	damage_type = BRUTE
-	armor_penetration = 40
-	woundclass = BCLASS_SMASH
+	armor_penetration = 0
+	npc_damage_mult = 1.5
+	woundclass = BCLASS_BLUNT
 	nodamage = FALSE
 	flag = "magic"
 	hitsound = 'sound/combat/hits/blunt/shovel_hit2.ogg'

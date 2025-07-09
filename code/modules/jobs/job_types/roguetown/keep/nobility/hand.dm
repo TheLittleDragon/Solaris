@@ -179,7 +179,7 @@
 		H.mind.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
 		H.change_stat("intelligence", rand(4,5))
 		H.change_stat("perception", 3)
-		H.mind.adjust_spellpoints(4)
+		H.mind.adjust_spellpoints(12)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/nondetection)
 		ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)

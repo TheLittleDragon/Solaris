@@ -2,7 +2,7 @@
 	name = "Stoneskin"
 	overlay_state = "stoneskin"
 	desc = "Harden the target's skin like stone. (+3 Constitution, -2 Speed, Critical Resistance)"
-	cost = 2
+	cost = 4
 	xp_gain = TRUE
 	releasedrain = 60
 	chargedrain = 1

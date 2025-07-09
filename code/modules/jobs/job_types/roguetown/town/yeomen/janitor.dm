@@ -68,4 +68,4 @@
 	H.change_stat("speed", 1) //5 points (weighted) 
 	ADD_TRAIT(H, TRAIT_CICERONE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_MAGIC_TALENT, TRAIT_GENERIC) // Arcane potential Trait, so they dont get to T2
-	H.mind?.adjust_spellpoints(2)
+	H.mind?.adjust_spellpoints(6)

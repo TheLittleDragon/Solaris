@@ -72,4 +72,4 @@
 	H.change_stat("endurance", 2) //Innate mining should have some gains
 	H.change_stat("constitution", 1)
 	ADD_TRAIT(H, TRAIT_MAGIC_TALENT, TRAIT_GENERIC) // Arcane potential Trait, so they dont get to T2
-	H.mind?.adjust_spellpoints(2)
+	H.mind?.adjust_spellpoints(6)

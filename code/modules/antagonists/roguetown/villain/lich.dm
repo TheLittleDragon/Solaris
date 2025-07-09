@@ -115,7 +115,7 @@
 	H.mind.adjust_skillrank(/datum/skill/combat/knives, 5, TRUE)
 	H.mind.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 	H.mind.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE)
-	H.mind.adjust_spellpoints(5)
+	H.mind.adjust_spellpoints(15)
 
 	H.change_stat("strength", -1)
 	H.change_stat("intelligence", 5)

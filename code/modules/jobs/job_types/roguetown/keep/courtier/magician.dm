@@ -68,7 +68,7 @@
 		H.change_stat("perception", 1)
 		H.change_stat("endurance", 1)
 		H.change_stat("intelligence", 4)
-		H.mind.adjust_spellpoints(5)
+		H.mind.adjust_spellpoints(15)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mindlink)
 		ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)

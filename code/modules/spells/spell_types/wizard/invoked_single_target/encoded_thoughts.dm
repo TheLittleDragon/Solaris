@@ -23,7 +23,7 @@
 	include_user = FALSE
 
 	spell_tier = 3 //Basically Message but sneaky and FOV based.
-	cost = 2
+	cost = 3
 
 /obj/effect/proc_holder/spell/targeted/encodethoughts/cast(list/targets, mob/user)
 	. = ..()

@@ -20,7 +20,7 @@
     charging_slowdown = 3
     chargedloop = /datum/looping_sound/invokegen
     associated_skill = /datum/skill/magic/arcane
-    cost = 2
+    cost = 6
     xp_gain = TRUE
 
 /obj/effect/proc_holder/spell/invoked/void_vigil/cast(mob/living/target, mob/living/user)

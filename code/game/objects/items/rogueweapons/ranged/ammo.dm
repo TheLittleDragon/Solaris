@@ -571,6 +571,7 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/stone
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
+	npc_damage_mult = 2
 	
 /obj/projectile/bullet/reusable/sling_bullet/iron
 	name = "iron sling bullet"

@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/gravity // to do: get scroll icon
 	name = "Gravity"
 	desc = "Weighten space around someone, crushing them and knocking them to the floor. Stronger opponents will resist and be off-balanced."
-	cost = 1
+	cost = 3
 	overlay_state = "hierophant"
 	xp_gain = TRUE
 	releasedrain = 20

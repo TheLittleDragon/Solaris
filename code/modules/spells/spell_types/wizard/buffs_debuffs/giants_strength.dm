@@ -1,8 +1,8 @@
 /obj/effect/proc_holder/spell/invoked/giants_strength
 	name = "Giant's Strength"
-	overlay_state = "giantsstrength"
+	overlay_state = "giants_strength"
 	desc = "Strengthen the target. (+3 Strength)" // Design Note: +3 instead of +5 for direct damage stats
-	cost = 2 // Direct DPS stats
+	cost = 4 // Direct DPS stats
 	xp_gain = TRUE
 	releasedrain = 60
 	chargedrain = 1

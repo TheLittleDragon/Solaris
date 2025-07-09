@@ -18,7 +18,7 @@
 	charging_slowdown = 3
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
-	cost = 1
+	cost = 2
 
 	spell_tier = 2
 	miracle = FALSE

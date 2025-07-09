@@ -1,12 +1,13 @@
 /obj/effect/proc_holder/spell/invoked/fortitude
 	name = "Fortitude"
 	desc = "Harden one's humors to the fatigues of the body. (-50% Stamina Usage)"
-	cost = 1
+	cost = 3
 	xp_gain = TRUE
 	releasedrain = 60
 	chargedrain = 1
 	chargetime = 1 SECONDS
 	recharge_time = 2 MINUTES
+	overlay_state = "fortitude"
 	warnie = "spellwarning"
 	school = "transmutation"
 	no_early_release = TRUE

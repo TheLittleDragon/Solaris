@@ -23,7 +23,7 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	var/wall_type = /obj/structure/forcefield_weak
-	cost = 1
+	cost = 3
 	xp_gain = TRUE
 
 //adapted from forcefields.dm, this needs to be destructible
