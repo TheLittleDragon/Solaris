@@ -67,7 +67,7 @@
 			last_eat = world.time
 			L.flash_fullscreen("redflash3")
 			playsound(src.loc, list('sound/vo/mobs/plant/attack (1).ogg','sound/vo/mobs/plant/attack (2).ogg','sound/vo/mobs/plant/attack (3).ogg','sound/vo/mobs/plant/attack (4).ogg'), 100, FALSE, -1)
-			if(iscarbon(L))
+			if(iscarbon(L)) //We check if the victim is a carbon entity.
 				var/mob/living/carbon/C = L
 				if(src.planter == L) // We won't harm our planter
 					maneater_spit_out(C)
@@ -76,19 +76,48 @@
 				spawn(50)
 					if(C && (C.buckled == src))
 						playsound(src, 'sound/misc/eat.ogg', rand(30,60), TRUE)
-						C.adjustBruteLoss(30)
-						seednutrition += 20
-						src.visible_message(span_danger("[src] bites down hard on [C]!"))
-						if(C.mind)
+						if(C.mind) //If our victim is player controlled, we just deal damage and spit them out.
+							src.visible_message(span_danger("[src] bites down hard on [C]!"))
+							C.adjustBruteLoss(200) //Brute damage only is not lethal. This is in average enough to mangle two limbs, as the damage is spread.
+							seednutrition += 20
 							maneater_spit_out(C)
+							return
+						//By this point, we are a carbon mob without a player mind.
+						var/obj/item/bodypart/limb
+						var/list/limb_list = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+						for(var/zone in limb_list) //We first eat the arms and legs.
+							limb = C.get_bodypart(zone)
+							if(limb)
+								playsound(src,'sound/misc/eat.ogg', rand(30,60), TRUE)
+								limb.dismember()
+								qdel(limb)
+								seednutrition += 20
+								return
+						limb = C.get_bodypart(BODY_ZONE_HEAD) //If we reach this point, that means we have eaten all limbs. Let's eat the head.
+						if(limb)
+							playsound(src,'sound/misc/eat.ogg', rand(30,60), TRUE)
+							limb.dismember()
+							qdel(limb)
+							return
+						limb = C.get_bodypart(BODY_ZONE_CHEST) //If the head is eaten, then we gib the body.
+						if(limb)
+							if(!limb.dismember())
+								C.gib()
+								seednutrition += 50
+								return
 						return
-			else
+			else //if we are not a carbon, we are a simple mob then.
 				src.visible_message(span_danger("[src] starts to rip apart [L]!"))
-				L.adjustBruteLoss(45)
-				seednutrition += 20
-				if(L.mind)
-					maneater_spit_out(L)
-				return
+				spawn(50)
+					if(L && (L.buckled == src))
+						if(L.mind) //if our simple mob is player controlled, we just deal damage once and spit them out.
+							L.adjustBruteLoss(50)
+							seednutrition += 10
+							maneater_spit_out(L)
+							return
+						L.gib() //otherwise we gib the mob.
+						seednutrition += 30
+						return
 
 /obj/structure/flora/roguegrass/maneater/real/proc/maneater_spit_out(mob/living/C)
 	if(!C)
