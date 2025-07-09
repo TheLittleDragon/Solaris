@@ -11,7 +11,7 @@
 	force = 5
 	associated_skill = /datum/skill/misc/reading
 	grid_width = 32
-	grid_height = 64
+	grid_height = 32
 
 /obj/item/book/rogue/getonmobprop(tag)
 	. = ..()

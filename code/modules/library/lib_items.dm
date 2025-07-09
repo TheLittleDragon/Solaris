@@ -13,7 +13,7 @@
 	attacked_sound = "woodimpact"
 	debris = list(/obj/item/grown/log/tree/small = 1)
 	var/state = 0
-	var/list/allowed_books = list(/obj/item/book, /obj/item/storage/book) //Things allowed in the bookcase
+	var/list/allowed_books = list(/obj/item/book, /obj/item/storage/book, /obj/item/recipe_book) //Things allowed in the bookcase
 
 /obj/structure/bookcase/examine(mob/user)
 	. = ..()

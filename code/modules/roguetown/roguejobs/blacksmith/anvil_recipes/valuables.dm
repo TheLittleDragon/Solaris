@@ -1,4 +1,5 @@
 /datum/anvil_recipe/valuables
+	abstract_type = /datum/anvil_recipe/valuables
 	appro_skill = /datum/skill/craft/blacksmithing
 	craftdiff = 2
 	i_type = "Valuables"

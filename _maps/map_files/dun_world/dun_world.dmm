@@ -2061,6 +2061,11 @@
 	icon_state = "wooden_floort"
 	},
 /area/provincial/indoors)
+"aHY" = (
+/obj/structure/closet/crate/drawer,
+/obj/item/recipe_book/survival,
+/turf/open/floor/rogue/twig,
+/area/provincial/indoors/town/house)
 "aIl" = (
 /obj/structure/table/wood{
 	dir = 10;
@@ -8126,6 +8131,7 @@
 /obj/machinery/light/rogue/wallfire/candle/directional/north,
 /obj/structure/closet/crate/drawer,
 /obj/item/roguekey/janitor,
+/obj/item/recipe_book/survival,
 /turf/open/floor/rogue/twig,
 /area/provincial/indoors/town/house/janitor)
 "cJd" = (
@@ -12227,6 +12233,7 @@
 	dir = 1;
 	icon_state = "longtable"
 	},
+/obj/item/recipe_book/survival,
 /turf/open/floor/rogue/tile,
 /area/provincial/indoors/town/adventurers_guild)
 "eaS" = (
@@ -13064,6 +13071,8 @@
 /area/provincial/indoors/town/province_keep/garrison/quarters/knight_captain)
 "epD" = (
 /obj/structure/closet/crate/drawer,
+/obj/item/recipe_book/survival,
+/obj/item/recipe_book/leatherworking,
 /turf/open/floor/carpet/red,
 /area/provincial/indoors/town/house)
 "epE" = (
@@ -13361,6 +13370,8 @@
 /area/provincial/underground/forest/brightway)
 "evc" = (
 /obj/structure/closet/crate/drawer,
+/obj/item/recipe_book/leatherworking,
+/obj/item/recipe_book/sewing,
 /turf/open/floor/carpet/stellar,
 /area/provincial/indoors/town/house)
 "evn" = (
@@ -22729,6 +22740,7 @@
 "hwG" = (
 /obj/structure/bookcase,
 /obj/item/book/rogue/axian_my_sweet,
+/obj/item/recipe_book/leatherworking,
 /turf/open/floor/rogue/carpet,
 /area/provincial/indoors/town/province_keep/library)
 "hwQ" = (
@@ -24378,6 +24390,8 @@
 "hVQ" = (
 /obj/structure/bookcase/random/archive,
 /obj/effect/decal/cleanable/dirt/cobweb,
+/obj/item/recipe_book/alchemy,
+/obj/item/recipe_book/survival,
 /turf/open/floor/rogue/twig,
 /area/provincial/indoors/town/house)
 "hWf" = (
@@ -24927,6 +24941,7 @@
 	},
 /obj/item/paper/scroll,
 /obj/item/natural/feather,
+/obj/item/recipe_book/survival,
 /turf/open/floor/carpet/royalblack,
 /area/provincial/indoors/town/adventurers_guild/handlers_office)
 "igy" = (
@@ -26190,6 +26205,7 @@
 	},
 /obj/item/paper/scroll,
 /obj/item/natural/feather,
+/obj/item/recipe_book/survival,
 /turf/open/floor/carpet/red,
 /area/provincial/indoors/town/church/quarters)
 "iCu" = (
@@ -27106,6 +27122,10 @@
 	},
 /turf/open/transparent/openspace,
 /area/provincial/indoors/town/house)
+"iQf" = (
+/obj/structure/bookcase/random_recipes,
+/turf/open/floor/carpet/purple,
+/area/provincial/indoors/town/mages_university/library)
 "iQh" = (
 /obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/wood,
@@ -30079,6 +30099,11 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
 /turf/open/floor/rogue/herringbone,
 /area/provincial/underground/dungeon/old_ruin)
+"jLG" = (
+/obj/structure/bookcase,
+/obj/item/recipe_book/builder,
+/turf/open/floor/rogue/carpet,
+/area/provincial/indoors/town/province_keep/library)
 "jLL" = (
 /mob/living/carbon/human/species/skeleton/npc/ambush,
 /turf/open/floor/rogue/sand,
@@ -30698,6 +30723,8 @@
 /area/provincial/indoors/town/mages_university/library)
 "jWC" = (
 /obj/structure/bookcase,
+/obj/item/recipe_book/sewing,
+/obj/item/recipe_book/alchemy,
 /turf/open/floor/rogue/carpet,
 /area/provincial/indoors/town/province_keep/library)
 "jWM" = (
@@ -35030,6 +35057,9 @@
 /area/provincial/indoors/town/farm/secondary/stall)
 "lrx" = (
 /obj/structure/closet/crate/drawer,
+/obj/item/recipe_book/blacksmithing,
+/obj/item/recipe_book/builder,
+/obj/item/recipe_book/survival,
 /turf/open/floor/rogue/twig,
 /area/provincial/indoors/town/house)
 "lrC" = (
@@ -42871,6 +42901,7 @@
 /obj/item/natural/stone,
 /obj/item/natural/stone,
 /obj/item/natural/stone,
+/obj/item/recipe_book/builder,
 /turf/open/floor/rogue/tile,
 /area/provincial/indoors/town/dusk_quarter)
 "nVG" = (
@@ -44726,6 +44757,7 @@
 "oyP" = (
 /obj/structure/closet/crate/drawer,
 /obj/machinery/light/rogue/wallfire/candle/directional/north,
+/obj/item/recipe_book/survival,
 /turf/open/floor/carpet/red,
 /area/provincial/indoors/town/house)
 "oyR" = (
@@ -45786,6 +45818,7 @@
 /obj/item/pestle,
 /obj/item/rogueweapon/huntingknife/chefknife,
 /obj/item/rogueweapon/huntingknife/chefknife,
+/obj/item/recipe_book/alchemy,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/provincial/indoors/town/mages_university/alchemy_lab)
 "oPU" = (
@@ -46664,6 +46697,8 @@
 "pgi" = (
 /obj/structure/closet/crate/drawer,
 /obj/machinery/light/rogue/wallfire/candle/directional/west,
+/obj/item/recipe_book/blacksmithing,
+/obj/item/recipe_book/survival,
 /turf/open/floor/carpet/red,
 /area/provincial/indoors/town/house)
 "pgj" = (
@@ -47932,6 +47967,7 @@
 /obj/item/rogueweapon/hoe,
 /obj/item/rogueweapon/thresher,
 /obj/structure/fluff/walldeco/customflag/directional/south,
+/obj/item/recipe_book/alchemy,
 /turf/open/floor/rogue/ruinedwood,
 /area/provincial/indoors/town/province_keep/magician/alchemylab)
 "pCa" = (
@@ -50250,6 +50286,8 @@
 /obj/machinery/light/rogue/wallfire/candle/directional/west,
 /obj/item/paper/scroll,
 /obj/item/natural/feather,
+/obj/item/recipe_book/blacksmithing,
+/obj/item/recipe_book/engineering,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
 	},
@@ -55339,6 +55377,11 @@
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/provincial/underground/underdark/undersea/undergrove)
+"rXF" = (
+/obj/structure/closet/crate/drawer,
+/obj/item/recipe_book/survival,
+/turf/open/floor/carpet/red,
+/area/provincial/indoors/town/house)
 "rXH" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
 /obj/machinery/light/rogue/wallfire/candle/directional/north,
@@ -57159,6 +57202,7 @@
 "sCW" = (
 /obj/structure/bookcase,
 /obj/structure/bookcase,
+/obj/item/recipe_book/engineering,
 /turf/open/floor/rogue/carpet,
 /area/provincial/indoors/town/province_keep/library)
 "sDd" = (
@@ -58301,6 +58345,7 @@
 /obj/structure/table/wood{
 	icon_state = "longtable"
 	},
+/obj/item/recipe_book/survival,
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "weird1"
 	},
@@ -60473,6 +60518,8 @@
 	pixel_x = 4;
 	pixel_y = -1
 	},
+/obj/item/recipe_book/sewing,
+/obj/item/recipe_book/leatherworking,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/provincial/indoors/town/tailor)
 "tIB" = (
@@ -60624,6 +60671,11 @@
 /obj/structure/roguemachine/scomm/directional/east,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/provincial/indoors/town/province_keep/garrison/warden_watchtower)
+"tLJ" = (
+/obj/structure/bookcase,
+/obj/item/recipe_book/survival,
+/turf/open/floor/rogue/carpet,
+/area/provincial/indoors/town/province_keep/library)
 "tLP" = (
 /turf/closed/wall/mineral/rogue/wooddark/end{
 	dir = 1
@@ -63286,6 +63338,7 @@
 /area/provincial/indoors/dungeon/giuseppes_toybox)
 "uEW" = (
 /obj/structure/closet/crate/drawer,
+/obj/item/recipe_book/survival,
 /turf/open/floor/carpet/royalblack,
 /area/provincial/indoors/town/adventurers_guild/handlers_office/bedroom)
 "uEX" = (
@@ -64133,6 +64186,9 @@
 	pixel_y = -32
 	},
 /obj/structure/closet/crate/drawer,
+/obj/item/recipe_book/survival,
+/obj/item/recipe_book/sewing,
+/obj/item/recipe_book/leatherworking,
 /turf/open/floor/carpet/royalblack,
 /area/provincial/indoors/town/house)
 "uUy" = (
@@ -66176,6 +66232,7 @@
 	pixel_y = 5
 	},
 /obj/item/storage/roguebag,
+/obj/item/recipe_book/blacksmithing,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/provincial/indoors/town/dusk_quarter)
 "vFP" = (
@@ -67836,6 +67893,7 @@
 /obj/item/pestle,
 /obj/item/rogueweapon/huntingknife/chefknife,
 /obj/item/rogueweapon/huntingknife/chefknife,
+/obj/item/recipe_book/alchemy,
 /turf/open/floor/rogue/blocks,
 /area/provincial/indoors/town/province_keep/deacon/alchemylab)
 "wiM" = (
@@ -71392,6 +71450,7 @@
 /obj/structure/closet/crate/drawer,
 /obj/structure/mirror,
 /obj/machinery/light/rogue/wallfire/candle/directional/west,
+/obj/item/recipe_book/survival,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/provincial/indoors/town/farm)
 "xth" = (
@@ -71471,6 +71530,11 @@
 /obj/machinery/light/rogue/firebowl/standing/blue,
 /turf/open/floor/rogue/blocks,
 /area/provincial/underground/dungeon/goblinfort)
+"xun" = (
+/obj/structure/bookcase,
+/obj/item/recipe_book/blacksmithing,
+/turf/open/floor/rogue/carpet,
+/area/provincial/indoors/town/province_keep/library)
 "xup" = (
 /obj/structure/chair/wood/rogue{
 	dir = 8
@@ -169483,9 +169547,9 @@ sGr
 cbs
 qxY
 iDF
-jLg
-jLg
-jLg
+iQf
+iQf
+iQf
 iDF
 iDF
 bVo
@@ -374628,7 +374692,7 @@ iYJ
 iYJ
 iYJ
 oTW
-epD
+rXF
 wHA
 sAW
 nIb
@@ -398655,7 +398719,7 @@ iYJ
 tYK
 aPF
 yem
-lrx
+aHY
 pIk
 bOg
 eZz
@@ -401756,7 +401820,7 @@ uyz
 xFM
 xFM
 jWC
-jWC
+tLJ
 xFM
 cnw
 cnw
@@ -405371,8 +405435,8 @@ uyz
 uyz
 xFM
 xFM
-jWC
-jWC
+jLG
+xun
 xFM
 cnw
 cnw

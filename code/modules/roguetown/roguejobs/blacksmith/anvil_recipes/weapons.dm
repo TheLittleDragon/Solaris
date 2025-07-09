@@ -1,4 +1,5 @@
 /datum/anvil_recipe/weapons
+	abstract_type = /datum/anvil_recipe/weapons
 	appro_skill = /datum/skill/craft/weaponsmithing  // inheritance yay !!
 	craftdiff = 1
 	i_type = "Weapons"
