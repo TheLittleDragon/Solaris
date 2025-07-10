@@ -149,6 +149,8 @@ GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 
 #define isidcard(I) (istype(I, /obj/item/card/id))
 
+#define isbook(I) (istype(I, /obj/item/book) || istype(I, /obj/item/recipe_book))
+
 #define isstructure(A) (istype(A, /obj/structure))
 
 #define ismachinery(A) (istype(A, /obj/machinery))

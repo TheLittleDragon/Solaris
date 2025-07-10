@@ -26,7 +26,7 @@
 	state = 2
 	anchored = TRUE
 	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/book))
+		if(isbook(I))
 			I.forceMove(src)
 	update_icon()
 
