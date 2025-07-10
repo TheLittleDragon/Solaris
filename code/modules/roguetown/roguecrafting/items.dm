@@ -129,6 +129,15 @@
 /obj/item/storage/roguebag/crafted
 	sellprice = 4
 
+/datum/crafting_recipe/roguetown/survival/cauterizepoultice
+	name = "Cauterizing Poultice (1 paper, 1 coaldust, 1 fibre, Firepowder horn)"
+	result = /obj/item/cauterizepoultice
+	reqs = list(/obj/item/natural/fibers = 1,/obj/item/paper = 1,/obj/item/alch/coaldust = 1)
+	tools = list(/obj/item/powderhorn)
+	craftdiff = 1
+	verbage_simple = "roll"
+	verbage = "rolls"
+
 //baits
 /datum/crafting_recipe/roguetown/survival/bait
 	name = "bait"

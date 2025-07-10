@@ -80,3 +80,10 @@
 	reqs = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/natural/fibers = 2)
 	sellprice = 30
+
+/datum/crafting_recipe/roguetown/leather/container/smokingpouch
+	name = "Smoking Pouch (1 leather, 1 fibre)"
+	result = /obj/item/storage/gadget/smokingpouch/crafted
+	reqs = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fibers = 1)
+	sellprice = 6

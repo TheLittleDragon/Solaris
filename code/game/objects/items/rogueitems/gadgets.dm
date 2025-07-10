@@ -41,6 +41,12 @@
 	new /obj/item/paper(src)
 	new /obj/item/paper(src)
 
+/obj/item/storage/gadget/smokingpouch/crafted
+	sellprice = 6
+
+/obj/item/storage/gadget/smokingpouch/crafted/PopulateContents()
+	return
+
 /obj/item/folding_table_stored
 	name = "folding table"
 	desc = "A folding table, useful for setting up a temporary workspace."
@@ -67,3 +73,54 @@
 	to_chat(user, "<span class='notice'>You deploy the folding table.</span>")
 	new /obj/structure/table/wood/folding(location)
 	qdel(src)
+
+/obj/item/cauterizepoultice
+	name = "Cauterizing Poultice"
+	desc = "A battlefield ready solution to pesky cuts, just put it on the wound and pull the string! Most Arquebusiers recommend putting a stick in your mouth beforehand for what follows."
+	icon = 'icons/roguetown/items/gadgets.dmi'
+	icon_state = "cpouch"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	throwforce = 0
+	resistance_flags = FLAMMABLE
+	slot_flags = ITEM_SLOT_MOUTH
+	max_integrity = 20
+	grid_width = 32
+	grid_height = 32
+
+/obj/item/cauterizepoultice/attack(mob/living/M, mob/user)
+	cpoultice(M, user)
+
+/obj/item/cauterizepoultice/proc/cpoultice(mob/living/target, mob/living/user)
+	var/mob/living/doctor = user
+	var/mob/living/carbon/human/patient = target
+	var/list/datum/wound/sewable
+	var/obj/item/bodypart/affecting
+	if(!istype(user))
+		return FALSE
+	if(iscarbon(patient))
+		affecting = patient.get_bodypart(check_zone(doctor.zone_selected))
+		if(!affecting)
+			to_chat(doctor, span_warning("That limb is missing."))
+			return FALSE
+		sewable = affecting.get_sewable_wounds()
+	else
+		sewable = patient.get_sewable_wounds()
+	if(!length(sewable))
+		to_chat(doctor, span_warning("This limb has no wounds."))
+		return FALSE
+	playsound(patient,'sound/foley/fuse_lit.ogg', 100)
+	if(do_after(doctor,6,target = patient))
+		for(var/datum/wound/W in sewable)
+			if(W.can_cauterize)
+				qdel(W)
+				affecting.receive_damage(0,6,6)
+		patient.emote("scream")
+		playsound(patient,'sound/combat/hits/burn (1).ogg',90)
+		shake_camera(patient, 7, 1)
+		patient.visible_message(span_boldannounce("The wounds on [patient]'s [affecting] burn shut as the poultice ignites!"))
+		qdel(src)
+	else
+		return
