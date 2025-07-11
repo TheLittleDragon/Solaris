@@ -34,6 +34,8 @@
 	var/list/possible_beacons = list()
 	/// Whether the beacon has been activated for this quest
 	var/beacon_activated = FALSE
+	/// Track if reward has been adjusted
+	var/reward_modified = FALSE
 
 /datum/quest/Destroy()
 	// Clean up mobs with quest components
@@ -69,3 +71,31 @@
 	possible_beacons = null
 	
 	return ..()
+
+/datum/quest/proc/apply_bonuses(mob/user)
+	if(reward_modified)  // Prevent multiple applications
+		return
+	
+	// Store original values
+	var/original_reward = reward_amount
+	var/list/applied_upgrade_types = list()
+
+	// Resolve the user if it's a weakref
+	var/mob/resolved_user = user
+	if(istype(user, /datum/weakref))
+		resolved_user = quest_receiver_reference?.resolve()
+		if(!resolved_user)
+			return
+
+	// Apply all upgrades only once
+	for(var/datum/guild_upgrade/upgrade in SSroguemachine.guild_upgrades)
+		if(upgrade.type in applied_upgrade_types)
+			continue
+		if(upgrade.apply_passive_bonus(resolved_user, src))
+			applied_upgrade_types += upgrade.type
+	
+	// Only show difference if reward changed
+	if(reward_amount != original_reward && resolved_user)
+		to_chat(resolved_user, span_notice("Guild upgrades increased your reward from [original_reward] to [reward_amount] marks!"))
+	
+	reward_modified = TRUE

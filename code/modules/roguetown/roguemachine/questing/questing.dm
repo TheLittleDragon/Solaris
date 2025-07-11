@@ -22,9 +22,8 @@
 	input_point = locate(x, y - 1, z)
 	scroll_point = locate(x, y, z)
 
-	var/obj/effect/decal/marker_export/marker = new(get_turf(input_point))
+	var/obj/effect/decal/questing/marker_export/marker = new(get_turf(input_point))
 	marker.desc = "Place completed quest scrolls here to turn them in."
-	marker.layer = ABOVE_OBJ_LAYER
 
 /obj/structure/roguemachine/questgiver/examine(mob/user)
 	. = ..()
@@ -39,6 +38,7 @@
 	var/list/choices = list("Consult Quests", "Turn In Quest", "Abandon Quest")
 	if(guild && user.job == "Guild Handler")
 		choices += "Print Issued Quests"
+		choices += "Purchase Upgrades"  // New option
 
 	var/selection = input(user, "The Excidium listens", src) as null|anything in choices
 	if(!selection)
@@ -53,6 +53,8 @@
 			abandon_quest(user)
 		if("Print Issued Quests")
 			print_quests(user)
+		if("Purchase Upgrades")
+			manage_upgrades(user)
 
 /obj/structure/roguemachine/questgiver/proc/consult_quests(mob/user)
 	if(!(user in SStreasury.bank_accounts))
@@ -159,32 +161,42 @@
 	var/total_deposit_return = 0
 
 	for(var/atom/movable/pawnable_loot in input_point)
+		// Handle quest scrolls
 		if(istype(pawnable_loot, /obj/item/paper/scroll/quest))
 			var/obj/item/paper/scroll/quest/turned_in_scroll = pawnable_loot
 			if(turned_in_scroll.assigned_quest?.complete)
 				// Calculate base reward
 				var/base_reward = turned_in_scroll.assigned_quest.reward_amount
 				original_reward += base_reward
-				
+
+				// Apply bonuses only once through apply_bonuses
+				if(!turned_in_scroll.assigned_quest.reward_modified)
+					turned_in_scroll.assigned_quest.apply_bonuses(user)
+					// Apply guild handler bonus if applicable (only once)
+					if(guild && user?.job == "Guild Handler")
+						turned_in_scroll.assigned_quest.reward_amount += base_reward * 1  // 100% bonus
+						to_chat(user, span_notice("Your guild handler expertise adds a 100% bonus to this quest!"))
+
+				reward += turned_in_scroll.assigned_quest.reward_amount
+
 				// Calculate deposit return based on difficulty
 				var/deposit_return = turned_in_scroll.assigned_quest.quest_difficulty == "Easy" ? 5 : \
 									turned_in_scroll.assigned_quest.quest_difficulty == "Medium" ? 10 : 20
 				total_deposit_return += deposit_return
-				
-				// Apply guild handler bonus if applicable (only to the base reward)
-				if(guild && user.job == "Guild Handler")
-					reward += base_reward * 2
-				else
-					reward += base_reward
-				
-				// Add deposit return to both reward totals
 				reward += deposit_return
 				original_reward += deposit_return
-				
+
 				qdel(turned_in_scroll.assigned_quest)
 				qdel(turned_in_scroll)
 				continue
 
+		// Handle upgrade kit refunds
+		if(istype(pawnable_loot, /obj/item/guild_upgrade_kit))
+			var/obj/item/guild_upgrade_kit/kit = pawnable_loot
+			if(kit.attempt_refund(user))
+				continue
+
+		// Handle sellable items
 		if(guild && is_type_in_list(pawnable_loot, sellable_items))
 			var/obj/item/to_sell = pawnable_loot
 			if(to_sell.get_real_price() > 0)
@@ -300,6 +312,116 @@
 
 	report.info = report_text
 	say("Quest report printed.")
+
+/obj/structure/roguemachine/questgiver/proc/manage_upgrades(mob/user)
+	if(!guild || user.job != "Guild Handler")
+		return
+
+	// Initialize categories with empty lists
+	var/list/categories = list(
+		"utility" = list(),
+		"convenience" = list(),
+		"storage" = list()
+	)
+
+	// Populate from global registry, filtering out upgrades that conflict with installed ones
+	var/list/installed_upgrade_types = list()
+	for(var/datum/guild_upgrade/upgrade in SSroguemachine.guild_upgrades)
+		installed_upgrade_types += upgrade.type
+
+	for(var/upgrade_type in GLOB.all_guild_upgrades)
+		var/datum/guild_upgrade/upgrade = new upgrade_type()
+		var/conflict_with_installed = FALSE
+		
+		// Check if this upgrade conflicts with any installed upgrades
+		for(var/installed_type in installed_upgrade_types)
+			if(installed_type in upgrade.conflicts_with)
+				conflict_with_installed = TRUE
+				break
+
+		if(!conflict_with_installed)
+			if(!categories[upgrade.category])
+				categories[upgrade.category] = list()
+			categories[upgrade.category][upgrade_type] = upgrade
+		qdel(upgrade)
+
+	// Category selection
+	var/category_choice = input(user, "Select upgrade category", "Guild Upgrades") as null|anything in categories
+	if(!category_choice || !length(categories[category_choice]))
+		return
+
+	// Create a formatted list of upgrades for display
+	var/list/upgrade_choices = list()
+	for(var/upgrade_type in categories[category_choice])
+		var/datum/guild_upgrade/upgrade = categories[category_choice][upgrade_type]
+		upgrade_choices["[upgrade.name] ([upgrade.cost] marks)"] = upgrade_type
+
+	// Upgrade selection
+	var/upgrade_choice = input(user, "Select upgrade to purchase", "Guild Upgrades") as null|anything in upgrade_choices
+	if(!upgrade_choice)
+		return
+
+	// Get the selected upgrade type
+	var/upgrade_type = upgrade_choices[upgrade_choice]
+	var/datum/guild_upgrade/upgrade = new upgrade_type()
+
+	// Check funds
+	if(SStreasury.bank_accounts[user] < upgrade.cost)
+		to_chat(user, span_warning("You don't have enough marks for this upgrade!"))
+		qdel(upgrade)
+		return
+
+	// Enhanced confirmation window
+	var/list/confirmation_text = list()
+	confirmation_text += "[upgrade.name]"
+	confirmation_text += "Category: [upgrade.category]"
+	confirmation_text += "Cost: [upgrade.cost] marks"
+
+	if(upgrade.bonus > 0)
+		confirmation_text += "Immediate Bonus: +[upgrade.bonus] marks"
+
+	if(upgrade.active_effects.len)
+		confirmation_text += "Creates:"
+		for(var/path in upgrade.active_effects)
+			var/atom/A = path
+			confirmation_text += " - [initial(A.name)]"
+
+	if(upgrade.passive_effects)
+		confirmation_text += "Passive Effect: [upgrade.passive_effects]"
+
+	confirmation_text += "Installation: [upgrade.outdoor_only ? "OUTSIDE the guild" : "INSIDE the guild"]"
+
+	// Show all potential conflicts from the upgrade's conflicts_with list
+	var/list/all_potential_conflicts = list()
+	for(var/conflicting_type in upgrade.conflicts_with)
+		if(conflicting_type == upgrade.type)
+			continue
+		var/datum/guild_upgrade/conflicting_upgrade = new conflicting_type()
+		all_potential_conflicts += conflicting_upgrade.name
+		qdel(conflicting_upgrade)
+
+	if(length(all_potential_conflicts))
+		confirmation_text += "WARNING: Will conflict with: [english_list(all_potential_conflicts)]"
+		confirmation_text += "(These upgrades will become unavailable if you install this one)"
+
+	var/confirm = alert(user, jointext(confirmation_text, "\n"), "Confirm Purchase", "Purchase", "Cancel")
+	if(confirm != "Purchase")
+		qdel(upgrade)
+		return
+
+	// Deduct cost and spawn kit
+	SStreasury.bank_accounts[user] -= upgrade.cost
+	SStreasury.treasury_value += upgrade.cost
+	SStreasury.log_entries += "+[upgrade.cost] to treasury (guild upgrade purchase)"
+
+	var/obj/item/guild_upgrade_kit/kit = new(get_turf(scroll_point), upgrade_type)
+	user.put_in_hands(kit)
+	to_chat(user, span_notice("The [kit.name] has been dispensed. Place it on a [upgrade.category] upgrade slot to install."))
+
+	// Show installation instructions
+	to_chat(user, span_info("Look for [icon2html('code/modules/roguetown/roguemachine/questing/questing.dmi', user, "marker_[upgrade.category]")] [upgrade.category] markers on the ground."))
+
+	qdel(upgrade)
 
 /obj/structure/roguemachine/questgiver/guild
 	guild = TRUE

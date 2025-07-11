@@ -11,6 +11,7 @@ PROCESSING_SUBSYSTEM_DEF(roguemachine)
 	var/list/noticeboards = list()
 	var/list/questgivers = list()
 	var/list/issued_quests = list()
+	var/list/guild_upgrades = list()
 	var/list/teleport_beacons = list()
 	var/hermailermaster
 	var/list/death_queue = list()

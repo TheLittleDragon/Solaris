@@ -80,7 +80,10 @@
 	if(!teleport_choice || teleport_choice == src)
 		return
 
-	if(!HAS_TRAIT(user, TRAIT_OUTLAW))
+	// Check for free teleport status effect
+	var/has_free_teleport = user.has_status_effect(/datum/status_effect/free_teleport_guild)
+
+	if(!HAS_TRAIT(user, TRAIT_OUTLAW) || !has_free_teleport)
 		final_price = src.departure_price + teleport_choice.arrival_price
 
 		if(HAS_TRAIT(user, TRAIT_NOBLE))
@@ -114,6 +117,9 @@
 		to_chat(user, span_notice("You have been billed [final_price] marks to teleport."))
 
 	to_chat(user, span_notice("Your vision shifts and brightens - and suddenly, you're standing by [teleport_choice]!"))
+	if(user.has_status_effect(/datum/status_effect/free_teleport_guild))
+		user.remove_status_effect(/datum/status_effect/free_teleport_guild)
+		to_chat(user,span_notice("Your one daily teleport has been exhausted!"))
 	teleport_turf = get_teleport_turf(get_turf(teleport_choice), 3)
 	user.forceMove(teleport_turf)
 	do_sparks(3, TRUE, get_turf(user))
@@ -137,9 +143,69 @@
 	SSroguemachine.teleport_beacons -= src
 	return ..()
 
+/mob/living/carbon/human/Initialize()
+	. = ..()
+	if(!mind?.assigned_role)
+		return
+	//evil ass job list
+	var/static/list/town_jobs = list(
+		/datum/job/roguetown/acolyte,
+		/datum/job/roguetown/priest,
+		/datum/job/roguetown/templar,
+		/datum/job/roguetown/churchling,
+		/datum/job/roguetown/towner,
+		/datum/job/roguetown/servant,
+		/datum/job/roguetown/councillor,
+		/datum/job/roguetown/deacon,
+		/datum/job/roguetown/jester,
+		/datum/job/roguetown/magician,
+		/datum/job/roguetown/seneschal,
+		/datum/job/roguetown/bogguardsman,
+		/datum/job/roguetown/manorguard,
+		/datum/job/roguetown/sergeant,
+		/datum/job/roguetown/guardsman,
+		/datum/job/roguetown/veteran,
+		/datum/job/roguetown/squire,
+		/datum/job/roguetown/captain,
+		/datum/job/roguetown/hand,
+		/datum/job/roguetown/knight,
+		/datum/job/roguetown/lord,
+		/datum/job/roguetown/marshal,
+		/datum/job/roguetown/nobleman,
+		/datum/job/roguetown/steward,
+		/datum/job/roguetown/alchemist,
+		/datum/job/roguetown/archivist,
+		/datum/job/roguetown/artificer,
+		/datum/job/roguetown/head_mage,
+		/datum/job/roguetown/apothicant_apprentice,
+		/datum/job/roguetown/wapprentice,
+		/datum/job/roguetown/soilson,
+		/datum/job/roguetown/knavewench,
+		/datum/job/roguetown/woodsman,
+		/datum/job/roguetown/clerk,
+		/datum/job/roguetown/shophand,
+		/datum/job/roguetown/bapprentice,
+		/datum/job/roguetown/barkeep,
+		/datum/job/roguetown/blacksmith,
+		/datum/job/roguetown/ghandler,
+		/datum/job/roguetown/janitor,
+		/datum/job/roguetown/merchant,
+		/datum/job/roguetown/tailor
+	)
+
+	if(ispath(mind.assigned_role) && (mind.assigned_role in town_jobs))
+		for(var/obj/structure/roguemachine/teleport_beacon/main/beacon in SSroguemachine.teleport_beacons)
+			if(!(real_name in beacon.granted_list))
+				beacon.granted_list += real_name
+				to_chat(src, span_notice("You feel a connection to the town's teleport beacon - you can use it for travel!"))
+			break
+
 /obj/structure/roguemachine/teleport_beacon/main //'Main' town beacon, needed to synch every towner role to one.
 	icon_state = "aetheryte_town"
 	fringe = FALSE
+	departure_price = 0
+	arrival_price = 15
+	pixel_x = -18
 
 /obj/structure/roguemachine/teleport_beacon/wilderness
 	icon_state = "aetheryte_outside"

@@ -369,7 +369,7 @@
 		/area/provincial/indoors/town/province_keep = list("Guild Handler", "Nobleman", "Hand", "Knight Captain", "Marshal", "Steward", "Clerk", "Head Mage", "Marquis"),
 		/area/provincial/indoors/town/mages_university = list("Guild Handler", "Head Mage", "Archivist", "Artificer", "Apothicant Apprentice", "Apprentice Magician"),
 		/area/provincial/indoors/town/mages_university/alchemy_lab = list("Guild Handler", "Head Mage", "Archivist", "Artificer", "Apothicant Apprentice", "Apprentice Magician"),
-		/area/provincial/indoors/town/steward = list("Guild Handler", "Steward"),
+		/area/provincial/indoors/town/steward = list("Guild Handler", "Steward", "Marquis"),
 		/area/provincial/indoors/town = list("Guild Handler")
 	)
 	return area_jobs[area_type] || list("Guild Handler")
@@ -425,3 +425,115 @@
 	. += (user.job in allowed_jobs) ? \
 		span_notice("As [user.job], you're authorized to open this.") : \
 		span_warning("It's sealed with an official guild mark - only authorized personnel should open this!")
+
+/obj/item/guild_upgrade_kit
+	name = "guild upgrade kit"
+	desc = "A kit containing materials to upgrade guild facilities."
+	icon = 'modular/Neu_food/icons/ration.dmi'
+	icon_state = "ration_large"
+	w_class = WEIGHT_CLASS_NORMAL
+	var/datum/guild_upgrade/upgrade_datum
+
+/obj/item/guild_upgrade_kit/Initialize(mapload, upgrade_type)
+	. = ..()
+	if(upgrade_type)
+		upgrade_datum = new upgrade_type()
+	else
+		upgrade_datum = new /datum/guild_upgrade/hearth()
+	
+	name = "[upgrade_datum.name] Kit"
+	desc = "Install on a [upgrade_datum.category] slot. Provides: [english_list(upgrade_datum.active_effects)]"
+
+/obj/item/guild_upgrade_kit/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return
+	
+	to_chat(user, span_notice("This is a [upgrade_datum.category] upgrade kit. Look for [upgrade_datum.category] markers on the ground."))
+	return FALSE
+
+/obj/item/guild_upgrade_kit/examine(mob/user)
+	. = ..()
+	. += span_notice("Installation Cost: [upgrade_datum.cost] marks")
+	if(upgrade_datum.bonus > 0)
+		. += span_green("Immediate Bonus: +[upgrade_datum.bonus] marks (deposited directly to your account)")
+	if(upgrade_datum.active_effects.len)
+		. += span_info("Creates: [english_list(upgrade_datum.active_effects)]")
+	if(upgrade_datum.passive_effects)
+		. += span_blue("Passive Effect: [upgrade_datum.passive_effects]")
+	. += upgrade_datum.outdoor_only ? span_info("Must be installed OUTSIDE the guild") : span_info("Must be installed INSIDE the guild")
+	. += span_notice("Look for [upgrade_datum.category]-marked slots on the ground to install this.")
+
+/obj/item/guild_upgrade_kit/proc/attempt_refund(mob/user)
+	if(user.job != "Guild Handler")
+		return FALSE
+	
+	var/refund_amount = round(upgrade_datum.cost * (upgrade_datum.refund_value/100))
+	if(refund_amount <= 0)
+		return FALSE
+	
+	if(user in SStreasury.bank_accounts)
+		SStreasury.bank_accounts[user] += refund_amount
+		SStreasury.treasury_value -= refund_amount
+		SStreasury.log_entries += "+[refund_amount] to [user.real_name] (upgrade kit refund)"
+		to_chat(user, span_notice("You receive a [refund_amount] mark refund for the [name]."))
+		qdel(src)
+		return TRUE
+	
+	// Fallback to physical coins if no bank account
+	var/obj/item/roguecoin/gold/gold_coins = new(get_turf(user))
+	var/obj/item/roguecoin/silver/silver_coins = new(get_turf(user))
+	var/obj/item/roguecoin/copper/copper_coins = new(get_turf(user))
+
+	gold_coins.quantity = FLOOR(refund_amount / 10, 1)
+	silver_coins.quantity = FLOOR(refund_amount % 10 / 5, 1)
+	copper_coins.quantity = refund_amount % 5
+
+	gold_coins.update_icon()
+	silver_coins.update_icon()
+	copper_coins.update_icon()
+
+	to_chat(user, span_notice("[refund_amount] marks worth of coins have been dispensed as your refund."))
+	qdel(src)
+	return TRUE
+
+/obj/structure/fluff/statue/knightalt/r/guild/examine(mob/user)
+	. = ..()
+	if(user.job == "Adventurer")
+		. += span_notice("An imposing statue of a legendary knight. It fills you with [span_red("DETERMINATION")].")
+		user.add_stress(/datum/stressevent/meditation)
+
+/obj/structure/well/fountain/town_center
+	pixel_x = -18
+
+/obj/machinery/tanningrack/guild
+	name = "guild tanning rack"
+	desc = "A sturdy drying rack provided by the Adventurers' Guild. It can be used to tan hides as normal, and occasionally provides equipment to adventurers."
+	var/list/received_adventurers = list() // Tracks who has received equipment
+
+/obj/machinery/tanningrack/guild/attack_hand(mob/living/user)
+	if(!hide && user.job == "Adventurer" && !received_adventurers[user.ckey])
+
+		// Give random equipment
+		var/obj/item/new_item
+		switch(rand(1,3))
+			if(1)
+				new_item = new /obj/item/reagent_containers/glass/bottle/waterskin(get_turf(user))
+			if(2)
+				new_item = new /obj/item/bedroll(get_turf(user))
+			if(3)
+				new_item = new /obj/item/storage/backpack/rogue/backpack(get_turf(user))
+
+		if(new_item)
+			user.put_in_hands(new_item)
+			to_chat(user, span_notice("The guild's tanning rack provides you with [new_item.name]!"))
+			received_adventurers[user.ckey] = TRUE
+			return
+
+	// Fall back to normal behavior
+	..()
+
+/obj/machinery/tanningrack/guild/examine(mob/user)
+	. = ..()
+	if(user.job == "Adventurer" && !received_adventurers[user.ckey])
+		. += span_notice("This guild-provided rack might have some equipment for you.")
