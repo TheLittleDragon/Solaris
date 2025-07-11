@@ -85,5 +85,8 @@
 		H.change_stat("speed", -1)
 		H.change_stat("constitution", 1)
 		H.change_stat("intelligence", 3)
+		if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+			H.mind.adjust_skillrank(/datum/skill/combat/maces, 6, TRUE) // I'M OLD!
+			l_hand = /obj/item/rogueweapon/mace/warhammer
 	ADD_TRAIT(H, TRAIT_SEEPRICES_SHITTY, "[type]")
 	ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC)
