@@ -363,6 +363,9 @@
 		return
 	remove_status_effect(/datum/status_effect/debuff/vamp_dreams)
 	mind.sleep_adv.advance_cycle()
+	allmig_reward++
+	adjust_triumphs(1)
+	to_chat(src, span_danger("Days Survived: \Roman[allmig_reward]"))
 
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST
