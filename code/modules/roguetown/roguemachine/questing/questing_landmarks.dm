@@ -247,13 +247,22 @@
 	var/turf/spawn_turf = get_safe_spawn_turf()
 	if(!spawn_turf)
 		return
-	
-	var/mob/living/new_mob = new miniboss_mob(spawn_turf)
+
+	// Pick a random mob type from the miniboss_mob list
+	var/mob_type = pick(miniboss_mob)
+	quest.target_mob_type = mob_type // Set the quest's target mob type BEFORE spawning
+	quest.target_spawn_area = get_area_name(spawn_turf) // Set the actual spawn area
+
+	var/mob/living/new_mob = new mob_type(spawn_turf)
 	new_mob.faction |= "quest"
 	new_mob.AddComponent(/datum/component/quest_object, quest)
-	new_mob.maxHealth *= 2
-	new_mob.health = new_mob.maxHealth
 	add_quest_faction_to_nearby_mobs(spawn_turf)
+
+	// Immediately update the quest scroll if it exists
+	if(quest.quest_scroll_ref)
+		var/obj/item/paper/scroll/quest/scroll = quest.quest_scroll_ref.resolve()
+		if(scroll)
+			scroll.update_quest_text()
 
 /obj/effect/landmark/quest_spawner/easy
 	name = "easy quest landmark"
