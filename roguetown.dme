@@ -1588,6 +1588,7 @@
 #include "code\modules\mob\living\carbon\human\voicepack.dm"
 #include "code\modules\mob\living\carbon\human\npc\_npc.dm"
 #include "code\modules\mob\living\carbon\human\npc\bandit_leader_henchman.dm"
+#include "code\modules\mob\living\carbon\human\npc\bandit_quest.dm"
 #include "code\modules\mob\living\carbon\human\npc\deadite.dm"
 #include "code\modules\mob\living\carbon\human\npc\drow.dm"
 #include "code\modules\mob\living\carbon\human\npc\goblin.dm"

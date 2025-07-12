@@ -12,7 +12,8 @@
 	var/list/kill_mobs = list(
 		/mob/living/carbon/human/species/goblin/npc/ambush/sea,
 		/mob/living/carbon/human/species/skeleton/npc/ambush,
-		/mob/living/carbon/human/species/human/northern/searaider/ambush
+		/mob/living/carbon/human/species/human/northern/searaider/ambush,
+		/mob/living/carbon/human/species/human/bandit_quest/ambush
 	)
 	var/miniboss_mob = list(
 		/mob/living/simple_animal/hostile/boss/lost_swordsman,

@@ -70,7 +70,7 @@
 
 /mob/living/simple_animal/hostile/boss/bandit_leader/Initialize()
 	. = ..()
-	next_allowed_spawn = world.time + 50000
+	next_allowed_spawn = world.time + 500000
 	spawned_mobs = 0
 
 /mob/living/simple_animal/hostile/boss/bandit_leader/Aggro()
