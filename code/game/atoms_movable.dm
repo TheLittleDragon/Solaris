@@ -227,6 +227,7 @@
 
 	for(var/atom/movable/AM in buckled_mobs)
 		AM.set_glide_size(target)
+
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
@@ -292,7 +293,6 @@
 
 //Early override for some cases like diagonal movement
 	if(glide_size_override)
-		testing("GSO 1 [glide_size_override]")
 		set_glide_size(glide_size_override)
 
 	if(loc != newloc)
