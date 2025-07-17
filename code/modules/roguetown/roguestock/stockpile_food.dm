@@ -1,146 +1,3 @@
-/datum/roguestock/stockpile/wood
-	name = "Wood"
-	desc = "Wooden logs cut short for transport."
-	item_type = /obj/item/grown/log/tree/small
-	held_items = list(2, 2)
-	payout_price = 3
-	withdraw_price = 5
-	transport_fee = 3
-	export_price = 5
-	importexport_amt = 10
-	passive_generation = 5
-
-/datum/roguestock/stockpile/coal
-	name = "Coal"
-	desc = "Chunks of coal used for fuel and alloying."
-	item_type = /obj/item/rogueore/coal
-	held_items = list(5, 0)
-	payout_price = 4
-	withdraw_price = 6
-	transport_fee = 4
-	export_price = 6
-	importexport_amt = 10
-	passive_generation = 2
-
-/datum/roguestock/stockpile/iron
-	name = "Raw Iron"
-	desc = "Chunks of iron used for smithing."
-	item_type = /obj/item/rogueore/iron
-	held_items = list(6, 0)
-	payout_price = 5
-	withdraw_price = 8
-	transport_fee = 6
-	export_price = 8
-	importexport_amt = 10
-	passive_generation = 2
-
-/datum/roguestock/stockpile/copper
-	name = "Raw Copper"
-	desc = "Chunks of copper used for smithing and alloying."
-	item_type = /obj/item/rogueore/copper
-	held_items = list(6, 0)
-	payout_price = 3
-	withdraw_price = 5
-	transport_fee = 3
-	export_price = 5
-	importexport_amt = 10
-	passive_generation = 2
-
-/datum/roguestock/stockpile/tin
-	name = "Raw Tin"
-	desc = "Chunks of tin used for smithing and alloying."
-	item_type = /obj/item/rogueore/tin
-	held_items = list(6, 0)
-	payout_price = 4
-	withdraw_price = 5
-	transport_fee = 4
-	export_price = 5
-	importexport_amt = 10
-	passive_generation = 2
-
-/datum/roguestock/stockpile/gold
-	name = "Raw Gold"
-	desc = "Chunks of unrefined gold."
-	item_type = /obj/item/rogueore/gold
-	held_items = list(0, 0)
-	payout_price = 50
-	withdraw_price = 75
-	transport_fee = 10
-	export_price = 75
-	importexport_amt = 10
-
-/datum/roguestock/stockpile/silver
-	name = "Raw Silver"
-	desc = "Chunks of unrefined silver."
-	item_type = /obj/item/rogueore/silver
-	held_items = list(0, 0)
-	payout_price = 75
-	withdraw_price = 100
-	transport_fee = 10
-	export_price = 100
-	importexport_amt = 10
-
-/datum/roguestock/stockpile/cloth
-	name = "Cloth"
-	desc = "Lengths of cloth for sewing and tailoring."
-	item_type = /obj/item/natural/cloth
-	held_items = list(0, 2)
-	payout_price = 3
-	withdraw_price = 5
-	transport_fee = 2
-	export_price = 5
-	importexport_amt = 10
-	passive_generation = 2
-
-/datum/roguestock/stockpile/fibers
-	name = "Fibers"
-	desc = "Strands used to make cloth and other items."
-	item_type = /obj/item/natural/fibers
-	held_items = list(0, 2)
-	payout_price = 1
-	withdraw_price = 3
-	transport_fee = 1
-	export_price = 3
-	importexport_amt = 10
-	passive_generation = 4
-
-//natural/hide/cured must be defined/populated in sstreasury before natural/hide, for istype stockpile check to work
-/datum/roguestock/stockpile/cured
-	name = "Cured Leather"
-	desc = "Cured Leather ready to be worked."
-	item_type = /obj/item/natural/hide/cured
-	held_items = list(2, 0)
-	payout_price = 3
-	withdraw_price = 7
-	transport_fee = 3
-	export_price = 7
-	importexport_amt = 10
-	passive_generation = 3
-
-/datum/roguestock/stockpile/hide
-	name = "Hide"
-	desc = "Stripped hide from animals."
-	item_type = /obj/item/natural/hide
-	held_items = list(0, 0)
-	payout_price = 8
-	withdraw_price = 12
-	transport_fee = 2
-	export_price = 12
-	importexport_amt = 5
-	passive_generation = 2
-
-/datum/roguestock/stockpile/fur
-	name = "Fur"
-	desc = "Hide with a long winter coat from animals."
-	item_type = /obj/item/natural/fur
-	held_items = list(0, 0)
-	payout_price = 10
-	withdraw_price = 15
-	transport_fee = 4
-	export_price = 15
-	importexport_amt = 5
-	passive_generation = 1
-
 /datum/roguestock/stockpile/salt
 	name = "Salt"
 	desc = "Rock salt useful for curing and cooking."
@@ -151,8 +8,9 @@
 	export_price = 8
 	importexport_amt = 5
 	passive_generation = 3
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/grain
+/datum/roguestock/stockpile/salt/grain
 	name = "Grain"
 	desc = "Spelt grain."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/wheat
@@ -163,8 +21,9 @@
 	export_price = 3
 	importexport_amt = 10
 	passive_generation = 3
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/oat
+/datum/roguestock/stockpile/salt/oat
 	name = "Oats"
 	desc = "A cereal grain."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/oat
@@ -175,8 +34,9 @@
 	export_price = 3
 	importexport_amt = 10
 	passive_generation = 3
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/garlick
+/datum/roguestock/stockpile/salt/garlick
 	name = "Garlick"
 	desc = "A pungent root vegetable."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/garlick/rogue
@@ -187,8 +47,9 @@
 	export_price = 3
 	importexport_amt = 10
 	passive_generation = 3
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/apple
+/datum/roguestock/stockpile/salt/apple
 	name = "Apple"
 	desc = "Harvested produce."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/apple
@@ -199,8 +60,9 @@
 	export_price = 5
 	importexport_amt = 5
 	passive_generation = 3
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/meat
+/datum/roguestock/stockpile/salt/meat
 	name = "Meat"
 	desc = "Edible flesh harvested from animals."
 	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
@@ -211,8 +73,9 @@
 	export_price = 8
 	importexport_amt = 5
 	passive_generation = 2
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/fishmince
+/datum/roguestock/stockpile/salt/fishmince
 	name = "Fish Mince"
 	desc = "Descaled and ground fish meat."
 	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/mince/fish
@@ -223,8 +86,9 @@
 	export_price = 3
 	importexport_amt = 10
 	passive_generation = 2
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/poultry
+/datum/roguestock/stockpile/salt/poultry
 	name = "Bird Meat"
 	desc = "Edible flesh harvested from birds."
 	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/poultry
@@ -235,6 +99,7 @@
 	export_price = 8
 	importexport_amt = 5
 	passive_generation = 1
+	category = "Foodstuffs"
 
 /datum/roguestock/stockpile/egg
 	name = "Egg"
@@ -247,8 +112,9 @@
 	export_price = 5
 	importexport_amt = 5
 	passive_generation = 2
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/fat
+/datum/roguestock/stockpile/salt/fat
 	name = "Fat"
 	desc = "Greasy flesh from an animal."
 	item_type = /obj/item/reagent_containers/food/snacks/fat
@@ -259,8 +125,9 @@
 	export_price = 5
 	importexport_amt = 5
 	passive_generation = 2
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/tallow
+/datum/roguestock/stockpile/salt/tallow
 	name = "Tallow"
 	desc = "Shelf-stabilized fatty tissue."
 	item_type = /obj/item/reagent_containers/food/snacks/tallow
@@ -271,8 +138,9 @@
 	export_price = 2
 	importexport_amt = 5
 	passive_generation = 2
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/butter
+/datum/roguestock/stockpile/salt/butter
 	name = "Butter"
 	desc = "The product of milk and salt."
 	item_type = /obj/item/reagent_containers/food/snacks/butter
@@ -283,8 +151,9 @@
 	export_price = 13
 	importexport_amt = 5
 	passive_generation = 1
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/cheese
+/datum/roguestock/stockpile/salt/cheese
 	name = "Cheese"
 	desc = "The product of milk and salt."
 	item_type = /obj/item/reagent_containers/food/snacks/rogue/cheese
@@ -295,8 +164,9 @@
 	export_price = 5
 	importexport_amt = 5
 	passive_generation = 1
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/jacksberry
+/datum/roguestock/stockpile/salt/jacksberry
 	name = "Jacksberries"
 	desc = "Sweet berries, prime for winemaking."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/berries/rogue
@@ -307,8 +177,9 @@
 	export_price = 3
 	importexport_amt = 10
 	passive_generation = 2
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/onion
+/datum/roguestock/stockpile/salt/onion
 	name = "Onion"
 	desc = "A bulb vegetable."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/onion/rogue
@@ -319,8 +190,9 @@
 	export_price = 3
 	importexport_amt = 10
 	passive_generation = 2
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/cabbage
+/datum/roguestock/stockpile/salt/cabbage
 	name = "Cabbage"
 	desc = "A leafy vegetable."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/cabbage/rogue
@@ -331,8 +203,9 @@
 	export_price = 3
 	importexport_amt = 10
 	passive_generation = 2
+	category = "Foodstuffs"
 
-/datum/roguestock/stockpile/potato
+/datum/roguestock/stockpile/salt/potato
 	name = "Potato"
 	desc = "An interesting tuber."
 	item_type = /obj/item/reagent_containers/food/snacks/grown/potato/rogue
@@ -355,6 +228,7 @@
 	export_price = 3
 	importexport_amt = 10
 	passive_generation = 2
+	category = "Foodstuffs"
 
 /datum/roguestock/stockpile/carrot
 	name = "Carrot"
@@ -367,6 +241,7 @@
 	export_price = 3
 	importexport_amt = 10
 	passive_generation = 2
+	category = "Foodstuffs"
 
 /datum/roguestock/stockpile/pumpkin
 	name = "Pumpkin"
@@ -379,3 +254,4 @@
 	export_price = 3
 	importexport_amt = 10
 	passive_generation = 2
+	category = "Foodstuffs"

@@ -18,8 +18,10 @@
 	var/locked = TRUE
 	var/keycontrol = "steward"
 	var/current_tab = TAB_MAIN
-	var/compact = FALSE
+	var/compact = TRUE
 	var/list/excluded_jobs = list("Vagabond","Adventurer")
+	var/current_category = "Raw Materials"
+	var/list/categories = list("Raw Materials", "Foodstuffs")
 
 
 /obj/structure/roguemachine/steward/attackby(obj/item/P, mob/user, params)
@@ -203,6 +205,8 @@
 				SStreasury.give_money_account(amount_to_pay, H, "NERVE MASTER")
 	if(href_list["compact"])
 		compact = !compact
+	if(href_list["changecat"])
+		current_category = href_list["changecat"]
 	return attack_hand(usr)
 
 /obj/structure/roguemachine/steward/proc/do_import(datum/roguestock/D,number)
@@ -281,7 +285,17 @@
 				contents += "Treasury: [SStreasury.treasury_value]m"
 				contents += " / Lord's Tax: [SStreasury.tax_value*100]%"
 				contents += " / Guild's Tax: [SStreasury.queens_tax*100]%</center><BR>"
+				var/selection = "<center>Categories: "
+				for(var/category in categories)
+					if(category == current_category)
+						selection += "<b>[current_category]</b> "
+					else
+						selection += "<a href='?src=[REF(src)];changecat=[category]'>[category]</a> "
+				contents += selection + "<BR>"
+				contents += "--------------</center><BR>"
 				for(var/datum/roguestock/stockpile/A in SStreasury.stockpile_datums)
+					if(A.category != current_category)
+						continue
 					contents += "<b>[A.name]:</b>"
 					contents += " [A.held_items[1] + A.held_items[2]]"
 					contents += " | SELL: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]m</a>"
@@ -292,7 +306,17 @@
 				contents += "Treasury: [SStreasury.treasury_value]m<BR>"
 				contents += "Lord's Tax: [SStreasury.tax_value*100]%<BR>"
 				contents += "Guild's Tax: [SStreasury.queens_tax*100]%</center><BR>"
+				var/selection = "<center>Categories: "
+				for(var/category in categories)
+					if(category == current_category)
+						selection += "<b>[current_category]</b> "
+					else
+						selection += "<a href='?src=[REF(src)];changecat=[category]'>[category]</a> "
+				contents += selection + "<BR>"
+				contents += "--------------</center><BR>"
 				for(var/datum/roguestock/stockpile/A in SStreasury.stockpile_datums)
+					if(A.category != current_category)
+						continue
 					contents += "[A.name]<BR>"
 					contents += "[A.desc]<BR>"
 					contents += "Stockpiled Amount: [A.held_items[1] + A.held_items[2]]<BR>"

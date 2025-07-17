@@ -6,6 +6,8 @@
 	density = FALSE
 	blade_dulling = DULLING_BASH
 	var/stockpile_index = 1
+	var/current_category = "Raw Materials"
+	var/list/categories = list("Raw Materials", "Foodstuffs")
 	var/datum/withdraw_tab/withdraw_tab = null
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/roguemachine/stockpile, 32)
@@ -14,6 +16,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/roguemachine/stockpile, 32)
 	. = ..()
 	SSroguemachine.stock_machines += src
 	withdraw_tab = new(stockpile_index, src)
+
 
 /obj/structure/roguemachine/stockpile/Destroy()
 	SSroguemachine.stock_machines -= src
@@ -25,6 +28,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/roguemachine/stockpile, 32)
 		return
 	if(href_list["navigate"])
 		return attack_hand(usr, href_list["navigate"])
+	if(href_list["stockpilechangecat"])
+		current_category = href_list["stockpilechangecat"]
+		return attack_hand(usr, "deposit")
 
 	if(withdraw_tab.perform_action(href, href_list))
 		if(href_list["remote"])
@@ -52,6 +58,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/roguemachine/stockpile, 32)
 	contents += "<a href='?src=[REF(src)];navigate=directory'>(back)</a><BR>"
 	contents += "----------<BR>"
 	contents += "</center>"
+	var/selection = "Categories: "
+	for(var/category in categories)
+		if(category == current_category)
+			selection += "<b>[current_category]</b> "
+		else
+			// Force call navigate so the UI actually updates fml
+			selection += "<a href='?src=[REF(src)];stockpilechangecat=[category]'>[category]</a> "
+	contents += selection + "<BR>"
+	contents += "--------------<BR>"
 
 	for(var/datum/roguestock/bounty/R in SStreasury.stockpile_datums)
 		contents += "[R.name] - [R.payout_price][R.percent_bounty ? "%" : ""]"
@@ -60,6 +75,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/roguemachine/stockpile, 32)
 	contents += "<BR>"
 
 	for(var/datum/roguestock/stockpile/R in SStreasury.stockpile_datums)
+		if(R.category != current_category)
+			continue
 		contents += "[R.name] - [R.payout_price] - [R.demand2word()]"
 		contents += "<BR>"
 
