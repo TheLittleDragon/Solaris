@@ -7,6 +7,7 @@
 
 /datum/anvil_recipe/engineering/jingle_bells
 	name = "Jingling Bells"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/jingle_bells
 	createditem_num = 5
@@ -14,6 +15,7 @@
 
 /datum/anvil_recipe/engineering/flint
 	name = "Flint x3 (+1 stone)"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/natural/stone)
 	created_item = /obj/item/flint
@@ -23,6 +25,7 @@
 //Lockpicks and rings moved from blacksmithing, to fit with locks being engineered
 /datum/anvil_recipe/engineering/lockpicks
 	name = "Lockpicks x3"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/lockpick
 	createditem_num = 3
@@ -30,6 +33,7 @@
 
 /datum/anvil_recipe/engineering/lockpickring
 	name = "Lockpickrings x3"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/lockpickring
 	createditem_num = 3
@@ -37,6 +41,7 @@
 
 /datum/anvil_recipe/engineering/chains
 	name = "Chains"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/rope/chain
 	createditem_num = 1
@@ -47,6 +52,7 @@
 
 /datum/anvil_recipe/engineering/bronze/locks
 	name = "Lock 2x"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	created_item = /obj/item/customlock
 	createditem_num = 2
@@ -54,6 +60,7 @@
 
 /datum/anvil_recipe/engineering/bronze/keys
 	name = "Keys 2x"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	created_item = /obj/item/customblank
 	createditem_num = 2
@@ -61,6 +68,7 @@
 
 /datum/anvil_recipe/engineering/bronze/wrench
 	name = "Engineering Wrench (+1 cog)"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	created_item = /obj/item/contraption/linker
 	additional_items = list(/obj/item/roguegear)
@@ -70,7 +78,8 @@
 
 
 /datum/anvil_recipe/engineering/bronze/cog
-	name = "Cog 2x"
+	name = "Bronze Cog 2x"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	created_item = /obj/item/roguegear
 	createditem_num = 2
@@ -78,6 +87,7 @@
 
 /datum/anvil_recipe/engineering/bronze/lamptern
 	name = "Bronze Lamptern 3x"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	created_item = /obj/item/flashlight/flare/torch/lantern/bronzelamptern
 	createditem_num = 3
@@ -85,6 +95,7 @@
 
 /datum/anvil_recipe/engineering/bronze/waterpurifier
 	name = "Self-Purifying Waterskin (+Waterskin)"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	created_item = /obj/item/reagent_containers/glass/bottle/waterskin/purifier
 	additional_items = list(/obj/item/reagent_containers/glass/bottle/waterskin)
@@ -92,6 +103,7 @@
 
 /datum/anvil_recipe/engineering/bronze/coolingbackpack
 	name = "Cooling Backpack (+Cog, +Backpack)" // why are these recipes capitalized differently than every other crafting recipe my ocddddddddddd
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	created_item = /obj/item/storage/backpack/rogue/artibackpack
 	additional_items = list(/obj/item/roguegear, /obj/item/storage/backpack/rogue/backpack)
@@ -99,6 +111,7 @@
 
 /datum/anvil_recipe/engineering/bronze/smokebomb
 	name = "Smoke Bomb 2x (+Cog, +Ash)"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	created_item = /obj/item/smokebomb
 	additional_items = list(/obj/item/roguegear, /obj/item/ash)
@@ -107,6 +120,7 @@
 
 /datum/anvil_recipe/engineering/bronze/grappler
 	name = "Grappler (+Pick, +Chain, +3 Cog)"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	created_item = /obj/item/grapplinghook
 	additional_items = list(/obj/item/rogueweapon/pick, /obj/item/roguegear, /obj/item/roguegear, /obj/item/roguegear, /obj/item/rope/chain)
@@ -116,6 +130,7 @@
 
 /datum/anvil_recipe/engineering/bronze/prosthetic/bronzeleftarm
 	name = "Bronze Left Arm (+2 Cogs)"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/roguegear, /obj/item/roguegear)
 	created_item = /obj/item/bodypart/l_arm/prosthetic/bronzeleft
@@ -123,6 +138,7 @@
 
 /datum/anvil_recipe/engineering/bronze/prosthetic/bronzerightarm
 	name = "Bronze Right Arm (+2 Cogs)"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/roguegear, /obj/item/roguegear)
 	created_item = /obj/item/bodypart/r_arm/prosthetic/bronzeright
@@ -130,6 +146,7 @@
 
 /datum/anvil_recipe/engineering/bronze/prosthetic/bronzeleftleg
 	name = "Bronze Left Leg (+2 Cogs)"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/roguegear, /obj/item/roguegear)
 	created_item = /obj/item/bodypart/l_leg/prosthetic/bronzeleft
@@ -137,6 +154,7 @@
 
 /datum/anvil_recipe/engineering/bronze/prosthetic/bronzerightleg
 	name = "Bronze Right Leg (+2 Cogs)"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/roguegear, /obj/item/roguegear)
 	created_item = /obj/item/bodypart/r_leg/prosthetic/bronzeright
@@ -145,6 +163,7 @@
 // ------------ Rings ----------------
 /datum/anvil_recipe/engineering/serfstone
 	name = "Serf Stone (+1 cog, +1 Topar)"
+	category = "Engineering"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/roguegear, /obj/item/roguegem/yellow) //using topar since the description calls it a "dull gem"
 	created_item = /obj/item/scomstone/bad

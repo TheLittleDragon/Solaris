@@ -6,21 +6,25 @@
 
 /datum/anvil_recipe/valuables/gold
 	name = "Statue"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
 	created_item = /obj/item/roguestatue/gold
 
 /datum/anvil_recipe/valuables/silver
 	name = "Statue"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/silver
 	created_item = /obj/item/roguestatue/silver
 
 /datum/anvil_recipe/valuables/iron
 	name = "Statue"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/roguestatue/iron
 
 /datum/anvil_recipe/valuables/steel
 	name = "Statue"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/steel
 	created_item = /obj/item/roguestatue/steel
 
@@ -43,47 +47,55 @@
 
 /datum/anvil_recipe/valuables/ringg
 	name = "Rings 3x"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
 	created_item = /obj/item/clothing/ring/gold
 	createditem_num = 3
 
 /datum/anvil_recipe/valuables/rings
 	name = "Rings 3x"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/silver
 	created_item = /obj/item/clothing/ring/silver
 	createditem_num = 3
 
 /datum/anvil_recipe/valuables/ornateamulet
 	name = "Ornate Amulet"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
 	created_item = /obj/item/clothing/neck/roguetown/ornateamulet
 
 /datum/anvil_recipe/valuables/skullamulet
 	name = "Skull Amulet"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
 	created_item = /obj/item/clothing/neck/roguetown/skullamulet
 
 //Gold Rings
 /datum/anvil_recipe/valuables/emeringg
 	name = "Emerald Ring (+1 Emerald)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/roguegem/green)
 	created_item = /obj/item/clothing/ring/emerald
 
 /datum/anvil_recipe/valuables/rubyg
 	name = "Ruby Ring (+1 Ruby)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/roguegem)
 	created_item = /obj/item/clothing/ring/ruby
 
 /datum/anvil_recipe/valuables/topazg
 	name = "Topaz Ring (+1 Topaz)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/roguegem/yellow)
 	created_item = /obj/item/clothing/ring/topaz
 
 /datum/anvil_recipe/valuables/quartzg
 	name = "Quartz Ring (+1 Quartz)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/roguegem/blue)
 	created_item = /obj/item/clothing/ring/quartz
@@ -91,18 +103,21 @@
 
 /datum/anvil_recipe/valuables/sapphireg
 	name = "Sapphire Ring (+1 Sapphire)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/roguegem/violet)
 	created_item = /obj/item/clothing/ring/sapphire
 
 /datum/anvil_recipe/valuables/diamondg
 	name = "Diamond Ring (+1 Diamond)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/roguegem/diamond)
 	created_item = /obj/item/clothing/ring/diamond
 
 /datum/anvil_recipe/valuables/signet
 	name = "Signet Ring"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
 	created_item = /obj/item/clothing/ring/signet
 
@@ -110,42 +125,49 @@
 
 /datum/anvil_recipe/valuables/emerings
 	name = "Emerald Ring (+1 Emerald)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/roguegem/green)
 	created_item = /obj/item/clothing/ring/emeralds
 
 /datum/anvil_recipe/valuables/rubys
 	name = "Ruby Ring (+1 Ruby)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/roguegem)
 	created_item = /obj/item/clothing/ring/rubys
 
 /datum/anvil_recipe/valuables/topazs
 	name = "Topaz Ring (+1 Topaz)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/roguegem/yellow)
 	created_item = /obj/item/clothing/ring/topazs
 
 /datum/anvil_recipe/valuables/quartzs
 	name = "Quartz Ring (+1 Quartz)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/roguegem/blue)
 	created_item = /obj/item/clothing/ring/quartzs
 
 /datum/anvil_recipe/valuables/sapphires
 	name = "Sapphire Ring (+1 Sapphire)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/roguegem/violet)
 	created_item = /obj/item/clothing/ring/sapphires
 
 /datum/anvil_recipe/valuables/diamonds
 	name = "Diamond Ring (+1 Diamond)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/silver
 	additional_items = list(/obj/item/roguegem/diamond)
 	created_item = /obj/item/clothing/ring/diamonds
 
 /datum/anvil_recipe/valuables/terminus
 	name = "Terminus Est (+1 Gold Bar, +1 Steel, +1 Ruby)"
+	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/steel, /obj/item/roguegem)
 	created_item = /obj/item/rogueweapon/sword/long/exe/cloth
@@ -154,6 +176,7 @@
 
 /datum/anvil_recipe/valuables/dragon
 	name = "Dragon Ring (+ Secrets)"
+	category = "Valuables"
 	req_bar =  /obj/item/ingot/blacksteel
 	additional_items = list(/obj/item/ingot/gold, /obj/item/roguegem/blue, /obj/item/roguegem/violet, /obj/item/clothing/neck/roguetown/psicross/silver)
 	created_item = /obj/item/clothing/ring/dragon_ring
@@ -161,6 +184,7 @@
 
 /datum/anvil_recipe/roguetown/sewing/goldanklet
 	name = "exotic silk anklets"
+	category = "Valuables"
 	req_bar =  /obj/item/ingot/gold
 	created_item = list (/obj/item/clothing/shoes/roguetown/anklets)
 	craftdiff = 6

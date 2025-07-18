@@ -8,6 +8,8 @@
 	/// Option flags for element behaviour
 	var/element_flags = NONE
 
+	var/id_arg_index = 1
+
 /// Activates the functionality defined by the element on the given target datum
 /datum/element/proc/Attach(datum/target)
 	SHOULD_CALL_PARENT(TRUE)
