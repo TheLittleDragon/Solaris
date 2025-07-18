@@ -1,3 +1,5 @@
+// Guild rewards tracking
+GLOBAL_LIST_EMPTY(adventuring_statistics_tracker) // Format: list("name" = list(rewards = list(), xp = X, level = Y))
 // Guild Upgrade Datums and Global Registry
 GLOBAL_LIST_INIT(all_guild_upgrades, list(
 	/datum/guild_upgrade/town_fountain,
@@ -27,7 +29,9 @@ GLOBAL_LIST_INIT(all_guild_upgrades, list(
 	var/refund_value = 100 // Percentage of original cost refunded when uninstalled (0-100)
 	var/bonus = 0
 	var/bonus_message = ""
-	var/list/active_effects = list() // Objects to spawn
+	var/list/active_effects = list() // Format: typepath = amount (-1 for unlimited)
+	var/list/rewards = list() // Items that can be given as rewards
+	var/list/rewards_given = list() // Tracks how many times each reward has been given
 	var/passive_effects = "" // Changed from list to string description
 	var/outdoor_only = FALSE // Default to false, set true for outdoor upgrades
 	var/list/conflicts_with = list()
@@ -84,4 +88,59 @@ GLOBAL_LIST_INIT(all_guild_upgrades, list(
 	return TRUE
 
 /datum/guild_upgrade/proc/apply_passive_bonus(mob/user, datum/quest/quest)
-	return
+	if(!user || !quest.complete)
+		return FALSE
+	
+	// Resolve weakref if needed
+	var/mob/resolved_user = user
+	if(istype(user, /datum/weakref))
+		resolved_user = quest.quest_receiver_reference?.resolve()
+		if(!resolved_user)
+			return FALSE
+
+	return FALSE
+
+/proc/get_xp_for_level(level)
+	return round(100 * (1.5 ** (level - 1))) // Exponential growth: 100, 150, 225, 338, etc.
+
+/datum/guild_upgrade/proc/give_reward(mob/user)
+	if(!user || !user.real_name)
+		return FALSE
+
+	// Initialize tracking if needed
+	if(!GLOB.adventuring_statistics_tracker[user.real_name])
+		GLOB.adventuring_statistics_tracker[user.real_name] = list(
+			"rewards" = list(),
+			"xp" = 0,
+			"level" = 1
+		)
+
+	var/list/user_stats = GLOB.adventuring_statistics_tracker[user.real_name]
+	var/list/user_rewards = user_stats["rewards"]
+
+	// Get all possible rewards from this specific upgrade only
+	var/list/available_rewards = list()
+	for(var/path in rewards)
+		var/limit = rewards[path]
+		var/given = user_rewards[path] || 0
+		if(limit == -1 || given < limit)
+			available_rewards += path
+
+	if(!length(available_rewards))
+		return FALSE
+
+	// Pick and give a random available reward
+	var/reward_path = pick(available_rewards)
+
+	// Create the item
+	var/obj/item/reward = new reward_path(get_turf(user))
+	if(user.put_in_hands(reward))
+		to_chat(user, span_notice("The [name] rewards you with \a [reward.name]!"))
+	else
+		reward.forceMove(get_turf(user))
+		to_chat(user, span_notice("The [name] rewards you with \a [reward.name] at your feet!"))
+
+	// Update tracking
+	user_rewards[reward_path] = (user_rewards[reward_path] || 0) + 1
+
+	return TRUE

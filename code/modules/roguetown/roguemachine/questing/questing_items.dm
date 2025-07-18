@@ -85,7 +85,7 @@
 	return // No fire to extinguish
 
 /obj/item/paper/scroll/quest/attack_self(mob/user)
-	. = ..() // Let the parent handle opening/closing first
+	. = ..()
 	if(.)
 		return
 
@@ -95,69 +95,105 @@
 		update_quest_text()
 		return
 
-	// Claim the quest
-	assigned_quest.quest_receiver_reference = WEAKREF(user)
-	assigned_quest.quest_receiver_name = user.real_name
+	// Handle initial claiming of the quest
+	if(!assigned_quest.quest_receiver_reference)
+		// Custom quests can only be claimed by non-guild-handlers
+		if(istype(assigned_quest, /datum/quest/custom) && user.job == "Guild Handler")
+			to_chat(user, span_warning("Guild Handlers cannot claim custom quests!"))
+			return
+			
+		assigned_quest.quest_receiver_reference = WEAKREF(user)
+		assigned_quest.quest_receiver_name = user.real_name
+		to_chat(user, span_notice("You claim this quest for yourself!"))
+		refresh_compass(user)
+		update_quest_text()
+		return
 
-	if(assigned_quest.quest_type == "Beacon" && assigned_quest.beacon_connection && length(assigned_quest.possible_beacons))
-		var/list/valid_beacons = list()
-		for(var/obj/structure/roguemachine/teleport_beacon/beacon in assigned_quest.possible_beacons)
-			if(!(user.real_name in beacon.granted_list) && beacon != src)
-				valid_beacons += beacon
+	// Standard behavior for non-custom quests
+	if(!assigned_quest.quest_receiver_reference)
+		assigned_quest.quest_receiver_reference = WEAKREF(user)
+		assigned_quest.quest_receiver_name = user.real_name
 
-		if(length(valid_beacons))
-			var/list/difficulty_beacons = list()
-			for(var/obj/structure/roguemachine/teleport_beacon/beacon in valid_beacons)
-				if(beacon.quest_difficulty == assigned_quest.quest_difficulty)
-					difficulty_beacons += beacon
+		if(assigned_quest.quest_type == "Beacon" && assigned_quest.beacon_connection && length(assigned_quest.possible_beacons))
+			var/list/valid_beacons = list()
+			for(var/obj/structure/roguemachine/teleport_beacon/beacon in assigned_quest.possible_beacons)
+				if(!(user.real_name in beacon.granted_list) && beacon != src)
+					valid_beacons += beacon
 
-			assigned_quest.possible_beacons = length(difficulty_beacons) ? difficulty_beacons : valid_beacons
-			assigned_quest.target_beacon = pick(assigned_quest.possible_beacons)
+			if(length(valid_beacons))
+				var/list/difficulty_beacons = list()
+				for(var/obj/structure/roguemachine/teleport_beacon/beacon in valid_beacons)
+					if(beacon.quest_difficulty == assigned_quest.quest_difficulty)
+						difficulty_beacons += beacon
+
+				assigned_quest.possible_beacons = length(difficulty_beacons) ? difficulty_beacons : valid_beacons
+				assigned_quest.target_beacon = pick(assigned_quest.possible_beacons)
 		else
 			to_chat(user, span_warning("There are no unconnected beacons available for this quest!"))
-			return
 
-	to_chat(user, span_notice("You claim this quest for yourself!"))
-	refresh_compass(user) // Update compass after claiming
+		to_chat(user, span_notice("You claim this quest for yourself!"))
+		refresh_compass(user)
 
 /obj/item/paper/scroll/quest/proc/update_quest_text()
 	if(!assigned_quest)
 		return
 
-	var/scroll_text = "<center>HELP NEEDED</center><br>"
+	var/scroll_text = "<center>[istype(assigned_quest, /datum/quest/custom) ? "CUSTOM QUEST" : "HELP NEEDED"]</center><br>"
 	scroll_text += "<center><b>[assigned_quest.title]</b></center><br><br>"
 	scroll_text += "<b>Issued by:</b> [assigned_quest.quest_giver_name ? "Guild Handler [assigned_quest.quest_giver_name]" : "The Adventurer's Guild"].<br>"
 	scroll_text += "<b>Issued to:</b> [assigned_quest.quest_receiver_name ? assigned_quest.quest_receiver_name : "whoever it may concern"].<br>"
-	scroll_text += "<b>Type:</b> [assigned_quest.quest_type] quest.<br>"
-	scroll_text += "<b>Difficulty:</b> [assigned_quest.quest_difficulty].<br><br>"
+	
+	if(istype(assigned_quest, /datum/quest/custom))
+		var/datum/quest/custom/custom_quest = assigned_quest
+		scroll_text += "<b>Type:</b> Custom assignment<br>"
+		scroll_text += "<b>Difficulty:</b> Special<br><br>"
+		scroll_text += "<b>Objectives:</b><br>"
+		if(custom_quest.objectives && length(custom_quest.objectives))
+			scroll_text += jointext(custom_quest.objectives, "<br>")
+		else
+			scroll_text += "Complete the tasks assigned by the quest giver.<br>"
+		scroll_text += "<br>"
 
-	if(last_compass_direction)
-		scroll_text += "<b>Direction:</b> [last_compass_direction]. "
-		if(last_z_level_hint)
-			scroll_text += " ([last_z_level_hint])"
-	scroll_text += "<br>"
+		// Add interaction buttons for custom quests
+		var/mob/user = usr
+		if(user && custom_quest.quest_receiver_reference?.resolve() == user)
+			if(!custom_quest.complete)
+				if(custom_quest.report_submitted)
+					scroll_text += "<br><a href='?src=[REF(src)];withdraw_report=1'>Withdraw Completion Report</a>"
+				else
+					scroll_text += "<br><a href='?src=[REF(src)];submit_report=1'>Submit Completion Report</a>"
+					scroll_text += "<br><a href='?src=[REF(src)];request_changes=1'>Request Quest Modifications</a>"
+	else
+		scroll_text += "<b>Type:</b> [assigned_quest.quest_type] quest.<br>"
+		scroll_text += "<b>Difficulty:</b> [assigned_quest.quest_difficulty].<br><br>"
 
-	switch(assigned_quest.quest_type)
-		if("Fetch")
-			scroll_text += "<b>Objective:</b> Retrieve [assigned_quest.target_amount] [initial(assigned_quest.target_item_type.name)].<br>"
-			scroll_text += "<b>Last Seen Location:</b> Reported sighting in [assigned_quest.target_spawn_area] region.<br>"
-		if("Kill", "Miniboss")
-			scroll_text += "<b>Objective:</b> Slay [assigned_quest.target_amount] [initial(assigned_quest.target_mob_type.name)].<br>"
-			scroll_text += "<b>Last Seen Location:</b> [assigned_quest.target_spawn_area ? "Reported sighting in [assigned_quest.target_spawn_area] region." : "Reported sighting in Sunmarch region."]<br>"
-		if("Clear Out")
-			scroll_text += "<b>Objective:</b> Eliminate [assigned_quest.target_amount] [initial(assigned_quest.target_mob_type.name)].<br>"
-			scroll_text += "<b>Infestation Location:</b> [assigned_quest.target_spawn_area ? "Reported sighting in [assigned_quest.target_spawn_area] region." : "Reported infestations in Sunmarch region."]<br>"
-		if("Courier")
-			scroll_text += "<b>Objective:</b> Deliver [initial(assigned_quest.target_delivery_item.name)] to [initial(assigned_quest.target_delivery_location.name)].<br>"
-			scroll_text += "<b>Delivery Instructions:</b> Package must remain intact and be delivered directly to the recipient.<br>"
-			scroll_text += "<b>Destination Description:</b> [initial(assigned_quest.target_delivery_location.brief_descriptor)].<br>"
-		if("Beacon")
-			if(assigned_quest.target_beacon)
-				var/area/beacon_area = get_area(assigned_quest.target_beacon)
-				scroll_text += "<b>Objective:</b> Activate the Kasmidian beacon in [beacon_area.name]<br>"
-				scroll_text += "<b>Beacon Name:</b> [assigned_quest.target_beacon.name]<br>"
-				scroll_text += "<b>Location Description:</b> [beacon_area.desc]<br>"
-				scroll_text += "<b>Activation Method:</b> Simply interact with the beacon once found<br>"
+		if(last_compass_direction)
+			scroll_text += "<b>Direction:</b> [last_compass_direction]. "
+			if(last_z_level_hint)
+				scroll_text += " ([last_z_level_hint])"
+			scroll_text += "<br>"
+
+		switch(assigned_quest.quest_type)
+			if("Fetch")
+				scroll_text += "<b>Objective:</b> Retrieve [assigned_quest.target_amount] [initial(assigned_quest.target_item_type.name)].<br>"
+				scroll_text += "<b>Last Seen Location:</b> Reported sighting in [assigned_quest.target_spawn_area] region.<br>"
+			if("Kill", "Miniboss")
+				scroll_text += "<b>Objective:</b> Slay [assigned_quest.target_amount] [initial(assigned_quest.target_mob_type.name)].<br>"
+				scroll_text += "<b>Last Seen Location:</b> [assigned_quest.target_spawn_area ? "Reported sighting in [assigned_quest.target_spawn_area] region." : "Reported sighting in Sunmarch region."]<br>"
+			if("Clear Out")
+				scroll_text += "<b>Objective:</b> Eliminate [assigned_quest.target_amount] [initial(assigned_quest.target_mob_type.name)].<br>"
+				scroll_text += "<b>Infestation Location:</b> [assigned_quest.target_spawn_area ? "Reported sighting in [assigned_quest.target_spawn_area] region." : "Reported infestations in Sunmarch region."]<br>"
+			if("Courier")
+				scroll_text += "<b>Objective:</b> Deliver [initial(assigned_quest.target_delivery_item.name)] to [initial(assigned_quest.target_delivery_location.name)].<br>"
+				scroll_text += "<b>Delivery Instructions:</b> Package must remain intact and be delivered directly to the recipient.<br>"
+				scroll_text += "<b>Destination Description:</b> [initial(assigned_quest.target_delivery_location.brief_descriptor)].<br>"
+			if("Beacon")
+				if(assigned_quest.target_beacon)
+					var/area/beacon_area = get_area(assigned_quest.target_beacon)
+					scroll_text += "<b>Objective:</b> Activate the Kasmidian beacon in [beacon_area.name]<br>"
+					scroll_text += "<b>Beacon Name:</b> [assigned_quest.target_beacon.name]<br>"
+					scroll_text += "<b>Location Description:</b> [beacon_area.desc]<br>"
+					scroll_text += "<b>Activation Method:</b> Simply interact with the beacon once found<br>"
 
 	scroll_text += "<br><b>Reward:</b> [assigned_quest.reward_amount] marks upon completion<br>"
 
@@ -165,11 +201,83 @@
 		scroll_text += "<br><center><b>QUEST COMPLETE</b></center>"
 		scroll_text += "<br><b>Return this scroll to the Quest Book to claim your reward!</b>"
 		scroll_text += "<br><i>Place it on the marked area next to the book.</i>"
+	else if(istype(assigned_quest, /datum/quest/custom))
+		scroll_text += "<br><i>Report back to the quest giver when completed.</i>"
 	else
 		scroll_text += "<br><i>The magic in this scroll will update as you progress.</i>"
 
 	info = scroll_text
 	update_icon()
+
+/obj/item/paper/scroll/quest/Topic(href, href_list)
+	if(!usr || usr.incapacitated())
+		return
+
+	if(!(src in usr.contents) && !(isturf(loc) && in_range(src, usr)))
+		to_chat(usr, span_warning("You need to hold the scroll to interact with it!"))
+		return
+
+	if(href_list["close"])
+		var/mob/user = usr
+		if(user?.client && user.hud_used)
+			if(user.hud_used.reads)
+				user.hud_used.reads.destroy_read()
+			user << browse(null, "window=reading")
+
+	if(!assigned_quest || !istype(assigned_quest, /datum/quest/custom))
+		return
+
+	var/datum/quest/custom/custom_quest = assigned_quest
+	var/mob/user = usr
+
+	if(href_list["submit_report"])
+		if(custom_quest.report_submitted)
+			to_chat(user, span_warning("You've already submitted a completion report!"))
+			return
+
+		var/report = input(user, "Describe your completion of this quest:", "Quest Completion Report") as message|null
+		if(!report)
+			return
+
+		custom_quest.custom_report = report
+		custom_quest.report_submitted = TRUE
+		custom_quest.report_submitted_by = user.real_name
+
+		// Notify the quest giver
+		var/mob/giver = custom_quest.quest_giver_reference?.resolve()
+		if(giver)
+			to_chat(giver, span_notice("[user.real_name] has submitted a completion report for your quest '[custom_quest.title]'!"))
+			to_chat(giver, span_info("Report: [report]"))
+
+		to_chat(user, span_notice("Completion report submitted to [custom_quest.quest_giver_name]!"))
+		update_quest_text()
+
+	if(href_list["withdraw_report"])
+		if(!custom_quest.report_submitted)
+			to_chat(user, span_warning("No report to withdraw!"))
+			return
+
+		custom_quest.report_submitted = FALSE
+		custom_quest.custom_report = null
+		to_chat(user, span_notice("You've withdrawn your completion report."))
+		update_quest_text()
+
+	if(href_list["request_changes"])
+		if(custom_quest.report_submitted)
+			to_chat(user, span_warning("You've already submitted a completion report!"))
+			return
+
+		var/request = input(user, "What modifications would you like to request for this quest?", "Quest Modification Request") as message|null
+		if(!request)
+			return
+
+		var/mob/giver = custom_quest.quest_giver_reference?.resolve()
+		if(giver)
+			to_chat(giver, span_notice("[user.real_name] has requested modifications to your quest '[custom_quest.title]'!"))
+			to_chat(giver, span_info("Request: [request]"))
+			to_chat(giver, span_info("You can review and modify the quest at the quest book."))
+
+		to_chat(user, span_notice("Modification request sent to [custom_quest.quest_giver_name]!"))
 
 /obj/item/paper/scroll/quest/proc/refresh_compass(mob/user)
 	if(!assigned_quest || assigned_quest.complete)

@@ -3,7 +3,10 @@
 	category = "utility"
 	cost = 150
 	active_effects = list(/obj/machinery/light/rogue/hearth, /obj/machinery/light/rogue/oven/south, /obj/item/cooking/pan)
-	passive_effects = "Spawns crackers when completing quests"
+	passive_effects = "Provides food rewards for completing quests"
+	rewards = list(
+		/obj/item/reagent_containers/food/snacks/rogue/crackerscooked = 5,
+	)
 	conflicts_with = list(/datum/guild_upgrade/hearth)
 
 /datum/guild_upgrade/hearth/apply_passive_bonus(mob/user, datum/quest/quest)
@@ -16,9 +19,7 @@
 		if(!resolved_user)
 			return FALSE
 
-	var/obj/item/reagent_containers/food/snacks/rogue/crackerscooked/cookerscracked = new
-	resolved_user.put_in_hands(cookerscracked)
-	return TRUE
+	return give_reward(resolved_user)
 
 /datum/guild_upgrade/training_dummy
 	name = "Training Dummy"
@@ -58,6 +59,11 @@
 	cost = 250
 	active_effects = list(/obj/machinery/tanningrack/guild)
 	passive_effects = "Provides equipment to adventurers completing quests."
+	rewards = list(
+		/obj/item/reagent_containers/glass/bottle/waterskin = 1,
+		/obj/item/bedroll = 1,
+		/obj/item/storage/backpack/rogue/backpack = 1,
+	)
 	conflicts_with = list(/datum/guild_upgrade/tanning_rack)
 
 /datum/guild_upgrade/tanning_rack/apply_passive_bonus(mob/user, datum/quest/quest)
@@ -67,19 +73,7 @@
 	var/mob/resolved_user = user
 	if(istype(user, /datum/weakref))
 		resolved_user = quest.quest_receiver_reference.resolve()
-		if(!resolved_user)
+		if(!resolved_user || resolved_user.job != "Adventurer")
 			return FALSE
 
-	// Only notify adventurers about the rack if they haven't received gear yet
-	if(resolved_user.job == "Adventurer")
-		// Check all guild tanning racks to see if this user has received equipment
-		var/has_received_gear = FALSE
-		for(var/obj/machinery/tanningrack/guild/rack in world)
-			if(rack.received_adventurers[resolved_user.ckey])
-				has_received_gear = TRUE
-				break
-		
-		if(!has_received_gear)
-			to_chat(resolved_user, span_notice("The guild's tanning rack might have some equipment for you!"))
-			return TRUE
-	return FALSE
+	return give_reward(resolved_user)

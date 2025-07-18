@@ -33,7 +33,7 @@
 /datum/guild_upgrade/mail_station
 	name = "HERMES (south-leaning)"
 	category = "storage"
-	cost = 350
+	cost = 250
 	active_effects = list(/obj/structure/roguemachine/mail)
 	passive_effects = "10% bonus for fetch/courier quests and temporary speed boost on completion"
 	conflicts_with = list(/datum/guild_upgrade/mail_station)
@@ -59,9 +59,9 @@
 /datum/guild_upgrade/reward_chest
 	name = "Reward Chest"
 	category = "storage"
-	cost = 300
+	cost = 200
 	active_effects = list(/obj/structure/closet/crate/chest)
-	passive_effects = "Guild handlers receive 10% of quest rewards"
+	passive_effects = "Guild handlers receive 30% of quest rewards"
 	conflicts_with = list(/datum/guild_upgrade/reward_chest)
 
 /datum/guild_upgrade/reward_chest/apply_passive_bonus(mob/user, datum/quest/quest)
@@ -76,10 +76,10 @@
 			break
 
 	if(guild_handler)
-		var/bonus = round(quest.reward_amount * 0.1)
+		var/bonus = round(quest.reward_amount * 0.3)
 		SStreasury.bank_accounts[guild_handler] += bonus
 		SStreasury.log_entries += "+[bonus] to [guild_handler.real_name] (reward chest bonus)"
-		to_chat(guild_handler, span_notice("The Reward Chest grants you [bonus] marks (10%) from a completed quest!"))
+		to_chat(guild_handler, span_notice("The Reward Chest grants you [bonus] marks (130%) from a completed quest!"))
 		return TRUE
 
 	return FALSE

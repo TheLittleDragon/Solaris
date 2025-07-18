@@ -38,7 +38,10 @@
 	var/list/choices = list("Consult Quests", "Turn In Quest", "Abandon Quest")
 	if(guild && user.job == "Guild Handler")
 		choices += "Print Issued Quests"
-		choices += "Purchase Upgrades"  // New option
+		choices += "Purchase Upgrades"
+		choices += "View Registered Adventurers"
+		choices += "Issue Custom Quest"
+		choices += "Review Custom Quests"
 
 	var/selection = input(user, "The Excidium listens", src) as null|anything in choices
 	if(!selection)
@@ -55,6 +58,12 @@
 			print_quests(user)
 		if("Purchase Upgrades")
 			manage_upgrades(user)
+		if("View Registered Adventurers")
+			show_rewards(user)
+		if("Issue Custom Quest")
+			create_custom_quest(user)
+		if("Review Custom Quests")
+			review_custom_quests(user)
 
 /obj/structure/roguemachine/questgiver/proc/consult_quests(mob/user)
 	if(!(user in SStreasury.bank_accounts))
@@ -67,7 +76,7 @@
 		"Hard" = list(deposit = 20, reward_min = 60, reward_max = 100, icon = "scroll_quest_high")
 	)
 
-	// Create a list with formatted difficulty choices showing deposits
+	// Standard quest handling
 	var/list/difficulty_choices = list()
 	for(var/difficulty in difficulty_data)
 		var/deposit = difficulty_data[difficulty]["deposit"]
@@ -77,7 +86,6 @@
 	if(!selection)
 		return
 
-	// Get the actual difficulty key from our formatted choice
 	var/actual_difficulty = difficulty_choices[selection]
 	var/deposit = difficulty_data[actual_difficulty]["deposit"]
 
@@ -91,18 +99,17 @@
 		"Hard" = list("Clear Out", "Beacon", "Miniboss")
 	)
 
-	var/type_selection = input(user, "Select quest type", src) as null|anything in type_choices[actual_difficulty] // Changed from selection to actual_difficulty
+	var/type_selection = input(user, "Select quest type", src) as null|anything in type_choices[actual_difficulty]
 	if(!type_selection)
 		return
 
-	// Continue with the rest of the proc using actual_difficulty instead of selection
 	var/datum/quest/attached_quest = new()
-	attached_quest.reward_amount = rand(difficulty_data[actual_difficulty]["reward_min"], difficulty_data[actual_difficulty]["reward_max"]) // Changed from selection to actual_difficulty
-	attached_quest.quest_difficulty = actual_difficulty // Changed from selection to actual_difficulty
+	attached_quest.reward_amount = rand(difficulty_data[actual_difficulty]["reward_min"], difficulty_data[actual_difficulty]["reward_max"])
+	attached_quest.quest_difficulty = actual_difficulty
 	attached_quest.quest_type = type_selection
 
 	var/obj/item/paper/scroll/quest/spawned_scroll = new(get_turf(scroll_point))
-	spawned_scroll.base_icon_state = difficulty_data[actual_difficulty]["icon"] // Changed from selection to actual_difficulty
+	spawned_scroll.base_icon_state = difficulty_data[actual_difficulty]["icon"]
 	spawned_scroll.assigned_quest = attached_quest
 	attached_quest.quest_scroll_ref = WEAKREF(spawned_scroll)
 
@@ -113,7 +120,7 @@
 		attached_quest.quest_giver_name = user.real_name
 		attached_quest.quest_giver_reference = WEAKREF(user)
 
-	var/obj/effect/landmark/quest_spawner/chosen_landmark = find_quest_landmark(actual_difficulty, type_selection) // Changed from selection to actual_difficulty
+	var/obj/effect/landmark/quest_spawner/chosen_landmark = find_quest_landmark(actual_difficulty, type_selection)
 	if(!chosen_landmark)
 		to_chat(user, span_warning("No suitable location found for this quest!"))
 		qdel(attached_quest)
@@ -159,27 +166,58 @@
 	var/reward = 0
 	var/original_reward = 0
 	var/total_deposit_return = 0
+	var/list/processed_quests = list()
 
 	for(var/atom/movable/pawnable_loot in input_point)
-		// Handle quest scrolls
 		if(istype(pawnable_loot, /obj/item/paper/scroll/quest))
 			var/obj/item/paper/scroll/quest/turned_in_scroll = pawnable_loot
-			if(turned_in_scroll.assigned_quest?.complete)
-				// Calculate base reward
+			if(turned_in_scroll.assigned_quest?.complete && !processed_quests[turned_in_scroll.assigned_quest])
+				processed_quests[turned_in_scroll.assigned_quest] = TRUE
+				
+				// Get the quest receiver
+				var/mob/resolved_receiver = turned_in_scroll.assigned_quest.quest_receiver_reference?.resolve()
 				var/base_reward = turned_in_scroll.assigned_quest.reward_amount
 				original_reward += base_reward
 
-				// Apply bonuses only once through apply_bonuses
+				// Record completed quest in adventurer's history
+				if(resolved_receiver?.real_name)
+					// Initialize user stats if they don't exist
+					if(!GLOB.adventuring_statistics_tracker[resolved_receiver.real_name])
+						GLOB.adventuring_statistics_tracker[resolved_receiver.real_name] = list(
+							"rewards" = list(),
+							"xp" = 0,
+							"level" = 1,
+							"recent_quests" = list(),
+							"status" = "Inactive",
+						)
+					
+					var/list/user_stats = GLOB.adventuring_statistics_tracker[resolved_receiver.real_name]
+					
+					// Ensure recent_quests is a list
+					if(!istype(user_stats["recent_quests"], /list))
+						user_stats["recent_quests"] = list()
+					
+					// Add quest to history
+					var/quest_entry = "[turned_in_scroll.assigned_quest.title] ([turned_in_scroll.assigned_quest.quest_type]) - Reward: [turned_in_scroll.assigned_quest.reward_amount] marks"
+					user_stats["recent_quests"] += quest_entry
+					
+					// Keep only last 5 quests
+					var/list/recent_quests = user_stats["recent_quests"]
+					if(length(recent_quests) > 5)
+						recent_quests.Cut(1, length(recent_quests) - 4) // Keep last 5 entries
+
+				// Apply bonuses to the quest (this will calculate XP for the receiver)
 				if(!turned_in_scroll.assigned_quest.reward_modified)
-					turned_in_scroll.assigned_quest.apply_bonuses(user)
-					// Apply guild handler bonus if applicable (only once)
-					if(guild && user?.job == "Guild Handler")
-						turned_in_scroll.assigned_quest.reward_amount += base_reward * 1  // 100% bonus
-						to_chat(user, span_notice("Your guild handler expertise adds a 100% bonus to this quest!"))
+					turned_in_scroll.assigned_quest.apply_bonuses(resolved_receiver) // Pass the receiver, not the user
+					
+					// Only apply guild handler bonus if the user is a guild handler
+					if(guild && user?.job == "Guild Handler" && !istype(turned_in_scroll.assigned_quest, /datum/quest/custom))
+						var/handler_bonus = base_reward * 0.5 // 50% bonus
+						turned_in_scroll.assigned_quest.reward_amount += handler_bonus
+						to_chat(user, span_notice("Your guild handler expertise adds a [handler_bonus] mark bonus to this quest!"))
 
 				reward += turned_in_scroll.assigned_quest.reward_amount
 
-				// Calculate deposit return based on difficulty
 				var/deposit_return = turned_in_scroll.assigned_quest.quest_difficulty == "Easy" ? 5 : \
 									turned_in_scroll.assigned_quest.quest_difficulty == "Medium" ? 10 : 20
 				total_deposit_return += deposit_return
@@ -190,13 +228,12 @@
 				qdel(turned_in_scroll)
 				continue
 
-		// Handle upgrade kit refunds
+		// Handle other items...
 		if(istype(pawnable_loot, /obj/item/guild_upgrade_kit))
 			var/obj/item/guild_upgrade_kit/kit = pawnable_loot
 			if(kit.attempt_refund(user))
 				continue
 
-		// Handle sellable items
 		if(guild && is_type_in_list(pawnable_loot, sellable_items))
 			var/obj/item/to_sell = pawnable_loot
 			if(to_sell.get_real_price() > 0)
@@ -422,6 +459,325 @@
 	to_chat(user, span_info("Look for [icon2html('code/modules/roguetown/roguemachine/questing/questing.dmi', user, "marker_[upgrade.category]")] [upgrade.category] markers on the ground."))
 
 	qdel(upgrade)
+
+/obj/structure/roguemachine/questgiver/proc/create_custom_quest(mob/user)
+	if(!guild || user.job != "Guild Handler")
+		return
+
+	if(!(user in SStreasury.bank_accounts))
+		to_chat(user, span_warning("You need a bank account to issue quests!"))
+		return
+
+	var/difficulty = input(user, "Select quest difficulty", "Custom Quest") as null|anything in list("Easy", "Medium", "Hard")
+	if(!difficulty)
+		return
+
+	var/reward = input(user, "Set reward amount (from your personal funds)", "Custom Quest") as num|null
+	if(!reward || reward <= 0)
+		return
+
+	if(SStreasury.bank_accounts[user] < reward)
+		to_chat(user, span_warning("You don't have enough marks for this reward!"))
+		return
+
+	var/title = input(user, "Enter quest title", "Custom Quest") as text|null
+	if(!title)
+		return
+
+	var/list/objectives = list()
+	var/objective_count = 1
+	var/add_more = TRUE
+
+	while(add_more)
+		var/objective = input(user, "Enter objective #[objective_count] (Leave empty to finish)", "Custom Quest") as text|null
+		if(!objective)
+			add_more = FALSE
+		else
+			objectives += "[objective_count]. [objective]"
+			objective_count++
+
+	if(!length(objectives))
+		to_chat(user, span_warning("Quest must have at least one objective!"))
+		return
+
+	var/confirm = alert(user, "Create this quest for [reward] marks?\nTitle: [title]\nObjectives:\n[jointext(objectives, "\n")]", "Confirm Custom Quest", "Create", "Cancel")
+	if(confirm != "Create")
+		return
+
+	SStreasury.bank_accounts[user] -= reward
+	SStreasury.log_entries += "-[reward] from [user.real_name] (custom quest reward)"
+
+	var/datum/quest/custom/new_quest = new()
+	new_quest.title = title
+	new_quest.quest_type = "Custom Assignment"
+	new_quest.quest_difficulty = difficulty
+	new_quest.reward_amount = reward
+	new_quest.quest_giver_reference = WEAKREF(user)
+	new_quest.quest_giver_name = user.real_name
+	new_quest.objectives = objectives
+	new_quest.reward_modified = TRUE // Mark as already modified to prevent any bonuses
+
+	var/obj/item/paper/scroll/quest/spawned_scroll = new(get_turf(scroll_point))
+	spawned_scroll.base_icon_state = difficulty == "Easy" ? "scroll_quest_low" : \
+									difficulty == "Medium" ? "scroll_quest_mid" : "scroll_quest_high"
+	spawned_scroll.assigned_quest = new_quest
+	new_quest.quest_scroll_ref = WEAKREF(spawned_scroll)
+
+	var/scroll_text = "<center>CUSTOM QUEST</center><br>"
+	scroll_text += "<center><b>[title]</b></center><br><br>"
+	scroll_text += "<b>Issued by:</b> Guild Handler [user.real_name]<br>"
+	scroll_text += "<b>Type:</b> Custom assignment<br>"
+	scroll_text += "<b>Difficulty:</b> [difficulty]<br><br>"
+	scroll_text += "<b>Objectives:</b><br>"
+	scroll_text += jointext(objectives, "<br>")
+	scroll_text += "<br><br><b>Reward:</b> [reward] marks upon completion<br>"
+	scroll_text += "<br><i>Return this scroll to the Quest Book to claim your reward.</i>"
+
+	spawned_scroll.info = scroll_text
+	spawned_scroll.update_icon()
+	to_chat(user, span_notice("Custom quest created! The scroll has been dispensed."))
+
+/obj/structure/roguemachine/questgiver/proc/review_custom_quests(mob/user)
+	if(!guild || user.job != "Guild Handler")
+		return
+	var/list/pending_quests = list()
+	for(var/obj/item/paper/scroll/quest/quest_scroll in world)
+		if(quest_scroll.assigned_quest && quest_scroll.assigned_quest.is_custom)
+			if(quest_scroll.assigned_quest.quest_giver_reference?.resolve() == user && !quest_scroll.assigned_quest.complete)
+				var/status = quest_scroll.assigned_quest.report_submitted ? "Awaiting Review" : "In Progress"
+				pending_quests["[quest_scroll.assigned_quest.title] ([status])"] = quest_scroll.assigned_quest
+
+	if(!length(pending_quests))
+		to_chat(user, span_notice("No active custom quests."))
+		return
+
+	var/selected = input(user, "Select quest to review", "Custom Quests") as null|anything in pending_quests
+	if(!selected)
+		return
+
+	var/datum/quest/custom/selected_quest = pending_quests[selected]
+	var/obj/item/paper/scroll/quest/scroll = selected_quest.quest_scroll_ref?.resolve()
+	var/mob/adventurer = selected_quest.quest_receiver_reference?.resolve()
+
+	// Show quest details
+	var/list/options = list()
+	if(selected_quest.report_submitted)
+		options += "Review Completion"
+	else 
+		options += "Check Progress"
+	options += "Modify Quest"
+	options += "Cancel Quest"
+
+	var/action = input(user, "Quest: [selected_quest.title]\n\nRecipient: [selected_quest.quest_receiver_name]\n\nStatus: [selected_quest.report_submitted ? "Awaiting Review" : "In Progress"]", "Quest Management") as null|anything in options
+	if(!action || action == "Cancel Quest")
+		return
+
+	switch(action)
+		if("Review Completion")
+			var/report = selected_quest.custom_report || "No report submitted."
+			var/decision = alert(user, "Quest: [selected_quest.title]\n\nSubmitted by: [selected_quest.report_submitted_by]\n\nReport:\n[report]\n\nReward: [selected_quest.reward_amount] marks", "Review Quest", "Approve", "Deny", "Request Changes")
+			
+			if(decision == "Request Changes")
+				var/changes = input(user, "What changes/additional work do you require?", "Request Changes") as message|null
+				if(changes)
+					selected_quest.report_submitted = FALSE
+					selected_quest.custom_report = null
+					if(adventurer)
+						to_chat(adventurer, span_warning("Your completion of '[selected_quest.title]' requires additional work."))
+						to_chat(adventurer, span_info("Guild Handler Notes: [changes]"))
+					to_chat(user, span_notice("Changes requested. The adventurer can submit a new report when ready."))
+				return
+
+			var/reason = input(user, "Enter your reason for [decision == "Approve" ? "approving" : "denying"] this quest:", "Quest Review") as text|null
+			if(!reason)
+				return
+
+			if(decision == "Approve")
+				selected_quest.complete = TRUE
+				if(adventurer)
+					to_chat(adventurer, span_notice("Your completion of '[selected_quest.title]' has been approved by [user.real_name]!"))
+					to_chat(adventurer, span_info("Reason: [reason]"))
+				if(scroll)
+					scroll.update_quest_text()
+					to_chat(user, span_notice("Quest approved! The adventurer can now turn in the scroll for their reward."))
+			else
+				SStreasury.bank_accounts[user] += selected_quest.reward_amount
+				SStreasury.log_entries += "+[selected_quest.reward_amount] to [user.real_name] (quest denial refund)"
+				if(adventurer)
+					to_chat(adventurer, span_warning("Your completion of '[selected_quest.title]' was denied by [user.real_name]."))
+					to_chat(adventurer, span_info("Reason: [reason]"))
+				qdel(selected_quest)
+				if(scroll)
+					qdel(scroll)
+				to_chat(user, span_notice("Quest denied and funds refunded."))
+
+		if("Check Progress")
+			var/progress = ""
+			if(adventurer)
+				progress = input(adventurer, "How is your progress on '[selected_quest.title]'?", "Progress Report") as message|null
+				if(progress)
+					to_chat(user, span_notice("[adventurer.real_name] reports:\n[progress]"))
+			else
+				to_chat(user, span_warning("The adventurer is not currently available to provide an update."))
+
+		if("Modify Quest")
+			var/list/mod_options = list("Change Reward", "Add Objective", "Cancel")
+			var/mod_choice = input(user, "Select modification", "Quest Editing") as null|anything in mod_options
+			if(!mod_choice || mod_choice == "Cancel")
+				return
+
+			switch(mod_choice)
+				if("Change Reward")
+					var/new_reward = input(user, "Enter new reward amount (current: [selected_quest.reward_amount])", "Modify Reward") as num|null
+					if(new_reward && new_reward > 0)
+						var/difference = new_reward - selected_quest.reward_amount
+						if(difference > 0 && SStreasury.bank_accounts[user] < difference)
+							to_chat(user, span_warning("You don't have enough marks to increase the reward by [difference]!"))
+							return
+						
+						selected_quest.reward_amount = new_reward
+						if(difference > 0)
+							SStreasury.bank_accounts[user] -= difference
+							SStreasury.log_entries += "-[difference] from [user.real_name] (quest reward increase)"
+						else if(difference < 0)
+							SStreasury.bank_accounts[user] += abs(difference)
+							SStreasury.log_entries += "+[abs(difference)] to [user.real_name] (quest reward decrease)"
+						
+						if(scroll)
+							scroll.update_quest_text()
+						to_chat(user, span_notice("Reward updated to [new_reward] marks."))
+						if(adventurer)
+							to_chat(adventurer, span_notice("The reward for '[selected_quest.title]' has been updated to [new_reward] marks by [user.real_name]."))
+
+				if("Add Objective")
+					var/new_objective = input(user, "Enter additional objective", "Add Objective") as text|null
+					if(new_objective)
+						if(!selected_quest.objectives)
+							selected_quest.objectives = list()
+						selected_quest.objectives += "[length(selected_quest.objectives)+1]. [new_objective]"
+						if(scroll)
+							scroll.update_quest_text()
+						to_chat(user, span_notice("Objective added to quest."))
+						if(adventurer)
+							to_chat(adventurer, span_notice("An additional objective has been added to '[selected_quest.title]' by [user.real_name]:\n[new_objective]"))
+
+/obj/structure/roguemachine/questgiver/proc/show_rewards(mob/user)
+	if(!guild || user.job != "Guild Handler")
+		return
+
+	// Get list of adventurers with statistics
+	var/list/adventurers = list()
+	for(var/name in GLOB.adventuring_statistics_tracker)
+		var/list/stats = GLOB.adventuring_statistics_tracker[name]
+		var/status = "Retired" // Default status
+		
+		// Find the actual player
+		for(var/mob/living/carbon/human/player in GLOB.player_list)
+			if(player.real_name == name)
+				if(player.client) // Player is online
+					status = player.client.inactivity >= 300 ? "Inactive" : "Active"
+				break // Found the player, stop searching
+
+		// Update the stored status
+		stats["status"] = status
+		
+		adventurers["[name] (Lv. [stats["level"]] - [status])"] = name
+
+	if(!length(adventurers))
+		to_chat(user, span_notice("No adventurers have registered statistics yet."))
+		return
+
+	var/selected_label = input(user, "Select adventurer to view", "Adventurer Statistics") as null|anything in adventurers
+	if(!selected_label)
+		return
+
+	var/selected_name = adventurers[selected_label]
+	var/list/selected_stats = GLOB.adventuring_statistics_tracker[selected_name]
+	var/mob/living/carbon/human/selected_adventurer
+	
+	// Find the actual adventurer mob if online
+	for(var/mob/living/carbon/human/player in GLOB.player_list)
+		if(player.real_name == selected_name)
+			selected_adventurer = player
+			break
+
+	// Apply consistent status checking logic
+	var/status = "Retired"
+	if(selected_adventurer)
+		status = selected_adventurer.client ? (selected_adventurer.client.inactivity >= 300 ? "Inactive" : "Active") : "Retired"
+	selected_stats["status"] = status // Update the stored status
+
+	// Calculate XP progress
+	var/current_level = selected_stats["level"]
+	var/current_xp = selected_stats["xp"]
+	var/xp_needed = get_xp_for_level(current_level)
+	var/xp_percent = round((current_xp / xp_needed) * 100, 1)
+
+	// Generate report
+	var/report_text = "<center><b>ADVENTURER STATISTICS</b></center><br><br>"
+	report_text += "<i>Generated on [station_time_timestamp()]</i><br><br>"
+	report_text += "<b>Name:</b> [selected_name]<br>"
+	report_text += "<b>Status:</b> [status]<br>"
+	report_text += "<b>Level:</b> [current_level]<br>"
+	report_text += "<b>Experience:</b> [current_xp]/[xp_needed] ([xp_percent]%)<br><br>"
+
+	// Add recent quests if available
+	if(length(selected_stats["recent_quests"]))
+		report_text += "<b>Recent Quests:</b><br>"
+		// Display in reverse chronological order (newest first)
+		for(var/i = length(selected_stats["recent_quests"]); i >= 1; i--)
+			report_text += "- [selected_stats["recent_quests"][i]]<br>"
+	else
+		report_text += "<b>Recent Quests:</b> No completed quests recorded<br>"
+
+	// Add bank balance if available
+	var/balance = 0
+	for(var/mob/M in SStreasury.bank_accounts)
+		if(M.real_name == selected_name)
+			balance = SStreasury.bank_accounts[M]
+			break
+	report_text += "<b>Account Balance:</b> [balance] marks<br><br>"
+
+	report_text += "<b>Available Rewards:</b><br>"
+	var/has_rewards = FALSE
+
+	// Only check installed upgrades
+	var/list/processed_upgrades = list()
+	for(var/datum/guild_upgrade/upgrade in SSroguemachine.guild_upgrades)
+		if(upgrade.type in processed_upgrades)
+			continue
+
+		if(length(upgrade.rewards))
+			var/upgrade_has_rewards = FALSE
+			var/upgrade_text = ""
+
+			for(var/path in upgrade.rewards)
+				var/obj/item/I = path
+				var/limit = upgrade.rewards[path]
+				var/given = selected_stats["rewards"][path] || 0
+				var/remaining = limit == -1 ? "Unlimited" : (limit - given)
+
+				if(remaining != 0 && (limit == -1 || remaining > 0))
+					upgrade_has_rewards = TRUE
+					upgrade_text += "- [initial(I.name)]: [remaining] remaining<br>"
+
+			if(upgrade_has_rewards)
+				has_rewards = TRUE
+				report_text += "<b>[upgrade.name]:</b><br>"
+				report_text += upgrade_text
+
+			processed_upgrades += upgrade.type
+
+	if(!has_rewards)
+		report_text += "No rewards currently available.<br>"
+
+	// Show the report
+	var/obj/item/paper/scroll/report = new(get_turf(scroll_point))
+	report.name = "Adventurer Report: [selected_name]"
+	report.desc = "Statistics and rewards for [selected_name]."
+	report.info = report_text
+	user.put_in_hands(report)
+	to_chat(user, span_notice("Printed adventurer report for [selected_name]."))
 
 /obj/structure/roguemachine/questgiver/guild
 	guild = TRUE

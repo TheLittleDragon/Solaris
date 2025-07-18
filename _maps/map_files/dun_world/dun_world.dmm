@@ -48472,7 +48472,6 @@
 /obj/structure/fluff/railing/border{
 	dir = 4
 	},
-/obj/machinery/gear_painter,
 /obj/effect/landmark/guild_upgrade/storage,
 /turf/open/floor/rogue/wood,
 /area/provincial/indoors/town/adventurers_guild)
@@ -61392,9 +61391,6 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/rogue/wood/herringbone,
 /area/provincial/underground/dungeon/gargoyles_rest)
-"tZN" = (
-/turf/open/floor/rogue/blocks,
-/area/provincial/outdoors/town)
 "tZO" = (
 /obj/effect/decal/cobbleedge{
 	dir = 9
@@ -70296,9 +70292,9 @@
 /turf/open/floor/rogue/hexstone,
 /area/provincial/indoors/town/steward)
 "wYL" = (
-/obj/structure/fluff/railing/border,
-/turf/open/floor/rogue/grass,
-/area/provincial/outdoors/town)
+/obj/machinery/gear_painter,
+/turf/open/floor/rogue/tile,
+/area/provincial/indoors/town/adventurers_guild)
 "wZe" = (
 /obj/structure/rack/rogue,
 /obj/item/ingot/bronze{
@@ -261178,7 +261174,7 @@ rVu
 qld
 msM
 tHC
-tHC
+wYL
 xSg
 ivv
 fHw
@@ -274705,7 +274701,7 @@ sHn
 buC
 ddV
 bRC
-tZN
+nVu
 cEA
 kUp
 ifQ
@@ -275157,7 +275153,7 @@ sHn
 buC
 ddV
 bRC
-tZN
+nVu
 dxO
 dxO
 ifQ
