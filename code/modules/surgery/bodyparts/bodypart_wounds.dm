@@ -391,8 +391,14 @@
 	embedder.forceMove(src)
 	if(owner)
 		embedder.add_mob_blood(owner)
-		if(!silent)
-			owner.emote("embed")
+		if (!silent)
+			playsound(owner, 'sound/combat/newstuck.ogg', 100, vary = TRUE)
+			if (owner.has_status_effect(/datum/status_effect/buff/ozium))
+				owner.emote ("exhales")
+			if (owner.has_status_effect(/datum/status_effect/buff/drunk) && !owner.has_status_effect(/datum/status_effect/buff/ozium))
+				owner.emote("pain")
+			if (!owner.has_status_effect(/datum/status_effect/buff/drunk) && !owner.has_status_effect(/datum/status_effect/buff/ozium))
+				owner.emote("embed")
 			playsound(owner, 'sound/combat/newstuck.ogg', 100, vary = TRUE)
 		if(crit_message)
 			owner.next_attack_msg += " <span class='userdanger'>[embedder] runs through [owner]'s [src]!</span>"
@@ -506,10 +512,12 @@
 	var/static/list/retracting_behaviors = list(
 		TOOL_RETRACTOR,
 		TOOL_CROWBAR,
+		TOOL_IMPROVISED_RETRACTOR,
 	)
 	var/static/list/clamping_behaviors = list(
 		TOOL_HEMOSTAT,
 		TOOL_WIRECUTTER,
+		TOOL_IMPROVISED_HEMOSTAT,
 	)
 	for(var/obj/item/embedded as anything in embedded_objects)
 		if((embedded.tool_behaviour in retracting_behaviors) || embedded.embedding?.retract_limbs)
@@ -520,6 +528,8 @@
 		returned_flags |= SURGERY_DISLOCATED
 	if(has_wound(/datum/wound/fracture))
 		returned_flags |= SURGERY_BROKEN
+	if(has_wound(/datum/wound/slash/vein))
+		returned_flags |= SURGERY_CUTVEIN
 	for(var/datum/wound/puncture/drilling/drilling in wounds)
 		if(drilling.is_sewn())
 			continue

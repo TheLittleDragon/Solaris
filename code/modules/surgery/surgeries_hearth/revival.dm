@@ -21,6 +21,7 @@
 	skill_min = SKILL_LEVEL_EXPERT
 	preop_sound = 'sound/surgery/organ2.ogg'
 	success_sound = 'sound/surgery/organ1.ogg'
+	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery_step/infuse_lux/validate_target(mob/user, mob/living/target, target_zone, datum/intent/intent)
 	. = ..()

@@ -20,6 +20,7 @@
 		/obj/item/rogueweapon/surgery/retractor,
 		/obj/item/rogueweapon/surgery/bonesetter,
 		/obj/item/rogueweapon/surgery/cautery,
+		/obj/item/rogueweapon/surgery/hammer, //Townfolk can have some aid in identifying wounds if they arent church or Apothicant
 		/obj/item/needle
 	)
 
@@ -32,6 +33,7 @@
 	/obj/item/rogueweapon/surgery/retractor,
 	/obj/item/rogueweapon/surgery/bonesetter,
 	/obj/item/rogueweapon/surgery/cautery,
+	/obj/item/rogueweapon/surgery/hammer, //Gets hammer even though doesnt need it
 	/obj/item/needle/infinite //Gets the special needle!
 	)
 
