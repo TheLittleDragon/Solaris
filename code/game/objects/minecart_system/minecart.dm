@@ -81,9 +81,11 @@
  * * damage_mod - How much to multiply the momentum by to get the damage.
  * * momentum_mod - How much to divide the momentum by after the smack.
  */
-/obj/structure/closet/crate/miningcar/proc/smack(mob/living/smacked, damage_mod = 8, momentum_mod = 1.5)
+/obj/structure/closet/crate/miningcar/proc/smack(mob/living/smacked, damage_mod = 1, momentum_mod = 1.5)
 	ASSERT(momentum_mod >= 1)
-	if(!smacked.apply_damage(damage_mod * momentum, BRUTE, BODY_ZONE_CHEST))
+	var/cartdamage = damage_mod * momentum //we calculate the damage mod * the speed we're going
+	cartdamage = CLAMP(cartdamage, 0, 50) //we max the damage at 50
+	if(!smacked.apply_damage(cartdamage, BRUTE, BODY_ZONE_CHEST))
 		return
 	if(obj_integrity <= max_integrity * 0.05)
 		smacked.visible_message(

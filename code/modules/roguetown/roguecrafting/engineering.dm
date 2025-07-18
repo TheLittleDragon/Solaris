@@ -367,16 +367,29 @@
 
 //rotational and minecart parts
 /datum/crafting_recipe/roguetown/engineering/shaft
-	name = "wooden shaft(3x)"
+	name = "wooden shaft(4x)"
 	category = "Rotational"
 	result = list(/obj/item/rotation_contraption/shaft,
+				  /obj/item/rotation_contraption/shaft,
 				  /obj/item/rotation_contraption/shaft,
 				  /obj/item/rotation_contraption/shaft)
 	reqs = list(/obj/item/grown/log/tree/small = 1)
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 2
+	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/engineering/stickshaft
+	name = "wooden shaft"
+	category = "Rotational"
+	result = list(/obj/item/rotation_contraption/shaft)
+	reqs = list(/obj/item/grown/log/tree/stick = 2)
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/cog
 	name = "wooden cogwheel(2x)"
@@ -387,7 +400,8 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 2
+	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	craftdiff = 3
 
 
 /datum/crafting_recipe/roguetown/engineering/waterwheel
@@ -398,7 +412,8 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 2
+	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/large_cog
 	name = "large wooden cogwheel"
@@ -408,7 +423,8 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 2
+	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/structure/gearbox
 	name = "gearbox"
@@ -418,7 +434,7 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 2
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/structure/vertical_gearbox
 	name = "vertical gearbox"
@@ -428,7 +444,7 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 2
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/rails
 	name = "minecart rails (5x)"
@@ -442,7 +458,7 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 2
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/railbreak
 	name = "minecart rail break (5x)"
@@ -456,7 +472,7 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 2
+	craftdiff = 3
 
 
 /datum/crafting_recipe/roguetown/engineering/minecart
@@ -467,4 +483,4 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 2
+	craftdiff = 3
