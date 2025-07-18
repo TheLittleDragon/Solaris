@@ -20,39 +20,15 @@ GLOBAL_VAR(lordsecondary)
 	if(!client)
 		addtimer(CALLBACK(src, PROC_REF(lord_color_choice)), 50)
 		return
-	var/list/lordcolors = list(
-"PURPLE"="#8747b1",
-"DEEP PURPLE"="#8747B1",
-"MAGENTA"="#962e5c",
-"ROYAL RED"="#FF1021",
-"BLOOD RED"="#8A040E",
-"SILVER"="#A9C4CA",
-"SLATE"="#707279",
-"BLACK"="#2b292e",
-"MUD"="#61462c",
-"ORANGE"="#df8405",
-"CLAY"="#CE7A45",
-"MAHOGANEY"="#522000",
-"LIME"="#7BFF4E",
-"FOREST GREEN"="#00AA00",
-"DARK GREEN"="#003900",
-"AZURE"="#007fff",
-"ULTRAMARINE BLUE"="#0035FF",
-"NAVY BLUE"="#173266",
-"YELLOW"="#FFD500",
-"GOLD"="#FFA400",
-"TEAL"="#249589",
-"CYAN"="#4BE0A6",
-"WHITE"="#ffffff",)
 	var/prim
 	var/sec
-	var/choice = input(src, "Choose a Primary Color", "ROGUETOWN") as anything in lordcolors
+	var/choice = input(src, "Choose a Primary Color", "ROGUETOWN") as anything in colorlist
 	if(choice)
-		prim = lordcolors[choice]
-		lordcolors -= choice
-	choice = input(src, "Choose a Secondary Color", "ROGUETOWN") as anything in lordcolors
+		prim = colorlist[choice]
+		colorlist -= choice
+	choice = input(src, "Choose a Secondary Color", "ROGUETOWN") as anything in colorlist
 	if(choice)
-		sec = lordcolors[choice]
+		sec = colorlist[choice]
 	if(!prim || !sec)
 		GLOB.lordcolor = list()
 		return

@@ -366,3 +366,12 @@
 		/obj/item/grown/log/tree/stick = 2,
 		)
 	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/dye_brush
+	name = "dye brush"
+	result = /obj/item/needle
+	reqs = list(
+		/obj/item/grown/log/tree/stick = 2,
+		/obj/item/natural/fur = 1
+		)
+	craftdiff = 1

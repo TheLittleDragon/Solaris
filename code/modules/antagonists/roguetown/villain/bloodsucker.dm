@@ -424,7 +424,7 @@
 
 /datum/antagonist/bloodsucker/proc/choose_eye_popup(mob/user)
 	var/mob/living/carbon/human/BSDrinker = user
-	var/new_eye_color = color_pick_sanitized_lumi(user, "Choose your eye color", "Eye Color", BSDrinker.eye_color)
+	var/new_eye_color = color_pick_sanitized(user, "Choose your eye color", "Eye Color", BSDrinker.eye_color)
 	if(new_eye_color)
 		new_eye_color = sanitize_hexcolor(new_eye_color, 6, TRUE)
 		BSDrinker.bs_eyes = new_eye_color
