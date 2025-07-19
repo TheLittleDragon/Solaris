@@ -404,7 +404,7 @@ All foods are distributed among various categories. Use common sense.
 				checkLiked(fraction, M)
 				if(bitecount >= bitesize)
 					qdel(src)
-				else
+				else if(user.client?.prefs.autoconsume)
 					if(M == user && do_after(user, CLICK_CD_MELEE))
 						INVOKE_ASYNC(src, PROC_REF(attack), M, user, def_zone)
 						user.changeNext_move(CLICK_CD_MELEE)
