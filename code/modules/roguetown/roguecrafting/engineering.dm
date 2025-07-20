@@ -183,7 +183,7 @@
 /datum/crafting_recipe/roguetown/engineering/floorgrille
 	name = "floorgrille"
 	category = "Engineering"
-	result = /obj/structure/bars/grille
+	result = /obj/structure/bars/grille/trap
 	reqs = list(/obj/item/ingot/iron = 1,
 					/obj/item/roguegear = 1)
 	verbage_simple = "engineer"

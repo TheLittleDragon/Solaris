@@ -378,14 +378,12 @@
 	desc = ""
 	icon_state = "floorgrille"
 	density = FALSE
-	layer = TABLE_LAYER
-	plane = GAME_PLANE
+	layer = LATTICE_LAYER
+	plane = FLOOR_PLANE
 	damage_deflection = 5
 	blade_dulling = DULLING_BASHCHOP
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	attacked_sound = list('sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg')
-	var/togg = FALSE
-	redstone_structure = TRUE
 
 /obj/structure/bars/grille/Initialize()
 	AddComponent(/datum/component/squeak, list('sound/foley/footsteps/FTMET_A1.ogg','sound/foley/footsteps/FTMET_A2.ogg','sound/foley/footsteps/FTMET_A3.ogg','sound/foley/footsteps/FTMET_A4.ogg'), 40)
@@ -396,7 +394,12 @@
 	obj_flags = CAN_BE_HIT
 	..()
 
-/obj/structure/bars/grille/redstone_triggered()
+/obj/structure/bars/grille/trap
+	desc = "A mildly suspect grate in the floor."
+	redstone_structure = TRUE
+	var/togg = FALSE
+
+/obj/structure/bars/grille/trap/redstone_triggered()
 	if(obj_broken)
 		return
 	testing("togge")
