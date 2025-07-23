@@ -32,13 +32,18 @@
 		if(VD.disguised)
 			to_chat(usr, span_warning("My curse is hidden."))
 			return
-	if(H.has_status_effect(/datum/status_effect/debuff/veil_up))
-		to_chat(usr, span_warning("My curse is hidden."))
-		return
-	if(HAS_TRAIT(H,TRAIT_VAMPIRISM) && (H.vitae < 100)) 
-		to_chat(src, span_warning("Not enough vitae blood."))
-		return
 	if(HAS_TRAIT(H,TRAIT_VAMPIRISM))
+		if(H.has_status_effect(/datum/status_effect/debuff/veil_up))
+			to_chat(H, span_warning("My curse is hidden."))
+			return
+		if(H.vitae < 100)
+			to_chat(H, span_warning("Not enough vitae."))
+			return
+		if(H.has_status_effect(/datum/status_effect/buff/vampire_bat))
+			to_chat(H, span_warning("Already active."))
+			return
+		to_chat(H, span_greentext("! SHAPESHIFT !"))
+		H.playsound_local(get_turf(H), 'sound/misc/vampirespell.ogg', 100, FALSE, pressure_affected = FALSE)
 		H.vitae -= 100
 	if(src in user.mob_spell_list)
 		user.mob_spell_list.Remove(src)

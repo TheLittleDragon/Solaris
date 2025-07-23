@@ -1984,6 +1984,7 @@
 #include "code\modules\spells\spell_types\blood\utility\vampire_float.dm"
 #include "code\modules\spells\spell_types\blood\utility\vampire_mistform.dm"
 #include "code\modules\spells\spell_types\blood\utility\vampire_regenerate.dm"
+#include "code\modules\spells\spell_types\blood\utility\vampire_greaterregenerate.dm"
 #include "code\modules\spells\spell_types\warlock\buffs_debuffs\cloak_of_flies.dm"
 #include "code\modules\spells\spell_types\warlock\buffs_debuffs\eldritch_curse.dm"
 #include "code\modules\spells\spell_types\warlock\buffs_debuffs\mischevious_whispers.dm"

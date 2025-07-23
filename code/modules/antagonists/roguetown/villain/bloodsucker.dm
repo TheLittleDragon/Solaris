@@ -64,7 +64,7 @@
 
 	if(owner.special_role == "bloodsucker")
 		new_bloodsucker = FALSE
-	if(owner.special_role == "ancient bloodsucker")
+	if(owner.special_role == "Ancient Bloodsucker")
 		ancient_bloodsucker = TRUE
 
 	for(var/inherited_trait in inherent_traits)
@@ -72,7 +72,7 @@
 		ADD_TRAIT(owner.current, inherited_trait, TRAIT_GENERIC)
 
 	owner.current.cmode_music = 'sound/music/combat_vamp2.ogg'
-	owner.adjust_skillrank(/datum/skill/magic/vampirism, 1, TRUE)
+	owner.adjust_skillrank(/datum/skill/magic/vampirism, 6, TRUE)
 	owner.adjust_skillrank(/datum/skill/magic/blood, 1, TRUE)
 	if(!new_bloodsucker)
 		owner.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
@@ -89,6 +89,7 @@
 		owner.current.AddSpell(new /obj/effect/proc_holder/spell/invoked/recruitthrall)
 		owner.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/vampire_bat)
 		owner.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/vampire_mistform)
+		owner.current.AddSpell(new /obj/effect/proc_holder/spell/invoked/vampire_greaterregenerate)
 
 	if (new_bloodsucker)
 		//we give fewer points to new spawn or those with a virtue

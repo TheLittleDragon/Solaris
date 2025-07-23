@@ -1,6 +1,6 @@
-/obj/effect/proc_holder/spell/invoked/vampire_regenerate
-	name = "Vampiric Regeneration"
-	desc = "Regenerate and heal my body"
+/obj/effect/proc_holder/spell/invoked/vampire_greaterregenerate
+	name = "Greater Vampiric Regeneration"
+	desc = "Regenerate using half of my blood (300 used minimum)"
 	cost = 2 //how many points it takes
 	xp_gain = TRUE
 	releasedrain = 0
@@ -20,69 +20,12 @@
 	badtrait = TRAIT_VAMP_HEAL_LIMIT //is there a bad trait we want to associate? the code name
 	badtraitname = "Healing Abilities Limit" //is there a bad trait we want to associate? the player name
 	badtraitdesc = "You can only have one ability that gives a heal. Affects regeneration, passive regeneration, batform, and mistform" //is there a bad trait we want to associate? the player description
-	recharge_time = 30 SECONDS
+	recharge_time = 3 MINUTES
 	glow_color = GLOW_COLOR_VAMPIRIC
 	glow_intensity = GLOW_INTENSITY_MEDIUM
-	vitaedrain = 75
+	vitaedrain = 300
 
-/obj/effect/proc_holder/spell/invoked/vampire_regenerate/cast(list/targets, mob/living/user)
-	. = ..()
-	if (!isliving(targets[1]))
-		revert_cast()
-		return FALSE
-	var/mob/living/carbon/human/BSDrinker = user
-	var/silver_curse_status = FALSE
-	//var/temp_vitae = BSDrinker.vitae
-	silver_curse_status = BSDrinker.has_status_effect(/datum/status_effect/debuff/silver_curse)
-	if(!BSDrinker == user)
-		recharge_time = 1 SECONDS
-		to_chat(BSDrinker, span_warning("I can only regenerate myself"))
-		return
-	if(silver_curse_status)
-		to_chat(BSDrinker, span_warning("My BANE is not letting me heal!"))
-		return
-	if(!HAS_TRAIT(BSDrinker,TRAIT_VAMPIRISM))
-		to_chat(BSDrinker, span_warning("I'm not a vampire, what am I doing?"))
-		return
-	if(BSDrinker.has_status_effect(/datum/status_effect/debuff/veil_up))
-		to_chat(BSDrinker, span_warning("My curse is hidden."))
-		return
-	if(BSDrinker.vitae < 75)
-		to_chat(BSDrinker, span_warning("Not enough vitae."))
-		return
-
-
-	//var/mob/living/target = targets[1]
-	//BSDrinker.visible_message(span_info("[BSDrinker] [othernotification]"), span_notice(targetnotification))
-
-	var/healing = 2.5 // Flat value, no patron bonuses like lesser_heal
-
-	//the cost of healing
-	BSDrinker.vitae -= vitaedrain
-
-	if (ishuman(BSDrinker))
-		//var/mob/living/carbon/human/H = target
-		var/no_embeds = TRUE
-		var/list/embeds = BSDrinker.get_embedded_objects()
-		if (length(embeds))
-			for (var/object in embeds)
-				if (!istype(object, /obj/item/natural/worms/leech))
-					no_embeds = FALSE
-					break
-		if (no_embeds)
-			BSDrinker.apply_status_effect(/datum/status_effect/buff/healing, healing)
-		else
-			BSDrinker.visible_message(span_warning("[BSDrinker]'s wounds tear and rip around embedded objects!"),
-			                       span_warning("Agonising pain shoots through your blood tries to close your wounds!"))
-			BSDrinker.adjustBruteLoss(20)
-			playsound(BSDrinker, 'sound/combat/dismemberment/dismem (2).ogg', 100)
-			BSDrinker.emote("agony")
-	else
-		// fallback for non-human living mobs
-		BSDrinker.apply_status_effect(/datum/status_effect/buff/healing, healing)
-	return TRUE
-
-/*
+/obj/effect/proc_holder/spell/invoked/vampire_greaterregenerate/cast(list/targets, mob/living/user)
 	if(isliving(user))
 		var/mob/living/carbon/human/BSDrinker = user
 		var/silver_curse_status = FALSE
@@ -114,10 +57,6 @@
 		BSDrinker.vitae -= vitaedrain
 		to_chat(BSDrinker, span_greentext("! REGENERATE !"))
 		BSDrinker.playsound_local(get_turf(BSDrinker), 'sound/misc/vampirespell.ogg', 100, FALSE, pressure_affected = FALSE)
-*/
-
-
-
 /* we can apply a buff and a glow if we want to telegraph this
 #define VAMPIRIC_FILTER "vampiric_glow"
 

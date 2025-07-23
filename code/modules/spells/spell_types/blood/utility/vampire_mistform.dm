@@ -20,18 +20,18 @@
 	charging_slowdown = 60
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/blood
-	recharge_time = 10 MINUTES
+	recharge_time = 1 MINUTES
 	glow_color = GLOW_COLOR_VAMPIRIC
 	glow_intensity = GLOW_INTENSITY_MEDIUM
 	vitaedrain = 100
 	xp_gain = TRUE
 	goodtrait = null //is there a good trait we want to associate? the code name
-	badtrait = TRAIT_VAMP_HEAL_LIMIT //is there a bad trait we want to associate? the code name
-	badtraitname = "Healing Abilities Limit" //is there a bad trait we want to associate? the player name
-	badtraitdesc = "You can only have one ability that gives a heal. Affects regeneration, passive regeneration, batform, and mistform" //is there a bad trait we want to associate? the player description
+	badtrait = null //TRAIT_VAMP_HEAL_LIMIT //is there a bad trait we want to associate? the code name
+	badtraitname = null //"Healing Abilities Limit" //is there a bad trait we want to associate? the player name
+	badtraitdesc = null //"You can only have one ability that gives a heal. Affects regeneration, passive regeneration, batform, and mistform" //is there a bad trait we want to associate? the player description
 
 
-
+/*
 /obj/effect/proc_holder/spell/targeted/shapeshift/vampire_mistform/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/human/BSDrinker = usr
 	//var/temp_vitae = H.vitae //use this to store vitae if we need a dynamic cost
@@ -60,3 +60,4 @@
 	//ADD_TRAIT(src, TRAIT_NOFALLDAMAGE2, MAGIC_TRAIT)
 	to_chat(BSDrinker, span_warning("mistform"))
 	addtimer(CALLBACK(BSDrinker, to_chat(BSDrinker, span_warning("I'm about to change back"))), 25 SECONDS)
+*/

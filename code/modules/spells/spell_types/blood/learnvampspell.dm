@@ -18,7 +18,7 @@
 	var/list/choices = list()
 	var/list/vamp_choices = list()
 
-	if(BSdrinker.bs_spawn == 1)
+	if(BSdrinker?.bs_spawn == 1)
 		//lesser perk list since they are fledglings
 		vamp_choices  += GLOB.learnable_fledgling_perks
 		//lesser spell list since they are fledglings
@@ -96,8 +96,6 @@
 
 		//Heal limiters, we only allow one trait or spell to heal
 		if (HAS_TRAIT(user,TRAIT_VAMP_HEAL_LIMIT) && (item.name in list("Passive Regeneration", 
-																		"Bat Form", 
-																		"Mist Form", 
 																		"Vampiric Regeneration",)))
 			to_chat(user,span_warning("You have an ability to heal with already"))
 			return	//we can't give users more than one way to heal
