@@ -23,7 +23,6 @@
 		CRASH("Incorrect touch spell hand.")
 	//Start recharging.
 	attached_hand = null
-	recharging = TRUE
 	action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/targeted/touch/cast(list/targets,mob/user = usr)
@@ -35,7 +34,6 @@
 	for(var/mob/living/carbon/C in targets)
 		if(!attached_hand)
 			if(ChargeHand(C))
-				recharging = FALSE
 				return
 
 /obj/effect/proc_holder/spell/targeted/touch/charge_check(mob/user,silent = FALSE)

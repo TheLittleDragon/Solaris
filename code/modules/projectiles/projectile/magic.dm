@@ -347,7 +347,6 @@
 			L.mind.hasSoul = FALSE
 		for(var/obj/effect/proc_holder/spell/spell in L.mind.spell_list)
 			spell.charge_counter = spell.recharge_time
-			spell.recharging = FALSE
 			spell.update_icon()
 
 /obj/projectile/magic/aoe

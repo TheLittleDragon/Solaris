@@ -79,7 +79,7 @@
 	if (!user.has_language(/datum/language/beast))
 		user.grant_language(/datum/language/beast)
 		to_chat(user, span_boldnotice("The vestige of the hidden moon high above reveals His truth: the knowledge of beast-tongue was in me all along."))
-	
+
 	if (!first_cast)
 		to_chat(user, span_boldwarning("So it is murmured in the Earth and Air: the Call of the Moon is sacred, and to share knowledge gleaned from it with those not of Her is a SIN."))
 		to_chat(user, span_boldwarning("Ware thee well, child of Tamari."))
@@ -196,7 +196,6 @@ var/static/list/druid_forms = list(
 	charge_type = "recharge"
 	charge_counter = recharge_time
 	recharge_time = 60 SECONDS
-	recharging = FALSE
 	still_recharging_msg = span_warning("[name] is still recharging!")
 
 /obj/effect/proc_holder/spell/self/tamari_shapeshift/cast(mob/living/carbon/human/user)
@@ -418,7 +417,6 @@ var/static/list/druid_forms = list(
 	// Start cooldown
 	if(action)
 		action.UpdateButtonIcon()
-	recharging = TRUE  // Set recharging flag to true
 	charge_counter = 0 // Reset counter to 0
 	START_PROCESSING(SSfastprocess, src)  // Ensure the spell is being processed
 
@@ -455,10 +453,8 @@ var/static/list/druid_forms = list(
 	if(was_dead)
 		charge_counter = 0
 		recharge_time = death_cooldown
-		recharging = TRUE  // Ensure recharging is set to true
 	else
 		charge_counter = 0  // Start the normal cooldown
-		recharging = TRUE   // Enable recharging
 
 	START_PROCESSING(SSfastprocess, src)  // Ensure the spell is being processed
 	if(action)
@@ -475,11 +471,10 @@ var/static/list/druid_forms = list(
 	return FALSE
 
 /obj/effect/proc_holder/spell/self/tamari_shapeshift/process(delta_time)
-	if(recharging && charge_type == "recharge")
+	if(charge_type == "recharge")
 		charge_counter += delta_time * 1  // Change from 10 to 1 since SECONDS macro already handles conversion
 		if(charge_counter >= recharge_time)
 			charge_counter = recharge_time
-			recharging = FALSE
 			STOP_PROCESSING(SSfastprocess, src)  // Stop processing when cooldown is complete
 			if(action)
 				action.UpdateButtonIcon()
@@ -501,9 +496,6 @@ var/static/list/druid_forms = list(
 /obj/effect/proc_holder/spell/self/tamari_shapeshift/can_cast(mob/user)
 	if(!..())
 		return FALSE
-	if(recharging)
-		to_chat(user, still_recharging_msg)
-		return FALSE
 	if(charge_counter < recharge_time)
 		to_chat(user, still_recharging_msg)
 		return FALSE
@@ -519,7 +511,6 @@ var/static/list/druid_forms = list(
 	// Set cooldown before restoration
 	charge_counter = 0
 	recharge_time = death_cooldown  // Set to long cooldown
-	recharging = TRUE  // Ensure recharging is set to true
 	START_PROCESSING(SSfastprocess, src)  // Ensure the spell is being processed
 
 	if(action)
