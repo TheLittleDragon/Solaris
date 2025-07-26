@@ -399,7 +399,8 @@
 			return
 
 		var/obj/item/natural/cloth/T = I
-		if(T.wet && !T.return_blood_DNA())
+		if(T.wet >= 10)
+			to_chat(user, span_warning("[T] is already soaked!")) //So we dont waste water if its already at max wetness or higher
 			return
 		else
 			var/removereg = /datum/reagent/water
