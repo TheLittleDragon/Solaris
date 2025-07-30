@@ -11,7 +11,15 @@ This is the codebase for Solaris Ridge; a new high-fantasy take on [Space Statio
 **Please note that this repository contains sexually explicit content and is not suitable for those under the age of 18.**
 
 ## Compilation
-At the moment, Solaris Ridge **does not use juke build**. In order to build the repository, you presently need to compile it within DreamMaker!
+
+**The quick way**. Find `bin/server.cmd` in this folder and double click it to automatically build and host the server on port 1337.
+
+**The long way**. Find `bin/build.cmd` in this folder, and double click it to initiate the build. It consists of multiple steps and might take around 1-5 minutes to compile. If it closes, it means it has finished its job. You can then [setup the server](.github/guides/RUNNING_A_SERVER.md) normally by opening `tgstation.dmb` in DreamDaemon.
+
+**Building tgstation in DreamMaker directly is deprecated and might produce errors**, such as `'tgui.bundle.js': cannot find file`.
+
+**[How to compile in VSCode and other build options](tools/build/README.md).**
+
 
 ## LICENSE
 

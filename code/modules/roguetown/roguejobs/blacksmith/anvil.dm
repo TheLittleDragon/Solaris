@@ -69,12 +69,12 @@
 			return
 
 	if(istype(W, /obj/item/rogueweapon/hammer))
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.changeNext_move(CLICK_CD_FAST)
 		if(!hingot)
 			return
 		if(!hingot.currecipe)
-			if(!choose_recipe(user))
-				return
+			ui_interact(user)
+			return
 		advance_multiplier = 1 //Manual striking more effective than manual striking.
 		user.doing = FALSE
 		spawn(1)
@@ -93,7 +93,7 @@
 						carbon_user.rogfat_add(max(21 - (used_str * 3), 0)*advance_multiplier)
 					else
 						carbon_user.rogfat_add(max(40 - (used_str * 3), 0)*advance_multiplier)
-				var/total_chance = 7 * user.mind.get_skill_level(hingot.currecipe.appro_skill) * user.STAPER/10
+				var/total_chance = 7 * user?.mind?.get_skill_level(hingot.currecipe.appro_skill) * user.STAPER/10
 				var/breakthrough = 0
 				if(prob((1 + total_chance)*advance_multiplier)) //Small chance to flash
 					user.flash_fullscreen("whiteflash")
@@ -134,54 +134,76 @@
 		return
 	..()
 
-/obj/machinery/anvil/proc/choose_recipe(mob/living/user)
-	if(!hingot || !hott)
-		return
+/obj/machinery/anvil/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Anvil", "Anvil")
+		ui.open()
 
-	var/list/valid_types = list()
+/obj/machinery/anvil/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/anvil_recipes)
+	)
+
+/obj/machinery/anvil/ui_data(mob/user)
+	var/list/data = ..()
+
+	data["hingot_type"] = hingot?.type
+
+	return data
+
+/obj/machinery/anvil/ui_static_data(mob/user)
+	var/list/data = ..()
+
+	var/list/recipes = list()
+
+	var/datum/asset/spritesheet/spritesheet = get_asset_datum(/datum/asset/spritesheet/anvil_recipes)
 
 	for(var/datum/anvil_recipe/R in GLOB.anvil_recipes)
-		if(istype(hingot, R.req_bar))
-			if(!valid_types.Find(R.i_type))
-				valid_types += R.i_type
+		UNTYPED_LIST_ADD(recipes, list(
+			"name" = R.name,
+			"category" = R.i_type,
+			"req_bar" = R.req_bar,
+			"ref" = REF(R),
+			"icon" = spritesheet.icon_class_name(sanitize_css_class_name("recipe_[REF(R)]"))
+		))
 
-	if(!valid_types.len)
+	data["recipes"] = recipes
+
+	return data
+
+/obj/machinery/anvil/ui_act(action, list/params, datum/tgui/ui)
+	. = ..()
+	if(.)
 		return
 
-	var/i_type_choice = input(user, "Choose a type", "Anvil") as null|anything in valid_types
-	if(!i_type_choice)
-		return
+	var/mob/user = ui.user
 
-	var/list/appro_recipe = list()
-	for(var/datum/anvil_recipe/R in GLOB.anvil_recipes)
-		if(R.i_type == i_type_choice && istype(hingot, R.req_bar))
-			appro_recipe += R
+	switch(action)
+		if("choose_recipe")
+			var/datum/anvil_recipe/recipe = locate(params["ref"])
+			if(!istype(recipe))
+				return TRUE
 
-	for(var/I in appro_recipe)
-		var/datum/anvil_recipe/R = I
-		if(!R.req_bar)
-			appro_recipe -= R
-		if(!istype(hingot, R.req_bar))
-			appro_recipe -= R
+			if(!istype(hingot, recipe.req_bar))
+				return TRUE
 
-	if(appro_recipe.len)
-		appro_recipe = sortNames(appro_recipe)
-		var/datum/anvil_recipe/chosen_recipe = input(user, "Choose A Creation", "Anvil") as null|anything in sortNames(appro_recipe.Copy())
-		if(!chosen_recipe)
-			return FALSE
-		var/smith_exp = user.mind.get_skill_level(chosen_recipe.appro_skill)
-		if(smith_exp < chosen_recipe.craftdiff)
-			if(alert(user, "This recipe needs [SSskills.level_names_plain[chosen_recipe.craftdiff]] skill.","IT'S TOO DIFFICULT!","CONFIRM","CANCEL") != "CONFIRM")
-				return FALSE
-		if(!hingot.currecipe)
-			hingot.currecipe = new chosen_recipe.type(hingot)
+			var/smith_exp = user?.mind?.get_skill_level(recipe.appro_skill)
+			if(smith_exp < recipe.craftdiff)
+				if(alert(user, "This recipe needs [SSskills.level_names_plain[recipe.craftdiff]] skill.","IT'S TOO DIFFICULT!","CONFIRM","CANCEL") != "CONFIRM")
+					return TRUE
+
+			// Half to check this again because we alert()ed
+			if(!istype(hingot, recipe.req_bar))
+				return TRUE
+
+			hingot.currecipe = new recipe.type(hingot)
 			hingot.currecipe.bar_health = 50 * (hingot.quality+1)
 			hingot.currecipe.max_progress = 100
 			hingot.currecipe.material_quality += hingot.quality
 			previous_material_quality = hingot.quality
+			ui.close()
 			return TRUE
-
-	return FALSE
 
 /obj/machinery/anvil/attack_hand(mob/user, params)
 	if(hingot)

@@ -377,6 +377,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	} while (0)
 #define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
 #define HAS_TRAIT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (source in target.status_traits[trait]) : FALSE) : FALSE)
+#define HAS_TRAIT_FROM_ONLY(target, trait, source) (HAS_TRAIT(target, trait) && (source in target._status_traits[trait]) && (length(target.status_traits[trait]) == 1))
+#define HAS_TRAIT_NOT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (length(target.status_traits[trait] - source) > 0))
 
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
@@ -587,3 +589,27 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 //for ai
 #define TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM "element-required"
 
+/*/mob/living/proc/on_trait_gain(trait, source)
+	SEND_SIGNAL(src, COMSIG_TRAIT_GAIN, trait, source)
+	switch(trait)
+		if(TRAIT_COMMIE, TRAIT_CABAL, TRAIT_HORDE, TRAIT_DEPRAVED)
+			if(ishuman(src))
+				var/mob/living/carbon/human/H = src
+				H.update_heretic_commune()
+
+/mob/living/proc/on_trait_loss(trait, source)
+	SEND_SIGNAL(src, COMSIG_TRAIT_LOSS, trait, source)
+	switch(trait)
+		if(TRAIT_COMMIE, TRAIT_CABAL, TRAIT_HORDE, TRAIT_DEPRAVED)
+			if(ishuman(src))
+				var/mob/living/carbon/human/H = src
+				H.update_heretic_commune()*/
+
+///The entity has AI 'access', so is either an AI, has an access wand, or is an admin ghost AI. Used to block off regular Silicons from things.
+///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.
+#define TRAIT_AI_ACCESS "ai_access_trait"
+#define TRAIT_UI_BLOCKED "uiblocked"
+/// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
+#define TRAIT_HANDS_BLOCKED "handsblocked"
+/// This mob should never close UI even if it doesn't have a client
+#define TRAIT_PRESERVE_UI_WITHOUT_CLIENT "preserve_ui_without_client"
