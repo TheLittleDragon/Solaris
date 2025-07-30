@@ -4,6 +4,13 @@
 	craftdiff = 1
 
 // --------- IRON -----------
+
+/datum/anvil_recipe/tools/iron/blowrod
+	name = "Glass Blowing Rod"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/rogueweapon/blowrod
+	craftdiff = 0
+
 /datum/anvil_recipe/tools/surgery/surgerytools
 	name = "Surgeon's Bag (+1 Iron, +1 Cured Leather)"
 	category = "Tools"
@@ -72,8 +79,22 @@
 	category = "Tools"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hammer
+	created_item = /obj/item/rogueweapon/hammer/iron
 	i_type = "Tools"
+
+
+/datum/anvil_recipe/tools/iron/handsaw
+	name = "Handsaw (+1 Stick)"
+	category = "Tools"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/grown/log/tree/stick)
+	created_item = /obj/item/rogueweapon/handsaw
+
+/datum/anvil_recipe/tools/iron/chisel
+	name = "Chisel"
+	category = "Tools"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/rogueweapon/chisel
 
 /datum/anvil_recipe/tools/iron/tongs
 	name = "Tongs"
@@ -138,10 +159,51 @@
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/iron/pot
-	name = "Pot"
+	name = "Cooking Pot (Iron)"
 	category = "Tools"
 	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/reagent_containers/glass/bucket/pot
+
+/datum/anvil_recipe/tools/pote/copper
+	name = "Cooking Pot (Copper)"
+	category = "Tools"
+	req_bar = /obj/item/ingot/copper
+	created_item = /obj/item/reagent_containers/glass/bucket/pot/copper
+
+/datum/anvil_recipe/tools/platter
+	name = "2x Platters (Copper)"
+	category = "Tools"
+	req_bar = /obj/item/ingot/copper
+	created_item = /obj/item/cooking/platter/copper
+	craftdiff = 1
+	createditem_num = 1
+
+/datum/anvil_recipe/tools/platter
+	name = "2x Platters (Copper)"
+	category = "Tools"
+	req_bar = /obj/item/ingot/copper
+	created_item = /obj/item/cooking/platter/copper
+	craftdiff = 1
+	createditem_num = 1
+
+/datum/anvil_recipe/tools/platter/tin
+	name = "2x Platters (Tin)"
+	category = "Tools"
+	req_bar = /obj/item/ingot/tin
+	created_item = /obj/item/cooking/platter/pewter
+
+/datum/anvil_recipe/tools/platter/gold
+	name = "2x Platters (Gold)"
+	category = "Tools"
+	req_bar = /obj/item/ingot/gold
+	created_item = /obj/item/cooking/platter/gold
+
+/datum/anvil_recipe/tools/platter/silver
+	name = "2x Platters (Silver)"
+	category = "Tools"
+	req_bar = /obj/item/ingot/silver
+	created_item = /obj/item/cooking/platter/silver
+
 
 /datum/anvil_recipe/tools/iron/fork
 	name = "Iron Fork x3"
@@ -151,6 +213,12 @@
 	createditem_num = 3
 	craftdiff = 1
 
+/datum/anvil_recipe/tools/fork/tin
+	name = "Tin Fork x3"
+	category = "Tools"
+	req_bar = /obj/item/ingot/tin
+	created_item = /obj/item/kitchen/fork/tin
+
 /datum/anvil_recipe/tools/iron/spoon
 	name = "Iron Spoon x3"
 	category = "Tools"
@@ -158,6 +226,12 @@
 	created_item = /obj/item/kitchen/spoon/ironspoon
 	createditem_num = 3
 	craftdiff = 1
+
+/datum/anvil_recipe/tools/spoon/tin
+	name = "Tin Spoon x3"
+	category = "Tools"
+	req_bar = /obj/item/ingot/tin
+	created_item = /obj/item/kitchen/spoon/tin
 
 /datum/anvil_recipe/tools/iron/bowl
 	name = "Iron Bowl"
@@ -174,6 +248,13 @@
 	i_type = "Tools"
 
 // --------- Steel -----------
+
+/datum/anvil_recipe/tools/steel/hammer
+	name = "Claw hammer (+1 Stick)"
+	category = "Tools"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/grown/log/tree/stick)
+	created_item = /obj/item/rogueweapon/hammer/steel
 
 /datum/anvil_recipe/tools/steel/pick
 	name = "Pickaxe (+1 Stick)"

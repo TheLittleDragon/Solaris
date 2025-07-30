@@ -44,3 +44,38 @@
 	name = "stone pot"
 	desc = "A pot made out of stone. It can hold less than a metal pot."
 	volume = 99 // 99 is the max volume for a stone pot
+
+/obj/item/reagent_containers/glass/bucket/pot/copper
+	name = "copper pot"
+	desc = "A pot made out of copper. It can hold a lot of liquid."
+	icon_state = "pote_copper"
+
+/obj/item/reagent_containers/glass/bucket/pot/teapot
+	name = "teapot"
+	desc = "A teapot made out of ceramic. Used to serve tea, it can hold a lot of liquid. It can still spill, however."
+	dropshrink = 0.7
+	icon_state = "teapot"
+	sellprice = 20
+
+/obj/item/reagent_containers/glass/bucket/pot/teapot/examine()
+	. = ..()
+	. += span_info("It can be brushed with a dye brush to glaze it.")
+
+/obj/item/reagent_containers/glass/bucket/pot/teapot/attackby(obj/item/I, mob/living/carbon/human/user)
+	if(istype(I, /obj/item/dye_brush))
+		if(reagents.total_volume)
+			to_chat(user, span_notice("I can't glaze the teapot while it has liquid in it."))
+			return
+		if(do_after(user, 3 SECONDS, target = src))
+			to_chat(user, span_notice("I glaze the teapot with the dye brush."))
+			new /obj/item/reagent_containers/glass/bucket/pot/teapot/fancy(get_turf(src))
+			qdel(src)
+		return
+	. = ..()
+
+/obj/item/reagent_containers/glass/bucket/pot/teapot/fancy
+	icon_state = "teapot_fancy"
+	sellprice = 24
+
+/obj/item/reagent_containers/glass/bucket/pot/teapot/update_icon(dont_fill=FALSE)
+	return FALSE // There's no filling for teapot

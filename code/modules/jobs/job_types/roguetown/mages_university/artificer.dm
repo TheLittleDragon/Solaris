@@ -46,6 +46,7 @@
 		H.mind.adjust_skillrank(/datum/skill/craft/smelting, 4, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/craft/traps, 2, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
+		H.mind.adjust_skillrank(/datum/skill/misc/ceramics, 3, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 
@@ -62,9 +63,10 @@
 	mask = /obj/item/clothing/mask/rogue/spectacles/golden
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
-						/obj/item/rogueweapon/hammer/claw = 1,
+						/obj/item/rogueweapon/hammer/steel = 1,
+						/obj/item/rogueweapon/handsaw = 1,
+						/obj/item/rogueweapon/chisel = 1,
 						/obj/item/lockpickring/mundane = 1,
-						/obj/item/clothing/cloak/apron/blacksmith = 1,
 						/obj/item/contraption/linker = 1
 						)
 	H.change_stat("strength", 1)

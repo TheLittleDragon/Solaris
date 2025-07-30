@@ -7,6 +7,7 @@
 	throwforce = 0
 	obj_flags = null
 	color = "#575e4a"
+	bundling_time = 1 SECONDS
 	firefuel = 5 MINUTES
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_MOUTH
@@ -15,17 +16,19 @@
 	w_class = WEIGHT_CLASS_TINY
 	spitoutmouth = FALSE
 	experimental_inhand = FALSE
+	sellprice = 2
 	bundletype = /obj/item/natural/bundle/fibers
 
 /obj/item/natural/fibers/attack_right(mob/user)
+	if(user.get_active_held_item())
+		return
 	var/is_legendary = FALSE
 	if(user.mind.get_skill_level(/datum/skill/labor/farming) == SKILL_LEVEL_LEGENDARY) //check if the user has legendary farming skill
 		is_legendary = TRUE //they do
-	var/work_time = 1 SECONDS //time to gather fibers
 	if(is_legendary)
-		work_time = 2 //if legendary skill, the move_after is fast, 0.2 seconds
+		bundling_time = 2 //if legendary skill, the move_after is fast, 0.2 seconds
 	to_chat(user, span_warning("I start to collect [src]..."))
-	if(move_after(user, work_time, target = src))
+	if(move_after(user, bundling_time, target = src))
 		var/fibercount = 0
 		for(var/obj/item/natural/fibers/F in get_turf(src))
 			fibercount++
@@ -38,6 +41,7 @@
 				B.amount = clamp(fibercount, 2, 6)
 				B.update_bundle()
 				fibercount -= clamp(fibercount, 2, 6)
+				user.put_in_hands(B)
 		for(var/obj/item/natural/fibers/F in get_turf(src))
 			qdel(F)
 
@@ -50,6 +54,7 @@
 	throwforce = 0
 	obj_flags = null
 	color = "#e6e3db"
+	bundling_time = 1 SECONDS
 	firefuel = 5 MINUTES
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_MOUTH
@@ -62,7 +67,7 @@
 
 /obj/item/natural/silk/attack_right(mob/user)
 	to_chat(user, span_warning("I start to collect [src]..."))
-	if(move_after(user, 1 SECONDS, target = src))
+	if(move_after(user, bundling_time, target = src))
 		var/silkcount = 0
 		for(var/obj/item/natural/silk/F in get_turf(src))
 			silkcount++
@@ -103,6 +108,7 @@
 	force = 0
 	throwforce = 0
 	obj_flags = null
+	bundling_time = 2 SECONDS
 	firefuel = 5 MINUTES
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP
@@ -114,13 +120,16 @@
 	spitoutmouth = FALSE
 	experimental_inhand = FALSE
 	bundletype = /obj/item/natural/bundle/cloth
+	sellprice = 4
 	var/wet = 0
 	/// Effectiveness when used as a bandage, how much bloodloss we can staunch
 	var/bandage_effectiveness = 0.9
 
 /obj/item/natural/cloth/attack_right(mob/user)
+	if(user.get_active_held_item())
+		return
 	to_chat(user, span_warning("I start to collect [src]..."))
-	if(move_after(user, 1 SECONDS, target = src))
+	if(move_after(user, bundling_time, target = src))
 		var/clothcount = 0
 		for(var/obj/item/natural/cloth/F in get_turf(src))
 			clothcount++
@@ -133,16 +142,15 @@
 				B.amount = clamp(clothcount, 2, 10)
 				B.update_bundle()
 				clothcount -= clamp(clothcount, 2, 10)
+				user.put_in_hands(B)
 		for(var/obj/item/natural/cloth/F in get_turf(src))
+			playsound(user, "rustle", 70, FALSE, -4)
 			qdel(F)
 
 /obj/item/natural/cloth/examine(mob/user)
 	. = ..()
 	if(wet)
 		. += span_notice("It's wet!")
-
-/obj/item/natural/cloth/bandit
-	color = "#ff0000"
 
 // CLEANING
 
@@ -466,10 +474,11 @@
 	icon3 = "worm6"
 	stacktype = /obj/item/natural/worms
 	stackname = "worms"
+	bundling_time = 1 SECONDS
 
 /obj/item/natural/worms/attack_right(mob/user)
 	to_chat(user, span_warning("I start to collect [src]..."))
-	if(move_after(user, 1 SECONDS, target = src))
+	if(move_after(user, bundling_time, target = src))
 		var/wormcount = 0
 		for(var/obj/item/natural/worms/F in get_turf(src))
 			wormcount++
@@ -482,6 +491,7 @@
 				B.amount = clamp(wormcount, 2, 12)
 				B.update_bundle()
 				wormcount -= clamp(wormcount, 2, 12)
+				user.put_in_hands(B)
 		for(var/obj/item/natural/worms/F in get_turf(src))
 			qdel(F)
 

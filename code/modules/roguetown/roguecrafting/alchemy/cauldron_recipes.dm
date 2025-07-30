@@ -58,12 +58,6 @@
 	skill_required = SKILL_LEVEL_JOURNEYMAN // If it has "Strong", lock it roundstart for Apothecary or above
 	output_reagents = list(/datum/reagent/medicine/healthpot = 81,/datum/reagent/additive = 81)
 
-/datum/alch_cauldron_recipe/rosewater_potion
-	recipe_name = "Rose Water"
-	smells_like = "roses"
-	skill_required = SKILL_LEVEL_NONE // Everyone can put rose in water
-	output_reagents = list(/datum/reagent/water/rosewater = 81)
-
 /datum/alch_cauldron_recipe/mana_potion
 	recipe_name = "Arcane Elixir"
 	smells_like = "power"

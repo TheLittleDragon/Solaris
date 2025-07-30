@@ -46,6 +46,26 @@
 	desc = ""
 	icon_state = "foodbuff"
 
+//coffee buff
+/datum/status_effect/buff/vigorized
+	id = "vigorized"
+	alert_type = /atom/movable/screen/alert/status_effect/vigorized
+	duration = 10 MINUTES
+	effectedstats = list("speed" = 1, "intelligence" = 1)
+
+/atom/movable/screen/alert/status_effect/vigorized
+	name = "Vigorized"
+	desc = "I feel a surge of energy inside, quickening my speed and sharpening my focus."
+	icon_state = "drunk"
+
+/datum/status_effect/buff/vigorized/on_apply()
+	. = ..()
+	to_chat(owner, span_warning("I feel a surge of energy inside me!"))
+
+/datum/status_effect/buff/vigorized/on_remove()
+	. = ..()
+	to_chat(owner, span_warning("The surge of energy inside me fades..."))
+
 /datum/status_effect/buff/druqks
 	id = "druqks"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/druqks

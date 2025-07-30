@@ -81,7 +81,7 @@
 /obj/item/reagent_containers/food/snacks/grown/rice
 	seed = /obj/item/seeds/rice
 	name = "rice grain"
-	desc = ""
+	desc = "Rice grains, ready to be worked with water to be cleaned."
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "rice"
 	gender = PLURAL
@@ -91,11 +91,12 @@
 	tastes = list("rice" = 1)
 	can_distill = TRUE
 	distill_reagent = /datum/reagent/consumable/ethanol/sake
-	distill_amt = 12
+	distill_amt = 24
 	grind_results = list(/datum/reagent/floure = 10)
+	mill_result = /obj/item/reagent_containers/powder/flour
 	can_press = TRUE //Rice can be pressed into rice milk.
 	press_reagent = /datum/reagent/consumable/rice_milk //Pressing rice produces rice milk.
-	press_amt = 12
+	press_amt = 24
 
 /obj/item/reagent_containers/food/snacks/grown/apple
 	seed = /obj/item/seeds/apple
@@ -216,9 +217,9 @@
 
 /obj/item/reagent_containers/food/snacks/grown/nut
 	name = "rocknut"
-	desc = "a nut with mild stimulant properties"
+	desc = "a nut with mild stimulant properties. In powderized form, it can be used to make a zig."
 	seed = /obj/item/seeds/nut
-	icon_state = "nut"
+	icon_state = "rocknut"
 	tastes = list("nutty" = 1)
 	filling_color = "#6b4d18"
 	bitesize = 1
@@ -454,3 +455,24 @@
 	can_press = TRUE //Carrots can be pressed into juice.
 	press_reagent = /datum/reagent/consumable/carrotjuice
 	press_amt = 12 //Pressing a carrot produces 12 units of carrot juice.
+
+/obj/item/reagent_containers/food/snacks/grown/coffee
+	name = "coffee cherry"
+	desc = "A small sweet, small red fruit that contains coffee bean(s) inside. Can be grounded in a millstone for coffee beans."
+	icon_state = "coffee"
+	seed = /obj/item/seeds/coffee
+	tastes = list("hibicus sweetness" = 1)
+	bitesize = 1
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	mill_result = /obj/item/reagent_containers/food/snacks/grown/coffeebeans
+	rotprocess = null
+
+/obj/item/reagent_containers/food/snacks/grown/tea
+	name = "tea leaves"
+	desc = "Tea leaves plucked from the plant. It is still fresh and needs to be dried before use."
+	icon_state = "tea"
+	seed = /obj/item/seeds/tea
+	tastes = list("grass" = 1)
+	bitesize = 1
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	rotprocess = null

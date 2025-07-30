@@ -47,6 +47,16 @@
 		/datum/crafting_recipe/roguetown/structure
 		)
 
+/obj/item/recipe_book/ceramics
+	name = "The Potter's Handbook"
+	icon_state = "book5_0"
+	base_icon_state = "book5"
+
+	types = list(
+		/datum/crafting_recipe/roguetown/structure/ceramicswheel,
+		/datum/crafting_recipe/roguetown/ceramics,
+		)
+
 // This book should be widely given to everyone
 /obj/item/recipe_book/survival
 	name = "The Survival Handbook"
@@ -70,6 +80,6 @@
 		/datum/crafting_recipe/roguetown/survival/mortar,
 		/datum/crafting_recipe/roguetown/survival/pestle,
 		/datum/crafting_recipe/roguetown/alchemy,
-		/datum/alch_grind_recipe//,
+		/datum/alch_grind_recipe,
 		///datum/alch_cauldron_recipe //leaving this out for now, it doesn't look nice for players and shows mostly back end ingredients.
 		)

@@ -52,6 +52,12 @@
 	last_used = 0
 	is_silver = TRUE
 
+/obj/item/reagent_containers/glass/cup/silver/small
+	name = "silver cup"
+	desc = "A silver cup, its surface adorned with intricate carvings and runes."
+	icon_state = "scup"
+	sellprice = 20
+
 /obj/item/reagent_containers/glass/cup/silver/pickup(mob/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user
@@ -119,6 +125,12 @@
 	icon_state = "golden"
 	sellprice = 50
 
+/obj/item/reagent_containers/glass/cup/golden/small
+	name = "golden cup"
+	desc = "Adorned with gemstones, this cup radiates opulence and grandeur."
+	icon_state = "gcup"
+	sellprice = 40
+
 /obj/item/reagent_containers/glass/cup/golden/poison
 	name = "golden goblet"
 	desc = "Adorned with gemstones, this goblet radiates opulence and grandeur."
@@ -161,3 +173,32 @@
 		add_overlay(filling)
 	else
 		icon_state = "bowl"
+
+/obj/item/reagent_containers/glass/cup/ceramic
+	name = "teacup"
+	desc = "A tea cup made out of ceramic. Used to serve tea."
+	dropshrink = 0.7
+	icon_state = "cup"
+	sellprice = 10
+
+/obj/item/reagent_containers/glass/cup/ceramic/examine()
+	. = ..()
+	. += span_info("It can be brushed with a dye brush to glaze it.")
+
+/obj/item/reagent_containers/glass/cup/ceramic/attackby(obj/item/I, mob/living/carbon/human/user)
+	. = ..()
+	if(istype(I, /obj/item/dye_brush))
+		if(reagents.total_volume)
+			to_chat(user, span_notice("I can't glaze the cup while it has liquid in it."))
+			return
+		if(do_after(user, 2 SECONDS, target = src))
+			to_chat(user, span_notice("I glaze the cup with the dye brush."))
+			new /obj/item/reagent_containers/glass/cup/ceramic/fancy(get_turf(src))
+			qdel(src)
+		return
+
+/obj/item/reagent_containers/glass/cup/ceramic/fancy
+	name = "fancy teacup"
+	desc = "A fancy tea cup made out of ceramic. Used to serve tea."
+	icon_state = "cup_fancy"
+	sellprice = 12

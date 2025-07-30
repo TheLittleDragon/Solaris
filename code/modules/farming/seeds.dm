@@ -127,3 +127,11 @@
 /obj/item/seeds/carrot
 	seed_identity = "carrot seeds"
 	plant_def_type = /datum/plant_def/carrot
+
+/obj/item/seeds/coffee
+	seed_identity = "coffee seeds"
+	plant_def_type = /datum/plant_def/coffee
+	
+/obj/item/seeds/tea
+	seed_identity = "tea seeds"
+	plant_def_type = /datum/plant_def/tea

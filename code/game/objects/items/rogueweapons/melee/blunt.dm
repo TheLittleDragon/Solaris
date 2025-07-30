@@ -183,17 +183,18 @@
 
 /obj/item/rogueweapon/mace/cudgel
 	name = "cudgel"
-	desc = "A stubby little club for brigands."
+	desc = "A stubby little club for brigands or thieves. Attempting parries with this is a bad idea."
 	force = 25
 	icon_state = "cudgel"
 	force_wielded = 25
-	gripped_intents = list(/datum/intent/mace/strike,/datum/intent/mace/smash)
+	possible_item_intents = list(/datum/intent/mace/strike)
+	gripped_intents = list(/datum/intent/mace/smash, /datum/intent/mace/strike)
 	smeltresult = /obj/item/ash
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_NORMAL
 	wbalance = 0
 	minstr = 7
-	wdefense = 3
+	wdefense = 1
 	resistance_flags = FLAMMABLE
 	grid_width = 32
 	grid_height = 96

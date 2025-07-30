@@ -109,7 +109,7 @@
 	name = "fireplace"
 	icon_state = "wallfire1"
 	base_state = "wallfire"
-	brightness = 10
+	light_outer_range = 4 //slightly weaker than a torch
 	bulb_colour = "#ffa35c"
 	density = FALSE
 	fueluse = 0
@@ -165,7 +165,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/rogue/wallfire/candle/tree, 32)
 
 /obj/machinery/light/rogue/wallfire/candle/weak
 	light_power = 0.9
-	light_outer_range =  6
+	light_outer_range =  4
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/rogue/wallfire/candle/weak, 32)
 
@@ -174,6 +174,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/rogue/wallfire/candle/weak, 32)
 	icon_state = "torchwall1"
 	base_state = "torchwall"
 	density = FALSE
+	light_outer_range = 5 //same as the held torch, if you put a torch into a sconce, it shouldn't magically become twice as bright, it's inconsistent.
 	var/obj/item/flashlight/flare/torch/torchy
 	fueluse = FALSE //we use the torch's fuel
 	soundloop = null
@@ -456,6 +457,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/rogue/torchholder, 0)
 							pot.reagents.remove_reagent(/datum/reagent/water, VOLUME_PER_STEW_COOK_AFTER) // Remove water first prevent overfill
 							pot.reagents.add_reagent(R.output, VOLUME_PER_STEW_COOK + VOLUME_PER_STEW_COOK_AFTER)
 							return
+			if(istype(W, /obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals_dried))
+				if(!pot.reagents.has_reagent(/datum/reagent/water, 33))
+					to_chat(user, "<span class='notice'>Not enough water.</span>")
+					return TRUE
+				if(pot.reagents.chem_temp < 374)
+					to_chat(user, "<span class='warning'>[pot] isn't boiling!</span>")
+					return
+				if(do_after(user,2 SECONDS, target = src))
+					user.visible_message("<span class='info'>[user] places [W] into the pot.</span>")
+					playsound(src.loc, 'sound/items/Fish_out.ogg', 20, TRUE)
+					pot.reagents.remove_reagent(/datum/reagent/water, 32)
+					qdel(W)
+					sleep(15 SECONDS/cooktime_divisor) // No nutritional value so make it much faster
+					playsound(src, "bubbles", 30, TRUE)
+					pot.reagents.add_reagent(/datum/reagent/water/rosewater, 32)
+					pot.reagents.remove_reagent(/datum/reagent/water, 1)
 	. = ..()
 
 //////////////////////////////////

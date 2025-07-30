@@ -224,3 +224,19 @@
 	maturation_time = 4 MINUTES
 	produce_time = 2 MINUTES
 	weed_immune = FALSE
+
+/datum/plant_def/coffee
+	name = "coffee bush"
+	icon = 'icons/roguetown/misc/crops.dmi'
+	icon_state = "coffee"
+	produce_type = /obj/item/reagent_containers/food/snacks/grown/coffee
+	produce_amount_min = 2
+	produce_amount_max = 3
+
+/datum/plant_def/tea
+	name = "tea bush"
+	icon = 'icons/roguetown/misc/crops.dmi'
+	icon_state = "tea"
+	produce_type = /obj/item/reagent_containers/food/snacks/grown/tea
+	produce_amount_min = 2
+	produce_amount_max = 3

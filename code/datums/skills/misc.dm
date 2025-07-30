@@ -98,3 +98,11 @@
 		"...as the years go by, the mantra becomes increasingly oppressive. Stitch, sew, cut ties, stitch, sew, thread the needle twice...",
 		"...you turn over the fabric, and within the two layers of the gown, you hide a secret stitched into the gown, your initials, hidden within. A forbidden mark in some cultures... you never liked the bride much..."
 	)
+
+/datum/skill/misc/ceramics
+	name = "Pottery"
+	desc = "Handles crafting and making of clay into vases and other fine-craft works."
+	dreams = list(
+		"...the wheel spins, and spins.. yet you watch as a work of art grows from its center...",
+		"...a slab of clay is molded into a beautiful statue. A testiment to Malum's blessings, and Xylix's insperation. A pure work of beauty..."
+	)

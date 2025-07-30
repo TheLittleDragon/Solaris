@@ -236,6 +236,16 @@
 					/obj/item/flashlight/flare/torch/metal,
 					/obj/item/flashlight/flare/torch/metal)
 
+/datum/supply_pack/rogue/tools/handsaw
+	name = "Handsaw"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/handsaw)
+
+/datum/supply_pack/rogue/tools/hammer
+	name = "Hammer"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/hammer/iron)
+
 /datum/supply_pack/rogue/tools/fryingpan
 	name = "Frying Pan"
 	cost = 20 // May actually be the most dangerous tool with 20 force in it. So a little bit more expensive.
