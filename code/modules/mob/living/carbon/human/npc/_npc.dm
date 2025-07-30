@@ -44,7 +44,7 @@
 	/// If the NPC's target is more than this many tiles away, they will try to leap ahead on their path.
 	var/npc_jump_distance = 4
 	/// When above this amount of stamina, the NPC will not attempt to jump.
-	var/npc_max_jump_stamina = 80
+	var/npc_max_jump_stamina = 50
 
 /mob/living/carbon/human/proc/IsStandingStill()
 	return doing || resisting || pickpocketing
