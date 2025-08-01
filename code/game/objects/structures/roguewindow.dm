@@ -1,7 +1,7 @@
 /obj/structure/roguewindow
 	name = "window"
 	desc = "A glass window."
-	icon = 'icons/roguetown/misc/structure.dmi'
+	icon = 'icons/roguetown/misc/roguewindow.dmi'
 	icon_state = "window-solid"
 	layer = TABLE_LAYER
 	density = TRUE
@@ -115,6 +115,23 @@
 	..()
 	lockdir = dir
 	icon_state = base_state
+
+/obj/structure/roguewindow/harem1
+	name = "harem window"
+	icon_state = "harem1-solid"
+	base_state = "harem1-solid"
+
+/obj/structure/roguewindow/harem2
+	name = "harem window"
+	icon_state = "harem2-solid"
+	base_state = "harem2-solid"
+	opacity = TRUE
+
+/obj/structure/roguewindow/harem3
+	name = "harem window"
+	icon_state = "harem3-solid"
+	base_state = "harem3-solid"
+
 
 /obj/structure/roguewindow/openclose/Initialize()
 	lockdir = dir

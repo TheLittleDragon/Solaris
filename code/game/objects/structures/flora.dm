@@ -58,23 +58,9 @@
 /obj/structure/flora/stump
 	name = "stump"
 	desc = "" //running naked through the trees
-	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "tree_stump"
 	density = FALSE
 	pixel_x = -16
-
-/obj/structure/flora/tree/pine
-	name = "pine tree"
-	desc = ""
-	icon = 'icons/obj/flora/pinetrees.dmi'
-	icon_state = "pine_1"
-	var/list/icon_states = list("pine_1", "pine_2", "pine_3")
-
-/obj/structure/flora/tree/pine/Initialize()
-	. = ..()
-
-	if(islist(icon_states && icon_states.len))
-		icon_state = pick(icon_states)
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
@@ -90,18 +76,6 @@
 	. = ..()
 	icon_state = pick("palm1","palm2")
 	pixel_x = 0
-
-/obj/structure/festivus
-	name = "festivus pole"
-	icon = 'icons/obj/flora/pinetrees.dmi'
-	icon_state = "festivus_pole"
-	desc = ""
-
-/obj/structure/festivus/anchored
-	name = "suplexed rod"
-	desc = ""
-	icon_state = "anchored_rod"
-	anchored = TRUE
 
 /obj/structure/flora/tree/dead/Initialize()
 	icon_state = "tree_[rand(1, 6)]"

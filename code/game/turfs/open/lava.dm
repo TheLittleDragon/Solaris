@@ -3,6 +3,7 @@
 /turf/open/lava
 	name = "lava"
 	icon_state = "lava"
+	desc = "Thick viscous bubbles swell and burst with sprays of molten rock. What was once locked away in the bowels of the earth now thrashes and gurgles on the surface, glowing with unimaginable heat. If you touch it, you will die."
 	icon = 'icons/turf/roguefloor.dmi'
 	gender = PLURAL //"That's some lava."
 	baseturfs = /turf/open/lava //lava all the way down

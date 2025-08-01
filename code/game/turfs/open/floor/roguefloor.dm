@@ -21,6 +21,8 @@
 
 /turf/open/floor/rogue/ruinedwood
 	icon_state = "wooden_floor"
+	name = "wooden floorboards"
+	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
@@ -35,11 +37,17 @@
 
 /turf/open/floor/rogue/ruinedwood/turned
 	icon_state = "wooden_floort"
+	name = "wooden floorboards"
+	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
 /turf/open/floor/rogue/ruinedwood/spiral
 	icon_state = "weird1"
+	name = "wooden floorboards"
+	desc = "Interlocking wooden floorboards."
 /turf/open/floor/rogue/ruinedwood/chevron
 	icon_state = "weird2"
+	name = "floorboards"
+	desc = "Interlocking wooden floorboards."
 
 /turf/open/floor/rogue/ruinedwood/platform
 	name = "platform"
@@ -61,6 +69,8 @@
 	landsound = 'sound/foley/jumpland/grassland.wav'
 
 /turf/open/floor/rogue/twig
+	name = "twig flooring"
+	desc = "Bundles of twigs have been laid flat against the ground. They creak and crackle with the slightest weight."
 	icon_state = "twig"
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_SOFT_BAREFOOT
@@ -73,7 +83,7 @@
 	. = ..()
 
 /turf/open/floor/rogue/twig/platform
-	name = "platform"
+	name = "twig platform"
 	desc = "A destructible platform."
 	damage_deflection = 4
 	max_integrity = 100		//It's fucking twig.
@@ -97,6 +107,8 @@
 	canSmoothWith = list(/turf/open/floor/rogue/wood,/turf/open/floor/carpet)
 
 /turf/open/floor/rogue/wood/nosmooth //these are here so we can put wood floors next to each other but not have them smooth
+	name = "wooden floorboards"
+	desc = "Polished wooden floorboards scuffed by scratches and a persistent layer of grime."
 	icon_state = "wooden_floor"
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/floor/rogue/wood/nosmooth,/turf/open/floor/carpet)
@@ -112,12 +124,15 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/rogue/woodturned/nosmooth
+	name = "wooden floorboards"
+	desc = "Polished wooden floorboards scuffed by scratches and a persistent layer of grime."
 	icon_state = "wooden_floort"
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/floor/rogue/woodturned/nosmooth,/turf/open/floor/carpet)
 
 /turf/open/floor/rogue/rooftop
 	name = "roof"
+	desc = "Overlapping wooden shingles protect the building and its inhabitants from the rain."
 	icon_state = "roof-arw"
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -512,6 +527,7 @@
 
 /turf/open/floor/rogue/sand
 	name = "sand"
+	desc = "Fine grains shift and hiss softly beneath your step."
 	icon = 'icons/turf/sand.dmi'
 	icon_state = "sand"
 	layer = MID_TURF_LAYER
@@ -530,7 +546,7 @@
 
 /turf/open/floor/rogue/hay
 	name = "hay"
-	desc = "For horses and cows like you."
+	desc = "Dried grass strewn across the floor. It's not the worst thing to sleep on."
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "hay"
 	layer = MID_TURF_LAYER
@@ -641,8 +657,8 @@
 	dir = rand(0,8)
 
 /turf/open/floor/rogue/volcanic
-	name = "dirt"
-	desc = "The dirt is pocked with the scars of countless steps."
+	name = "solidified lava"
+	desc = "Once, it burned anything it touched with the hatred of hell itself. Now a hardened black crust crunches beneath your feet."
 	icon_state = "lavafloor"
 	layer = MID_TURF_LAYER
 	footstep = FOOTSTEP_SAND
@@ -662,6 +678,8 @@
 
 /turf/open/floor/rogue/blocks
 	icon_state = "blocks"
+	name = "stone flooring"
+	desc = "These rough stone slabs have been arranged in a neat grid for a rustic yet tidy charm."
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -690,14 +708,22 @@
 
 /turf/open/floor/rogue/blocks/stonered
 	icon_state = "stoneredlarge"
+	name = "large red tiles"
+	desc = "Large red earthen tiles carefully set in a pleasantly symmetrical pattern."
 /turf/open/floor/rogue/blocks/stonered/tiny
 	icon_state = "stoneredtiny"
+	name = "square red tiles"
+	desc = "Small square earthen tiles carefully arranged in a somewhat plain pattern."
+
 /turf/open/floor/rogue/blocks/green
 	icon_state = "greenblocks"
+
 /turf/open/floor/rogue/blocks/bluestone
 	icon_state = "bluestone2"
+
 /turf/open/floor/rogue/blocks/newstone
 	icon_state = "newstone2"
+
 /turf/open/floor/rogue/blocks/newstone/alt
 	icon_state = "bluestone"
 
@@ -764,6 +790,8 @@
 
 /turf/open/floor/rogue/churchmarble
 	icon_state = "church_marble"
+	name = "marble flooring"
+	desc = "Polished marble tiling clacks softly with every footstep. A prized material for vaunted halls."
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -797,6 +825,8 @@
 
 /turf/open/floor/rogue/church
 	icon_state = "church"
+	name = "polished tile floor"
+	desc = "Glazed tiling that has withstood the decades with barely a scratch despite the steady accumulation of dirt and grime."
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -897,6 +927,8 @@
 //
 /turf/open/floor/rogue/herringbone
 	icon_state = "herringbone"
+	name = "stone herringbone flooring"
+	desc = "These stone bricks have been carefully arranged in a rather pleasing pattern."
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -923,8 +955,8 @@
 	dir = pick(GLOB.cardinals)
 
 /obj/effect/decal/herringbone
-	name = ""
-	desc = ""
+	name = "herringbone flooring"
+	desc = "These stone bricks have been carefully arranged in a rather pleasing pattern."
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "herringedge"
 	mouse_opacity = 0
@@ -932,8 +964,8 @@
 MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/herringbone, 0)
 
 /obj/effect/decal/wood/herringbone
-	name = ""
-	desc = ""
+	name = "herringbone flooring"
+	desc = "thin planks of wood carefully arranged in a rather pleasing pattern."
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "herringbonewoodedge"
 	mouse_opacity = 0
@@ -941,8 +973,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/herringbone, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/wood/herringbone, 0)
 
 /obj/effect/decal/wood/herringbone2
-	name = ""
-	desc = ""
+	name = "herringbone flooring"
+	desc = "thin planks of wood carefully arranged in a rather pleasing pattern."
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "herringbonewood2edge"
 	mouse_opacity = 0
@@ -950,6 +982,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/wood/herringbone, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/wood/herringbone2, 0)
 
 /turf/open/floor/rogue/ruinedwood/herringbone
+	name = "wooden herringbone flooring"
+	desc = "Thin planks of wood carefully arranged in a rather pleasing pattern."
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
@@ -969,6 +1003,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/wood/herringbone2, 0)
 
 /turf/open/floor/rogue/cobble
 	icon_state = "cobblestone1"
+	name = "cobblestone"
+	desc = "Stone bricks carefully inlaid upon the ground for a more refined and resilient path."
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -993,6 +1029,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/wood/herringbone2, 0)
 	icon_state = "cobblestone[rand(1,3)]"
 
 /turf/open/floor/rogue/cobble/mossy
+	name = "mossy cobblestone"
+	desc = "Dirt and moss have crept between the gaps of this stone-brick flooring."
 	icon_state = "mossystone1"
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -1018,21 +1056,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/wood/herringbone2, 0)
 	icon_state = "mossystone[rand(1,3)]"
 
 /obj/effect/decal/mossy
-	name = ""
-	desc = ""
+	name = "mossy brick floor"
+	desc = "dirt and moss have crept between the gaps of this stone-brick flooring."
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "mossyedge"
 	mouse_opacity = 0
 
 /obj/effect/decal/cobble/mossy
-	name = ""
-	desc = ""
+	name = "mossy brick floor"
+	desc = "Dirt and moss have crept between the gaps of this stone-brick flooring. Rather fitting for an outdoor garden; not so much for a home."
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "mossystone_edges"
 	mouse_opacity = 0
 
 /turf/open/floor/rogue/cobblerock
 	icon_state = "cobblerock"
+	name = "cobbled rock path"
+	desc = "A crude path of lumpy rocks that allows feet and cart wheels alike to escape the treacherous mud."
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -1048,8 +1088,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/wood/herringbone2, 0)
 	roguesmooth(adjacencies)
 
 /obj/effect/decal/cobbleedge
-	name = ""
-	desc = ""
+	name = "old cobble path"
+	desc = "Erosion and time have worn this path to half-scattered rocks slowly sinking back into the earth."
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "cobblestone_edges"
 	mouse_opacity = 0
@@ -1065,8 +1105,49 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/cobbleedge, 0)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/church_line, 0)
 
+/obj/effect/decal/carpet
+	name = "exotic rug"
+	desc = "Dazzling symmetrical patterns flow with an old culture's style."
+	pixel_w = -16
+	pixel_z = -17
+	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon_state = "kover"
+
+/obj/effect/decal/carpet/kover_darkred
+	name = "exotic red rug"
+	desc = "Dazzling symmetrical patterns flow with an old culture's style."
+	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon_state = "kover_darkred"
+
+/obj/effect/decal/carpet/kover_purple
+	name = "exotic purple rug"
+	desc = "Dazzling symmetrical patterns flow with an old culture's style."
+	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon_state = "kover_purple"
+
+/obj/effect/decal/carpet/kover_black
+	name = "exotic black carpet"
+	desc = "Dazzling symmetrical patterns flow with an old culture's style."
+	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon_state = "kover_black"
+
+/obj/effect/decal/carpet/square
+	name = "green carpet"
+	desc = "Soft green carpeting that reminds you of grassy meadows."
+	pixel_w = -16
+	pixel_z = -16
+	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon_state = "greencarpet"
+
+/obj/effect/decal/carpet/square/black
+	name = "black carpet"
+	desc = "As black as the night sky during a storm."
+	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon_state = "blackcarpet"
+
 /turf/open/floor/rogue/tile
 	icon_state = "chess"
+	desc = "Feet march across a grid of plots and schemes."
 	landsound = 'sound/foley/jumpland/tileland.wav'
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -1101,20 +1182,46 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/church_line, 0)
 	icon_state = "masonicspiral"
 
 /turf/open/floor/rogue/tile/bath
+	name = "bath tiles"
+	desc = "A special waterproof flooring suited for baths and pools. Slippery when wet."
 	icon_state = "bathtile"
+
+
 /turf/open/floor/rogue/tile/brick
 	icon_state = "bricktile"
+
 /turf/open/floor/rogue/tile/bfloorz
 	icon_state = "bfloorz"
+
 /turf/open/floor/rogue/tile/tilerg
 	icon_state = "tilerg"
+
 /turf/open/floor/rogue/tile/checker
 	icon_state = "linoleum"
+
 /turf/open/floor/rogue/tile/checkeralt
 	icon_state = "tile"
 
+/turf/open/floor/rogue/tile/brownbrick
+	icon_state = "brown"
+
+/turf/open/floor/rogue/tile/harem
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "harem"
+
+/turf/open/floor/rogue/tile/harem1
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "harem1"
+
+/turf/open/floor/rogue/tile/harem2
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "harem2"
+
+
 /turf/open/floor/rogue/concrete
 	icon_state = "concretefloor1"
+	name = "slab flooring"
+	desc = "Solid stone slabs have been carefully carved and laid to rest with nary a hair's breadth between them."
 	landsound = 'sound/foley/jumpland/stoneland.wav'
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -1145,6 +1252,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/church_line, 0)
 
 /turf/open/floor/rogue/metal
 	icon_state = "plating1"
+	desc = "Covered in the tell-tale nicks of thousands of hammer-blows, this metal flooring clangs beneath your feet with every step."
 	landsound = 'sound/foley/jumpland/metalland.wav'
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -1180,6 +1288,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/church_line, 0)
 
 /turf/open/floor/rogue/carpet
 	icon_state = "carpet"
+	desc = "Plush fabric softens your step. Did you remember to wipe your shoes?"
 	landsound = 'sound/foley/jumpland/carpetland.wav'
 	footstep = FOOTSTEP_CARPET
 	barefootstep = FOOTSTEP_SOFT_BAREFOOT
@@ -1258,6 +1367,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/effect/decal/church_line, 0)
 	dir = pick(GLOB.cardinals)
 
 /turf/open/floor/rogue/naturalstone
+	name = "rough stone ground"
+	desc = "Rough stone that's been exposed to the air either through erosion or the swing of a pickaxe. A few patchy lichens eke out a living between the cracks."
 	icon_state = "digstone"
 	footstep = FOOTSTEP_STONE
 	barefootstep = FOOTSTEP_HARD_BAREFOOT

@@ -210,6 +210,9 @@
 /obj/item/clothing/under/roguetown/skirt/red
 	color = CLOTHING_RED
 
+/obj/item/clothing/under/roguetown/skirt/brown
+	color = CLOTHING_BROWN
+
 /obj/item/clothing/under/roguetown/chainlegs
 	name = "steel chain chausses"
 	desc = "Chain leggings composed of interlinked metal rings."

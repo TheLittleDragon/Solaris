@@ -405,7 +405,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/roguemachine/scomm, 32)
 /obj/item/listenstone
 	name = "emerald choker"
 	icon_state = "listenstone"
-	desc = "A iron and gold choker with an emerald gem."
+	desc = "An iron and gold choker with an emerald gem."
 	gripped_intents = null
 	//dropshrink = 0.75
 	possible_item_intents = list(INTENT_GENERIC)
@@ -539,7 +539,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/roguemachine/scomm, 32)
 
 /obj/item/listeningdevice
 	name = "listener"
-	desc = "A ever attentive ear"
+	desc = "An ever-attentive ear"
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "listenstone"
 	dropshrink = 0.75
@@ -564,7 +564,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/roguemachine/scomm, 32)
 
 /obj/structure/listeningdeviceactive
 	name = "listener"
-	desc = "A ever attentive ear, a red light blinks upon it..."
+	desc = "An ever attentive ear. A red light blinks upon it..."
 	icon_state = "listenstone_active"
 	icon = 'icons/roguetown/items/misc.dmi'
 	var/listening = TRUE

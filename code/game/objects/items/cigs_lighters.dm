@@ -336,7 +336,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/rollie
 	name = "zig"
-	desc = ""
+	desc = "Dried westleach carefully wrapped in fine paper for a soothing flavor."
 	icon_state = "spliffoff"
 	icon_on = "spliffon"
 	icon_off = "spliffoff"

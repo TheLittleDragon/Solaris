@@ -75,6 +75,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/walldeco/innsign, 32)
 	icon_state = "goblet"
 	layer = ABOVE_MOB_LAYER
 
+/obj/structure/fluff/walldeco/flower
+	name = "sign"
+	desc = ""
+	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	icon_state = "flower"
+	layer = ABOVE_MOB_LAYER
+
 /obj/structure/fluff/walldeco/barbersign
 	name = "sign"
 	desc = "The iconic swirl of the barber surgeon."

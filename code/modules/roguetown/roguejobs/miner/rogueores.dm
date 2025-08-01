@@ -77,6 +77,17 @@
 	icon_state = "orecoal[rand(1,3)]"
 	..()
 
+
+/obj/item/rogueore/charcoal
+	name = "charcoal"
+	icon_state = "oreada"
+	desc = "Burnt lumps of wood."
+	dropshrink = 0.8
+	color = "#929292"
+	firefuel = 15 MINUTES
+	smeltresult = /obj/item/rogueore/charcoal
+	sellprice = 1
+
 /obj/item/ingot
 	name = "ingot"
 	icon = 'icons/roguetown/items/ore.dmi'
