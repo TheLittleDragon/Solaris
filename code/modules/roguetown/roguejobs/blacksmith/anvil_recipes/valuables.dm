@@ -83,7 +83,7 @@
 	name = "Ruby Ring (+1 Ruby)"
 	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
-	additional_items = list(/obj/item/roguegem)
+	additional_items = list(/obj/item/roguegem/ruby)
 	created_item = /obj/item/clothing/ring/ruby
 
 /datum/anvil_recipe/valuables/topazg
@@ -134,7 +134,7 @@
 	name = "Ruby Ring (+1 Ruby)"
 	category = "Valuables"
 	req_bar = /obj/item/ingot/silver
-	additional_items = list(/obj/item/roguegem)
+	additional_items = list(/obj/item/roguegem/ruby)
 	created_item = /obj/item/clothing/ring/rubys
 
 /datum/anvil_recipe/valuables/topazs
@@ -169,7 +169,7 @@
 	name = "Terminus Est (+1 Gold Bar, +1 Steel, +1 Ruby)"
 	category = "Valuables"
 	req_bar = /obj/item/ingot/gold
-	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/steel, /obj/item/roguegem)
+	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/steel, /obj/item/roguegem/ruby)
 	created_item = /obj/item/rogueweapon/sword/long/exe/cloth
 	craftdiff = 3
 	i_type = "Weapons"

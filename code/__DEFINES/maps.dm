@@ -20,6 +20,9 @@ Multi-Z stations are supported and multi-Z mining and away missions would
 require only minor tweaks.
 */
 
+/// A map key that corresponds to being one exclusively for Space.
+#define SPACE_KEY "space"
+
 // helpers for modifying jobs, used in various job_changes.dm files
 #define MAP_JOB_CHECK if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return; }
 #define MAP_JOB_CHECK_BASE if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return ..(); }

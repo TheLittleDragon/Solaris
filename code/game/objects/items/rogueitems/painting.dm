@@ -75,3 +75,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/walldeco/painting/queen, 32)
 	stolen_painting = /obj/item/rogue/painting/seraphina
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/walldeco/painting/seraphina, 32)
+
+
+/obj/item/rogue/painting/skullzhg
+	icon_state = "skullpainting"
+	desc = "A moody scene depicting a skull and candles on a table. Memento mori."
+	sellprice = 40
+	deployed_structure = /obj/structure/fluff/walldeco/painting/skull
+
+/obj/structure/fluff/walldeco/painting/skull
+	desc = "A moody scene depicting a skull and candles on a table. Memento mori."
+	icon_state = "skullpainting_deployed"
+	stolen_painting = /obj/item/rogue/painting/skullzhg

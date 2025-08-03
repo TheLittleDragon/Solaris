@@ -17689,8 +17689,8 @@
 /turf/open/floor/rogue/tile/masonic/inverted,
 /area/provincial/underground/dungeon/vulnafir)
 "fUg" = (
-/obj/item/roguegem,
-/obj/item/roguegem,
+/obj/item/roguegem/ruby,
+/obj/item/roguegem/ruby,
 /obj/item/roguegem/violet,
 /obj/item/roguegem/yellow,
 /obj/item/roguegem/green,
@@ -42078,6 +42078,10 @@
 /obj/effect/decal/church_line/directional/east,
 /turf/open/floor/rogue/grass,
 /area/provincial/indoors/dungeon/giuseppes_toybox)
+"nJF" = (
+/obj/effect/landmark/map_load_mark/south_mine_road,
+/turf/closed/mineral/random/rogue/high,
+/area/provincial/underground/field)
 "nJH" = (
 /obj/effect/decal/church_line/directional/west,
 /obj/structure/chair/stool/rogue,
@@ -72811,7 +72815,7 @@
 /area/provincial/underground/dungeon/old_ruin)
 "xUK" = (
 /obj/structure/table/vtable,
-/obj/item/roguegem{
+/obj/item/roguegem/ruby{
 	pixel_y = 10
 	},
 /obj/item/roguegem/blue,
@@ -240324,7 +240328,7 @@ ojJ
 nXg
 nXg
 nXg
-nXg
+nJF
 nXg
 nXg
 nXg

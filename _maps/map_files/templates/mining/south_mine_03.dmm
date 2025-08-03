@@ -1,0 +1,19 @@
+"a" = (/turf/closed/mineral/random/rogue/high,/area/provincial)
+"g" = (/obj/item/rogueweapon/pick,/obj/effect/decal/remains/human,/turf/open/floor/rogue/cobblerock,/area/provincial)
+"n" = (/turf/open/floor/rogue/cobblerock,/area/provincial)
+"p" = (/turf/closed/mineral/random/rogue/med,/area/provincial)
+"A" = (/turf/closed/mineral/random/rogue,/area/provincial)
+"O" = (/obj/item/rogueweapon/pick,/obj/effect/decal/remains/human,/mob/living/simple_animal/hostile/retaliate/rogue/bigrat,/turf/open/floor/rogue/cobblerock,/area/provincial)
+
+(1,1,1) = {"
+ppppppAAAA
+appppppAAA
+aapppppAAA
+aappppppAA
+naOanpppAA
+nOaganppAA
+aaaaappppA
+aaaaaapppp
+aaaaaapppp
+aaaaaaappp
+"}

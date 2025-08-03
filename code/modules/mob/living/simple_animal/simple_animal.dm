@@ -293,7 +293,8 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, DEAD)
 			return
 	if(footstep_type)
-		AddComponent(/datum/component/footstep, footstep_type)
+		if(!QDELING(src))
+			AddComponent(/datum/component/footstep, footstep_type)
 
 /mob/living/simple_animal/handle_status_effects()
 	..()

@@ -12,7 +12,7 @@
 /datum/supply_pack/rogue/mage/ruby
 	name = "Ruby"
 	cost = 150
-	contains = list(/obj/item/roguegem)
+	contains = list(/obj/item/roguegem/ruby)
 
 /datum/supply_pack/rogue/mage/quartz
 	name = "Quartz"

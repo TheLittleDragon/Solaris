@@ -102,3 +102,12 @@
 	allow_quick_gather = TRUE
 	allow_quick_empty = TRUE
 	insert_preposition = "in"
+
+/datum/component/storage/concrete/roguetown/saddle
+	screen_max_rows = 4
+	screen_max_columns = 4
+	max_w_class = WEIGHT_CLASS_NORMAL
+
+/datum/component/storage/tray
+	insert_preposition = "on"
+	max_w_class = WEIGHT_CLASS_NORMAL

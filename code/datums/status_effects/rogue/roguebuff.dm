@@ -252,6 +252,12 @@
 	desc = ""
 	icon_state = "weed"
 
+/datum/status_effect/buff/seelie_drugs
+	id = "seelie drugs"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/druqks
+	effectedstats = list("intelligence" = 2, "endurance" = 4, "speed" = -3)
+	duration = 20 SECONDS
+
 /datum/status_effect/buff/vitae
 	id = "druqks"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/vitae

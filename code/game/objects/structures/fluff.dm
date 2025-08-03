@@ -1022,7 +1022,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/wallclock/vampire, 32)
 	layer = BELOW_MOB_LAYER
 	max_integrity = 100
 	sellprice = 40
-	flags_1 = HEAR_1
 	var/chance2hear = 30
 	buckleverb = "crucifie"
 	can_buckle = 1
@@ -1031,6 +1030,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fluff/wallclock/vampire, 32)
 	dir = NORTH
 	buckle_requires_restraints = 1
 	buckle_prevents_pull = 1
+
+/obj/structure/fluff/psycross/Initialize()
+	. = ..()
+	become_hearing_sensitive()
+
+/obj/structure/fluff/psycross/Destroy()
+	lose_hearing_sensitivity()
+	return ..()
 
 /obj/structure/fluff/psycross/post_buckle_mob(mob/living/M)
 	..()

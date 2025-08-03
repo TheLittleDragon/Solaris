@@ -16,8 +16,32 @@
 /// Return value to cancel attaching
 #define ELEMENT_INCOMPATIBLE 1
 
-/// /datum/element flags
-#define ELEMENT_DETACH		(1 << 0)
+/// fires on the target datum when an element is attached to it (/datum/element)
+#define COMSIG_ELEMENT_ATTACH "element_attach"
+/// fires on the target datum when an element is detached from it (/datum/element)
+#define COMSIG_ELEMENT_DETACH "element_detach"
+
+/// before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
+/// you should only be using this if you want to block deletion
+/// that's the only functional difference between it and COMSIG_QDELETING, outside setting QDELETING to detect
+#define COMSIG_PREQDELETED "parent_preqdeleted"
+/// just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
+#define COMSIG_QDELETING "parent_qdeleting"
+
+// /datum/element flags
+/// Causes the detach proc to be called when the host object is being deleted.
+/// Should only be used if you need to perform cleanup not related to the host object.
+/// You do not need this if you are only unregistering signals, for instance.
+/// You would need it if you are doing something like removing the target from a processing list.
+#define ELEMENT_DETACH_ON_HOST_DESTROY (1 << 0)
+/**
+  * Only elements created with the same arguments given after `id_arg_index` share an element instance
+  * The arguments are the same when the text and number values are the same and all other values have the same ref
+  */
+#define ELEMENT_BESPOKE		(1 << 1)
+/// Causes all detach arguments to be passed to detach instead of only being used to identify the element
+/// When this is used your Detach proc should have the same signature as your Attach proc
+#define ELEMENT_COMPLEX_DETACH (1 << 2)
 
 // How multiple components of the exact same type are handled in the same datum
 /// old component is deleted (default)
@@ -26,8 +50,17 @@
 #define COMPONENT_DUPE_ALLOWED			1
 /// new component is deleted
 #define COMPONENT_DUPE_UNIQUE			2
+/**
+ * Component uses source tracking to manage adding and removal logic.
+ * Add a source/spawn to/the component by using AddComponentFrom(source, component_type, args...)
+ * Removing the last source will automatically remove the component from the parent.
+ * Arguments will be passed to on_source_add(source, args...); ensure that Initialize and on_source_add have the same signature.
+ */
+#define COMPONENT_DUPE_SOURCES 3
 /// old component is given the initialization args of the new
 #define COMPONENT_DUPE_UNIQUE_PASSARGS	4
+/// each component of the same type is consulted as to whether the duplicate should be allowed
+#define COMPONENT_DUPE_SELECTIVE 5
 
 // All signals. Format:
 // When the signal is called: (signal arguments)
@@ -38,6 +71,8 @@
 // start global signals with "!", this used to be necessary but now it's just a formatting choice
 /// from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
 #define COMSIG_GLOB_NEW_Z "!new_z"
+/// sent after world.maxx and/or world.maxy are expanded: (has_exapnded_world_maxx, has_expanded_world_maxy)
+#define COMSIG_GLOB_EXPANDED_WORLD_BOUNDS "!expanded_world_bounds"
 /// called after a successful var edit somewhere in the world: (list/args)
 #define COMSIG_GLOB_VAR_EDIT "!var_edit"
 /// mob was created somewhere : (mob)

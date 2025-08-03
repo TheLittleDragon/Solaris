@@ -316,12 +316,6 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 	else
 		return ..()
 
-/obj/item/roguegem/amethyst
-	name = "amethyst"
-	icon_state = "amethyst"
-	sellprice = 18
-	desc = "A deep lavender crystal, it surges with magical energy, yet it's artificial nature means it is worth little."
-
 // Leaving this in for now for aesthetics, but they're now useless
 /obj/effect/roguerune
 	name = "arcane rune"

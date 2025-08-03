@@ -84,7 +84,7 @@
 	. = ..()
 	var/datum/component/magcom = GetComponent(/datum/component/anti_magic)
 	if(magcom)
-		magcom.RemoveComponent()
+		magcom.ClearFromParent()
 
 //gold rings
 /obj/item/clothing/ring/emerald

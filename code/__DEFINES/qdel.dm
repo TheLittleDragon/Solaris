@@ -31,7 +31,7 @@
 #define GC_DEL_QUEUE (10 SECONDS)
 
 #define QDELING(X) (X.gc_destroyed)
-#define QDELETED(X) (!X || QDELING(X))
+#define QDELETED(X) (isnull(X) || QDELING(X))
 #define QDESTROYING(X) (!X || X.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 
 //Theses were taken from Vanderlin, some are commented out if they are dupped elsewhere

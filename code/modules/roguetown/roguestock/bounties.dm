@@ -31,5 +31,5 @@
 			return TRUE
 		if(istype(I, /obj/item/reagent_containers/glass/cup))
 			return TRUE
-		if(istype(I, /obj/item/roguegem))
+		if(istype(I, /obj/item/roguegem/ruby))
 			return TRUE
