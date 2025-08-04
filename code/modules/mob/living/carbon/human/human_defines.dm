@@ -107,6 +107,7 @@
 	var/datum/devotion/devotion = null // Used for cleric_holder for priests
 
 	var/headshot_link = null
+	var/chatheadshot = null
 	var/flavortext = null
 	var/flavortext_display = null
 	var/ooc_notes = null

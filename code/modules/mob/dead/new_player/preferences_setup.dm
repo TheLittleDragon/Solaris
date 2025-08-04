@@ -20,6 +20,7 @@
 	ooc_extra_link = null
 	ooc_extra = null
 	headshot_link = null
+	chatheadshot = 1
 	features = pref_species.get_random_features()
 	body_markings = pref_species.get_random_body_markings(features)
 	accessory = "Nothing"
