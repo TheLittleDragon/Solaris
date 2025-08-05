@@ -128,17 +128,17 @@
 	sellprice = 80
 
 /datum/crafting_recipe/roguetown/leather/bearcloak
-	name = "direbear cloak (4 leather, 2 fur)"
+	name = "direbear cloak (4 leather, 1 direbear fur)"
 	result = list(/obj/item/clothing/cloak/darkcloak/bear)
-	reqs = list(/obj/item/natural/fur = 2,
+	reqs = list(/obj/item/natural/fur/direbear = 1,
 				/obj/item/natural/hide/cured = 4)
 	craftdiff = 3
 	sellprice = 80
 
 /datum/crafting_recipe/roguetown/leather/lightbearcloak
-	name = "light direbear cloak (4 leather, 2 fur)"
+	name = "light direbear cloak (4 leather, 1 direbear fur)"
 	result = list(/obj/item/clothing/cloak/darkcloak/bear/light)
-	reqs = list(/obj/item/natural/fur = 2,
+	reqs = list(/obj/item/natural/fur/direbear = 1,
 				/obj/item/natural/hide/cured = 4)
 	craftdiff = 3
 	sellprice = 80

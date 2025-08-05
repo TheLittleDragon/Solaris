@@ -126,6 +126,14 @@
 	additional_items = list(/obj/item/rogueweapon/pick, /obj/item/roguegear, /obj/item/roguegear, /obj/item/roguegear, /obj/item/rope/chain)
 	craftdiff = 5
 
+/datum/anvil_recipe/engineering/bronze/headhook
+	name = "Bronze Headhook (+2 Fibers)"
+	category = "Engineering"
+	req_bar = /obj/item/ingot/bronze
+	created_item = /obj/item/storage/hip/headhook/bronze
+	additional_items = list(/obj/item/natural/fibers = 2)
+	craftdiff = 3
+
 // ------------ PROSTHETICS ----------------
 
 /datum/anvil_recipe/engineering/bronze/prosthetic/bronzeleftarm

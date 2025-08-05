@@ -1,10 +1,10 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/troll
-	icon = 'icons/roguetown/mob/monster/trolls.dmi'
+	icon = 'icons/roguetown/mob/monster/trolls/trolls.dmi'
 	name = "troll"
 	desc = "Elven legends say these monsters were servants of Tamari tasked to guard his realm; nowadays they are sometimes found in the company of orcs. It's said that fire curbs their almost magical regeneration."
-	icon_state = "Troll"
-	icon_living = "Troll"
-	icon_dead = "Trolld"
+	icon_state = "troll"
+	icon_living = "troll"
+	icon_dead = "troll_dead"
 	pixel_x = -16
 
 	faction = list("trolls")
@@ -21,11 +21,33 @@
 	move_to_delay = 7
 	vision_range = 6
 	aggro_vision_range = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 15,
-						/obj/item/natural/hide = 15, /obj/item/natural/bundle/bone/full = 3, /obj/item/alch/sinew = 7, /obj/item/alch/horn = 2, /obj/item/alch/viscera = 3)
+	botched_butcher_results = list (
+		/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2,
+		/obj/item/natural/bundle/bone/full = 1,
+		/obj/item/alch/horn = 1, 
+		/obj/item/natural/hide = 2)
+	butcher_results = list(
+		/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 3,
+		/obj/item/natural/hide = 3,
+		/obj/item/natural/bundle/bone/full = 1,
+		/obj/item/alch/sinew = 5,
+		/obj/item/alch/horn = 2,
+		/obj/item/alch/viscera = 3,
+		/obj/item/natural/head/troll = 1, // We want head in normal tier to guarantee towner hunter get heads
+		)
+	perfect_butcher_results = list(
+		/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 5,
+		/obj/item/natural/hide = 5,
+		/obj/item/natural/bundle/bone/full = 1, 
+		/obj/item/alch/sinew = 7, 
+		/obj/item/alch/horn = 2, 
+		/obj/item/alch/viscera = 3,
+		/obj/item/natural/head/troll = 1,
+		)
 	health = TROLL_HEALTH * 1.1
 	maxHealth = TROLL_HEALTH
 	food_type = list(
+					/obj/item/reagent_containers/food/snacks/rogue/meat,
 					/obj/item/bodypart,
 					/obj/item/organ)
 
@@ -97,6 +119,20 @@
 		GiveTarget(pulledby)
 	if(fire_stacks <= 0)
 		adjustHealth(-rand(20,35))
+
+/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog/LoseTarget()
+	..()
+	if(health > 0)
+		icon_state = "troll_hiding"
+
+/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog/Moved()
+	. = ..()
+	if(!icon_state == "troll")
+		icon_state = "troll"
+
+/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog/GiveTarget()
+	..()
+	icon_state = "troll_ambush"
 
 /mob/living/simple_animal/hostile/retaliate/rogue/troll/simple_limb_hit(zone)
 	if(!zone)

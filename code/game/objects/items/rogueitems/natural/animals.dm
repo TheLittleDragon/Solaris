@@ -23,12 +23,46 @@
 	color = "#5c5243"
 	sellprice = 18
 
-/obj/item/natural/head/wolf
-	name = "wolf head"
-	desc = "the head of a fearsome wolf."
-	icon_state = "volfhead"
-	layer = 3.1
-	sellprice = 15
+/obj/item/natural/fur/goat
+	desc = "from a gote."
+	icon_state = "pelt_gote"
+	color = null
+
+/obj/item/natural/fur/wolf
+	desc = "from a wolf."
+	icon_state = "pelt_wolf"
+	color = null
+
+/obj/item/natural/fur/fox
+	desc = "from a venard."
+	icon_state = "pelt_fox"
+	color = null
+
+/obj/item/natural/fur/bobcat
+	desc = "from a lynx."
+	icon_state = "pelt_bobcat"
+	color = null
+
+/obj/item/natural/fur/mole
+	desc = "from a mole."
+	icon_state = "pelt_mole"
+	color = null
+
+/obj/item/natural/fur/rat
+	desc = "from a rous."
+	icon_state = "pelt_rous"
+	color = null
+
+/obj/item/natural/fur/direbear
+	desc = "fur from one of Dendor's mightiest creachers."
+	icon_state = "pelt_direbear"
+	color = "#33302b"
+	sellprice = 28
+
+/obj/item/natural/fur/rabbit
+	desc = "from a cabbit."
+	icon_state = "wool2"
+	color = "#cecac4"
 
 //RTD make this a storage item and make clickign on animals with things put it in storage
 /obj/item/natural/saddle
@@ -177,3 +211,10 @@
 	desc = "Dismembered head of a big dragon."
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 200
+
+/obj/item/natural/rabbitsfoot
+	name = "rabbit's foot"
+	icon_state = "rabbitfoot"
+	desc = "A rabbit's foot. A lucky charm."
+	w_class = WEIGHT_CLASS_TINY
+	sellprice = 10

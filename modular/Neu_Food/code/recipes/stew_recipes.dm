@@ -38,6 +38,10 @@
 	inputs = list(/obj/item/reagent_containers/food/snacks/rogue/meat/mince/fish)
 	output = /datum/reagent/consumable/soup/stew/fish
 
+/datum/stew_recipe/rabbit
+	inputs = list(/obj/item/reagent_containers/food/snacks/rogue/meat/mince/rabbit)
+	output = /datum/reagent/consumable/soup/stew/rabbit
+
 /datum/stew_recipe/spider
 	inputs = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider)
 	output = /datum/reagent/consumable/soup/stew/yucky

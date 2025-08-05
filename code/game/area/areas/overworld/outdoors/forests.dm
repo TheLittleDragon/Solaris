@@ -16,6 +16,7 @@
 				/turf/open/floor/rogue/grass)
 	ambush_mobs = list(
 				/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 40,
+				/mob/living/simple_animal/hostile/retaliate/rogue/wolf/bobcat = 20,
 				/mob/living/carbon/human/species/skeleton/npc/ambush = 10,
 				/mob/living/carbon/human/species/goblin/npc/ambush = 30)
 	first_time_text = "THE EMERALD GLADE"

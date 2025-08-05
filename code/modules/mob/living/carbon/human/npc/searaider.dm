@@ -52,6 +52,7 @@ GLOBAL_LIST_INIT(searaider_aggro, world.file2list("strings/rt/searaideraggroline
 		organ_eyes.eye_color = pick("27becc", "35cc27", "000000")
 	update_hair()
 	update_body()
+	head.sellprice = 30 // 50% More than gobbo
 
 /mob/living/carbon/human/species/human/northern/searaider/npc_idle()
 	if(m_intent == MOVE_INTENT_SNEAK)

@@ -76,6 +76,11 @@
 	color = "#c7816e"
 	taste_description = "fish"
 
+/datum/reagent/consumable/soup/stew/rabbit
+	name = "cabbit stew"
+	color = "#c59182"
+	taste_description = "cabbit"
+
 /datum/reagent/consumable/soup/stew/bisque
 	name = "bisque"
 	color = "#ffb74f" // Bisque like color I know bisque's more complicated than that 

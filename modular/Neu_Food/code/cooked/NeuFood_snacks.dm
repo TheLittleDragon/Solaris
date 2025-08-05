@@ -640,6 +640,29 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEATSLAB_NUTRITION)
 	rotprocess = SHELFLIFE_DECENT
 
+/* .............   Fried Volf   ................ */
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried
+	eat_effect = null
+	slices_num = 0
+	name = "fried volf"
+	desc = "A slab of volf, fried to a perfect medium rare. A bit gamey and chewy, but tasty."
+	icon_state = "fryvolf"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEATSLAB_NUTRITION)
+	faretype = FARE_NEUTRAL
+	rotprocess = SHELFLIFE_DECENT
+
+/* .............   Fried Cabbit   ................ */
+/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried
+	eat_effect = null
+	slices_num = 0
+	name = "fried cabbit"
+	desc = "A slab of cabbit, fried to a perfect crispy texture."
+	icon_state = "frycabbit"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)	//It's easier and cheaper than normal meat to find.
+	faretype = FARE_NEUTRAL
+	rotprocess = SHELFLIFE_DECENT
+	tastes = list("warm cabbit" = 1)
+
 /* .............   RICE   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/preserved/rice_cooked
 	icon_state = "rice"

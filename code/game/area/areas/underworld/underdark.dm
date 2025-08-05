@@ -18,6 +18,7 @@
 				/mob/living/carbon/human/species/elf/dark/drowraider/ambush = 10,
 				/mob/living/simple_animal/hostile/retaliate/rogue/minotaur = 25,
 				/mob/living/carbon/human/species/goblin/npc/ambush/moon = 30,
+				/mob/living/simple_animal/hostile/retaliate/rogue/mole = 10,
 				/mob/living/simple_animal/hostile/retaliate/rogue/troll = 15)
 	brief_descriptor = "where dusk elves once stood as monuments"
 
@@ -29,6 +30,8 @@
 	ambush_mobs = list(
 				/mob/living/carbon/human/species/skeleton/npc = 10,
 				/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 30,
+				/mob/living/simple_animal/hostile/retaliate/rogue/mole = 10,
+				/mob/living/simple_animal/hostile/retaliate/rogue/direbear = 5,
 				/mob/living/carbon/human/species/goblin/npc/sea = 20,
 				/mob/living/simple_animal/hostile/retaliate/rogue/troll = 15)
 	brief_descriptor = "a sea, entrenched in the Underking's former realm"

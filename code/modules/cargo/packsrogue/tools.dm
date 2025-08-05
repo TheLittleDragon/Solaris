@@ -299,5 +299,8 @@
 	cost = 30
 	contains = list(/obj/item/gwstrap,)
 
-
+/datum/supply_pack/rogue/tools/headhook
+	name = "Iron Head Hook"
+	cost = 10
+	contains = list(/obj/item/storage/hip/headhook)
 

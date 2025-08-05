@@ -31,9 +31,9 @@
 	sellprice = 10
 
 /datum/crafting_recipe/roguetown/leather/armor/wolfhelm
-	name = "wolf helm (1 leather, 1 fur, 1 wolf head)"
+	name = "wolf helm (1 leather, 1 volf fur, 1 wolf head)"
 	result = list(/obj/item/clothing/head/roguetown/helmet/leather/wolfhelm)
-	reqs = list(/obj/item/natural/hide/cured = 1, /obj/item/natural/fur = 2, /obj/item/natural/head/wolf = 1)
+	reqs = list(/obj/item/natural/hide/cured = 1, /obj/item/natural/fur/wolf = 1, /obj/item/natural/head/wolf = 1)
 	sellprice = 20
 
 /datum/crafting_recipe/roguetown/leather/armor/wolfmantle
@@ -44,6 +44,12 @@
 		/obj/item/natural/head/wolf = 1,
 	)
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/leather/saigahelm
+	name = "saiga helm (1 leather, 2 hide, 1 saiga head)"
+	result = list(/obj/item/clothing/head/roguetown/helmet/leather/saiga)
+	reqs = list(/obj/item/natural/hide/cured = 1, /obj/item/natural/hide = 2, /obj/item/natural/head/saiga = 1)
+	sellprice = 20
 
 /datum/crafting_recipe/roguetown/leather/armor/heavy_leather_pants
 	name = "hardened leather pants (1 fibers, 3 leather, 1 tallow)"

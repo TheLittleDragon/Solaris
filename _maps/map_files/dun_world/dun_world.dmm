@@ -18694,7 +18694,7 @@
 /turf/open/floor/rogue/grassred,
 /area/provincial/underground/dungeon/old_university)
 "gma" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/trollbog{
+/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog{
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 3, /obj/item/alch/sinew = 7, /obj/item/alch/horn = 1, /obj/item/alch/viscera = 2);
 	name = "Lesser bog troll"
 	},
@@ -30612,7 +30612,7 @@
 /obj/item/chair/rogue{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/retaliate/rogue/trollbog{
+/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog{
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 3, /obj/item/alch/sinew = 7, /obj/item/alch/horn = 1, /obj/item/alch/viscera = 2);
 	name = "Lesser bog troll"
 	},
@@ -39741,6 +39741,7 @@
 /obj/effect/decal/herringbone{
 	dir = 1
 	},
+/obj/structure/roguemachine/headeater,
 /turf/open/floor/rogue/blocks,
 /area/provincial/indoors/town/steward)
 "mVq" = (
@@ -44682,7 +44683,7 @@
 /obj/item/chair/rogue{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/retaliate/rogue/trollbog{
+/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog{
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 3, /obj/item/alch/sinew = 7, /obj/item/alch/horn = 1, /obj/item/alch/viscera = 2);
 	name = "Lesser bog troll"
 	},
@@ -69161,7 +69162,7 @@
 	dir = 4
 	},
 /obj/item/chair/rogue,
-/mob/living/simple_animal/hostile/retaliate/rogue/trollbog{
+/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog{
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 3, /obj/item/alch/sinew = 7, /obj/item/alch/horn = 1, /obj/item/alch/viscera = 2);
 	name = "Lesser bog troll"
 	},
@@ -73005,7 +73006,7 @@
 /turf/open/floor/rogue/blocks,
 /area/provincial/underground/dungeon/goblinfort)
 "xYD" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/trollbog,
+/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog,
 /turf/open/floor/rogue/naturalstone,
 /area/provincial/underground/field)
 "xYH" = (

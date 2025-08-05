@@ -126,6 +126,16 @@
 /obj/structure/fermenting_barrel/crafted
 	sellprice = 6
 
+/datum/crafting_recipe/roguetown/structure/meathook
+	name = "meat hook"
+	result = /obj/structure/meathook
+	reqs = list(/obj/item/grown/log/tree = 2,
+				/obj/item/rope = 1)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/crafting
+	craftdiff = 2
+
 /datum/crafting_recipe/roguetown/roguebin
 	name = "wooden bin"
 	result = /obj/item/roguebin
@@ -665,3 +675,21 @@
 	verbage_simple = "construct"
 	craftdiff = 2
 	verbage = "constructs"
+
+/datum/crafting_recipe/roguetown/structure/bearrug
+	name = "bearpelt rug"
+	result = /obj/structure/bearpelt
+	reqs = list(/obj/item/natural/fur/direbear = 2, /obj/item/natural/head/direbear = 1)
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/structure/foxrug
+	name = "foxpelt rug"
+	result = /obj/structure/foxpelt
+	reqs = list(/obj/item/natural/fur/fox = 2, /obj/item/natural/head/fox = 1)
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/structure/bobcatrug
+	name = "lynxpelt rug"
+	result = /obj/structure/bobcatpelt
+	reqs = list(/obj/item/natural/fur/bobcat = 2)	//Gives no head for lynx, plus it's the smallest rug anyway.
+	craftdiff = 0

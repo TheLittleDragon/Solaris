@@ -51,6 +51,8 @@ GLOBAL_LIST_INIT(highwayman_aggro, world.file2list("strings/rt/highwaymanaggroli
 		organ_eyes.eye_color = pick("27becc", "35cc27", "000000")
 	update_hair()
 	update_body()
+	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
+	head.sellprice = 30 // 50% More than goblin
 
 /mob/living/carbon/human/species/human/northern/highwayman/npc_idle()
 	if(m_intent == MOVE_INTENT_SNEAK)

@@ -217,7 +217,7 @@
 		if(headdy)
 			headdy.icon = 'icons/roguetown/mob/monster/goblins.dmi'
 			headdy.icon_state = "[src.dna.species.id]_head"
-			headdy.sellprice = rand(7,40)
+			headdy.sellprice = 20
 			headdy.grid_height = 32
 			headdy.grid_width = 32
 	src.grant_language(/datum/language/orcish)
