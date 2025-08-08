@@ -20,7 +20,7 @@
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	blade_dulling = DULLING_BASHCHOP
+	blade_dulling = DULLING_SHAFT_WOOD
 	sharpness = IS_BLUNT
 	walking_stick = TRUE
 	pixel_y = -16

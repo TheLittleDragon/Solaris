@@ -230,7 +230,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	beltl = /obj/item/storage/keyring/guard
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/hammer
+	beltr = /obj/item/rogueweapon/hammer/iron
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backl = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
 	r_hand = /obj/item/rogueweapon/spear

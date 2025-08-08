@@ -299,7 +299,7 @@
 //Turns a Body_parts_covered bitfield into a list of organ/limb names.
 //(I challenge you to find a use for this)
 //^ I did.
-/proc/body_parts_covered2organ_names(bpc)
+/proc/body_parts_covered2organ_names(bpc, verbose = FALSE)
 	var/list/covered_parts = list()
 
 	if(!bpc)
@@ -309,7 +309,7 @@
 		covered_parts |= list(READABLE_ZONE_HEAD)
 	if(bpc & NECK)
 		covered_parts |= list(READABLE_ZONE_NECK)
-	if(bpc & FACE)
+	if(bpc & FACE && !verbose)
 		covered_parts |= list(READABLE_ZONE_FACE)
 	else
 		if(bpc & MOUTH)
@@ -326,7 +326,7 @@
 	if(bpc & GROIN)
 		covered_parts |= list(READABLE_ZONE_GROIN)
 
-	if(bpc & ARMS)
+	if(bpc & ARMS && !verbose)
 		covered_parts |= list(READABLE_ZONE_ARMS)
 	else
 		if(bpc & ARM_LEFT)
@@ -334,7 +334,7 @@
 		if(bpc & ARM_RIGHT)
 			covered_parts |= list(READABLE_ZONE_R_ARM)
 
-	if(bpc & HANDS)
+	if(bpc & HANDS && !verbose)
 		covered_parts |= list(READABLE_ZONE_HANDS)
 	else
 		if(bpc & HAND_LEFT)
@@ -342,7 +342,7 @@
 		if(bpc & HAND_RIGHT)
 			covered_parts |= list(READABLE_ZONE_R_HAND)
 
-	if(bpc & LEGS)
+	if(bpc & LEGS && !verbose)
 		covered_parts |= list(READABLE_ZONE_LEGS)
 	else
 		if(bpc & LEG_LEFT)
@@ -350,7 +350,7 @@
 		if(bpc & LEG_RIGHT)
 			covered_parts |= list(READABLE_ZONE_R_LEG)
 
-	if(bpc & FEET)
+	if(bpc & FEET && !verbose)
 		covered_parts |= list(READABLE_ZONE_FEET)
 	else
 		if(bpc & FOOT_LEFT)
@@ -360,7 +360,41 @@
 
 	return covered_parts
 
-
+//Takes a user-targeted zone and returns a readable version of it.
+/proc/bodyzone2readablezone(zone)
+	switch(zone)
+		if(BODY_ZONE_HEAD)
+			return READABLE_ZONE_HEAD
+		if(BODY_ZONE_PRECISE_EARS)
+			return READABLE_ZONE_HEAD
+		if(BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_R_EYE)
+			return READABLE_ZONE_EYES
+		if(BODY_ZONE_PRECISE_MOUTH)
+			return READABLE_ZONE_MOUTH
+		if(BODY_ZONE_PRECISE_NOSE)
+			return READABLE_ZONE_NOSE
+		if(BODY_ZONE_CHEST)
+			return READABLE_ZONE_CHEST
+		if(BODY_ZONE_PRECISE_STOMACH)
+			return READABLE_ZONE_VITALS
+		if(BODY_ZONE_PRECISE_GROIN)
+			return READABLE_ZONE_GROIN
+		if(BODY_ZONE_L_ARM)
+			return READABLE_ZONE_L_ARM
+		if(BODY_ZONE_PRECISE_L_HAND)
+			return READABLE_ZONE_L_HAND
+		if(BODY_ZONE_R_ARM)
+			return READABLE_ZONE_R_ARM
+		if(BODY_ZONE_PRECISE_R_HAND)
+			return READABLE_ZONE_R_HAND
+		if(BODY_ZONE_L_LEG)
+			return READABLE_ZONE_L_LEG
+		if(BODY_ZONE_PRECISE_L_FOOT)
+			return READABLE_ZONE_L_FOOT
+		if(BODY_ZONE_R_LEG)
+			return READABLE_ZONE_R_LEG
+		if(BODY_ZONE_PRECISE_R_FOOT)
+			return READABLE_ZONE_R_FOOT
 
 /proc/slot2body_zone(slot)
 	switch(slot)

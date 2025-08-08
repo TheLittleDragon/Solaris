@@ -1,6 +1,6 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration, penetrated_text, damage, blade_dulling)
-	var/armor = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration, penetrated_text, damage, blade_dulling, peeldivisor, intdamfactor)
+	var/armor = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor)
 
 	//the if "armor" check is because this is used for everything on /living, including humans
 	if(armor > 0 && armor_penetration)
@@ -22,7 +22,7 @@
 	return armor
 
 
-/mob/living/proc/getarmor(def_zone, type, damage, armor_penetration, blade_dulling)
+/mob/living/proc/getarmor(def_zone, type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor)
 	return 0
 
 //this returns the mob's protection against eye damage (number between -1 and 2) from bright lights
@@ -46,7 +46,8 @@
 /mob/living/bullet_act(obj/projectile/P, def_zone = BODY_ZONE_CHEST)
 	if(!prob(P.accuracy + P.bonus_accuracy))
 		def_zone = BODY_ZONE_CHEST
-	var/armor = run_armor_check(def_zone, P.flag, "", "",P.armor_penetration, damage = P.damage)
+	var/ap = (P.flag == "blunt") ? -100 : P.armor_penetration
+	var/armor = run_armor_check(def_zone, P.flag, "", "",armor_penetration = ap, damage = P.damage)
 
 	next_attack_msg.Cut()
 
@@ -119,7 +120,8 @@
 		var/zone = throwingdatum?.target_zone || ran_zone(BODY_ZONE_CHEST, 65)
 		SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone)
 		if(!blocked)
-			var/armor = run_armor_check(zone, damage_flag, "", "",I.armor_penetration, damage = I.throwforce)
+			var/ap = (damage_flag == "blunt") ? -100 : I.armor_penetration 
+			var/armor = run_armor_check(zone, damage_flag, "", "", armor_penetration = ap, damage = I.throwforce)
 			next_attack_msg.Cut()
 			var/nodmg = FALSE
 			if(!apply_damage(I.throwforce, I.damtype, zone, armor))
@@ -451,7 +453,7 @@
 	return
 
 
-/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
+/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent, simplified = TRUE)
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()

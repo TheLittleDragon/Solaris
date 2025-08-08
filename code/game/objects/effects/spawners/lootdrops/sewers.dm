@@ -87,7 +87,7 @@
 		/obj/item/flint = 8,
 		/obj/item/rogueweapon/stoneaxe/woodcut = 3,
 		/obj/item/rogueweapon/stoneaxe = 6,
-		/obj/item/rogueweapon/hammer = 6,
+		/obj/item/rogueweapon/hammer/iron = 6,
 		/obj/item/rogueweapon/tongs = 6,
 		/obj/item/rogueweapon/pick = 3,
 

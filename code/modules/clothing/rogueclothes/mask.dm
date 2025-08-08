@@ -86,7 +86,7 @@
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	max_integrity = 100
 	resistance_flags = FIRE_PROOF
-	armor = list("blunt" = 90, "slash" = 100, "stab" = 80, "fire" = 0, "acid" = 0)
+	armor = ARMOR_MASK_METAL
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FACE
@@ -103,7 +103,7 @@
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	resistance_flags = FIRE_PROOF
-	armor = list("blunt" = 90, "slash" = 100, "stab" = 80, "fire" = 0, "acid" = 0)
+	armor = ARMOR_MASK_METAL
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FACE
@@ -238,7 +238,7 @@
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	resistance_flags = FIRE_PROOF
-	armor = list("blunt" = 10, "slash" = 40, "stab" = 40, "fire" = 0, "acid" = 0)
+	armor = ARMOR_HEAD_BAD
 	prevent_crits = null
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FACE

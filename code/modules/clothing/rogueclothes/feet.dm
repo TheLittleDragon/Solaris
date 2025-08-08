@@ -6,6 +6,7 @@
 	gender = PLURAL
 	slot_flags = ITEM_SLOT_SHOES
 	body_parts_covered = FEET
+	body_parts_inherent = FEET
 	sleeved = 'icons/roguetown/clothing/onmob/feet.dmi'
 	sleevetype = "leg"
 	bloody_icon_state = "shoeblood"
@@ -21,9 +22,10 @@
 	gender = PLURAL
 	icon_state = "blackboots"
 	item_state = "blackboots"
+	max_integrity = 80
 	sewrepair = TRUE
 	var/atom/movable/holdingknife = null
-	armor = list("blunt" = 30, "slash" = 10, "stab" = 20, "piercing" = 0, "fire" = 0, "acid" = 0)
+	armor = ARMOR_BOOTS_BAD
 
 /obj/item/clothing/shoes/roguetown/boots/attackby(obj/item/W, mob/living/carbon/user, params)
 	if(istype(W, /obj/item/rogueweapon/huntingknife/throwingknife))
@@ -55,7 +57,7 @@
 	icon_state = "nobleboots"
 	item_state = "nobleboots"
 	sewrepair = TRUE
-	armor = list("blunt" = 35, "slash" = 15, "stab" = 25, "piercing" = 0, "fire" = 0, "acid" = 0)
+	armor = ARMOR_BOOTS_BAD
 	salvage_amount = 2
 	salvage_result = /obj/item/natural/hide/cured
 
@@ -147,7 +149,7 @@
 	icon_state = "leatherboots"
 	item_state = "leatherboots"
 	sewrepair = TRUE
-	armor = list("blunt" = 30, "slash" = 10, "stab" = 20, "piercing" = 0, "fire" = 0, "acid" = 0)
+	armor = ARMOR_BOOTS_BAD
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 
@@ -162,7 +164,7 @@
 	blocksound = PLATEHIT
 	resistance_flags = FIRE_PROOF
 	max_integrity = 300
-	armor = list("blunt" = 90, "slash" = 100, "stab" = 80, "piercing" = 50, "fire" = 0, "acid" = 0)
+	armor = ARMOR_BOOTS_PLATED
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
 
@@ -176,7 +178,7 @@
 	color = null
 	blocksound = PLATEHIT
 	max_integrity = 200
-	armor = list("blunt" = 80, "slash" = 100, "stab" = 70, "piercing" = 35, "fire" = 0, "acid" = 0)
+	armor = ARMOR_BOOTS_PLATED_IRON
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
 
@@ -197,7 +199,8 @@
 	icon_state = "furlinedboots"
 	item_state = "furlinedboots"
 	sewrepair = TRUE
-	armor = list("blunt" = 30, "slash" = 10, "stab" = 20, "piercing" = 0, "fire" = 0, "acid" = 0)
+	max_integrity = 160
+	armor = ARMOR_BOOTS_BAD
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/fur
 
@@ -208,7 +211,7 @@
 	icon_state = "furlinedanklets"
 	item_state = "furlinedanklets"
 	sewrepair = TRUE
-	armor = list("blunt" = 30, "slash" = 10, "stab" = 20, "piercing" = 0, "fire" = 0, "acid" = 0)
+	armor = ARMOR_BOOTS_BAD
 	is_barefoot = TRUE
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/fur
@@ -221,7 +224,7 @@
 	item_state = "furlinedanklets"
 	is_barefoot = TRUE
 	sewrepair = TRUE
-	armor = list("blunt" = 5, "slash" = 5, "stab" = 5, "piercing" = 0, "fire" = 0, "acid" = 0) //Thinks its fair for a piece of cloth and fiber.
+	armor = ARMOR_BOOTS_BAD
 
 
 // ----------------- BLACKSTEEL -----------------------
@@ -238,7 +241,7 @@
 	color = null
 	blocksound = PLATEHIT
 	max_integrity = 400
-	armor = list("blunt" = 90, "slash" = 100, "stab" = 80, "piercing" = 60, "fire" = 0, "acid" = 0)
+	armor = ARMOR_BOOTS_PLATED
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/blacksteel
 	resistance_flags = FIRE_PROOF
@@ -253,12 +256,12 @@
 	item_state = "anklets"
 	is_barefoot = TRUE
 	sewrepair = TRUE
-	armor = list("blunt" = 5, "slash" = 5, "stab" = 5, "piercing" = 0, "fire" = 0, "acid" = 0)
+	armor = ARMOR_BOOTS_BAD
 
 /obj/item/clothing/shoes/roguetown/boots/leather/elven_boots
 	name = "woad elven boots"
 	desc = "The living trunks still blossom in the spring. They let water through, but it is never cold."
-	armor = list("blunt" = 90, "slash" = 10, "stab" = 100, "piercing" = 20, "fire" = 0, "acid" = 0)
+	armor = list("blunt" = 100, "slash" = 10, "stab" = 100, "piercing" = 20, "fire" = 0, "acid" = 0) //Resistant to blunt and stab, but very weak to slash.
 	prevent_crits = list(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'

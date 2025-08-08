@@ -27,7 +27,7 @@
 	target.orbiters = src
 	if(ismovableatom(target))
 		tracker = new(target, CALLBACK(src, PROC_REF(move_react)))
-	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(orbiter_glide_size_update))
+	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(orbiter_glide_size_update), TRUE)
 
 
 /datum/component/orbiter/UnregisterFromParent()

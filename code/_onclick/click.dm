@@ -17,10 +17,10 @@
 // eg: 10*0.5 = 5 deciseconds of delay
 // DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
 
-/mob/proc/changeNext_move(num, hand)
+/mob/proc/changeNext_move(num, hand, override = FALSE)
 	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
 
-/mob/living/changeNext_move(num, hand)
+/mob/living/changeNext_move(num, hand, override = FALSE)
 	var/mod = next_move_modifier
 	var/adj = next_move_adjust
 	for(var/i in status_effects)
@@ -28,13 +28,21 @@
 		mod *= S.nextmove_modifier()
 		adj += S.nextmove_adjust()
 	if(!hand)
-		next_move = world.time + ((num + adj)*mod)
+		var/check_move = world.time + ((num + adj)*mod)
+		if((check_move >= next_move) || override)
+			next_move = check_move
 		hud_used?.cdmid?.mark_dirty()
 		return
 	if(hand == 1)
+		var/check_move = world.time + ((num + adj)*mod)
+		if((check_move >= next_lmove) || override)
+			next_lmove = check_move
 		next_lmove = world.time + ((num + adj)*mod)
 		hud_used?.cdleft?.mark_dirty()
 	else
+		var/check_move = world.time + ((num + adj)*mod)
+		if((check_move >= next_rmove) || override)
+			next_rmove = check_move
 		next_rmove = world.time + ((num + adj)*mod)
 		hud_used?.cdright?.mark_dirty()
 
@@ -225,7 +233,8 @@
 		if(ismob(A))
 			if(CanReach(A,W))
 				if(get_dist(get_turf(src), get_turf(A)) <= used_intent.reach)
-					do_attack_animation(get_turf(A), visual_effect_icon = used_intent.animname)
+					if(!used_intent.noaa)
+						do_attack_animation(get_turf(A), used_intent.animname, W, used_intent = src.used_intent)
 				resolveAdjacentClick(A,W,params)
 				return
 
@@ -285,6 +294,7 @@
 						var/mob/target = pick(mobs_here)
 						if(target)
 							if(target.Adjacent(src))
+								do_attack_animation(T, used_intent.animname, used_intent.masteritem, used_intent = src.used_intent)
 								resolveAdjacentClick(target,W,params,used_hand)
 								atkswinging = null
 								//update_warning()
@@ -294,7 +304,7 @@
 					if(!used_intent.noaa)
 						changeNext_move(CLICK_CD_MELEE)
 						if(get_dist(get_turf(src), T) <= used_intent.reach)
-							do_attack_animation(T, visual_effect_icon = used_intent.animname)
+							do_attack_animation(T, used_intent.animname, used_intent.masteritem, used_intent = src.used_intent)
 						if(W)
 							playsound(get_turf(src), pick(W.swingsound), 100, FALSE)
 							var/adf = used_intent.clickcd

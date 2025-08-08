@@ -231,6 +231,8 @@
 /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 	name = "hierophant's kandys"
 	desc = "A thin piece of fabric worn under a robe to stop chafing and keep ones dignity if a harsh blow of wind comes through."
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
+	armor = ARMOR_PADDED_GOOD
 	icon_state = "desertgown"
 	item_state = "desertgown"
 	color = null
@@ -238,6 +240,8 @@
 /obj/item/clothing/suit/roguetown/shirt/robe/pointfex
 	name = "pointfex's qaba"
 	desc = "A slimmed down, tighter fitting robe made of fine silks and fabrics. Somehow you feel more mobile in it than in the nude."
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
+	armor = ARMOR_PADDED_GOOD
 	icon_state = "monkcloth"
 	item_state = "monkcloth"
 	color = null

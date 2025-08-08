@@ -30,7 +30,7 @@
 
 /obj/item/natural/fur/wolf
 	desc = "from a wolf."
-	icon_state = "pelt_wolf"
+	icon_state = "pelt_volf"
 	color = null
 
 /obj/item/natural/fur/fox

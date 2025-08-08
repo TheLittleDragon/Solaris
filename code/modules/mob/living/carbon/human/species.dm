@@ -1364,6 +1364,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		var/damage = user.get_punch_dmg()
 
+		if(target.has_status_effect(/datum/status_effect/buff/clash) && target.get_active_held_item() && ishuman(user))
+			var/obj/item/IM = target.get_active_held_item()
+			target.process_clash(user, IM)
+			return
 /*		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
 			if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided my species deals more than 0 damage)
@@ -1390,7 +1394,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!target.lying_attack_check(user))
 			return 0
 
-		var/armor_block = target.run_armor_check(selzone, "blunt", blade_dulling = user.used_intent.blade_class, damage = damage)
+		var/armor_block = target.run_armor_check(selzone, "blunt", armor_penetration = -100, blade_dulling = user.used_intent.blade_class, damage = damage)
 
 		target.lastattacker = user.real_name
 		if(target.mind)
@@ -1620,6 +1624,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 			if(!nodmg)
 				playsound(target, 'sound/combat/hits/kick/stomp.ogg', 100, TRUE, -1)
+
 			return TRUE
 		else
 			to_chat(user, span_warning("I'm too close to get a good kick in."))
@@ -1708,6 +1713,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.mind.attackedme[user.real_name] = world.time
 		user.rogfat_add(15)
 		target.forcesay(GLOB.hit_appends)
+		if(user.has_status_effect(/datum/status_effect/buff/clash))
+			user.bad_guard(span_warning("The kick throws my stance off!"))
+		if(target.has_status_effect(/datum/status_effect/buff/clash))
+			target.bad_guard(span_warning("The kick throws my stance off!"))
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
@@ -1765,6 +1774,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!affecting)
 		return
 
+	if(istype(user.used_intent, /datum/intent/effect) && selzone)
+		var/datum/intent/effect/int = user.used_intent
+		var/do_effect = FALSE
+		if(length(int.target_parts))
+			if(selzone in int.target_parts)
+				do_effect = TRUE
+		else
+			do_effect = TRUE
+		if(do_effect)
+			H.apply_status_effect(int.intent_effect)
 	hit_area = affecting.name
 	var/def_zone = affecting.body_zone
 
@@ -1775,7 +1794,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //	var/armor_block = H.run_armor_check(affecting, "I.d_type", span_notice("My armor has protected my [hit_area]!"), span_warning("My armor has softened a hit to my [hit_area]!"),pen)
 
 	var/Iforce = get_complex_damage(I, user) //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
-	var/armor_block = H.run_armor_check(selzone, I.d_type, "", "",pen, damage = Iforce, blade_dulling=user.used_intent.blade_class)
+	if(!user.used_intent?.allow_offhand)
+		if(user.get_num_arms(FALSE) < 2 || user.get_inactive_held_item())
+			Iforce = 0
+	var/bladec = user.used_intent.blade_class
+	if(H == user && bladec == BCLASS_PEEL)
+		bladec = BCLASS_BLUNT
+	var/armor_block = H.run_armor_check(selzone, I.d_type, "", "",pen, damage = Iforce, blade_dulling=user.used_intent.blade_class, peeldivisor = user.used_intent.peel_divisor, intdamfactor = user.used_intent.masteritem?.intdamage_factor)
 
 	var/nodmg = FALSE
 

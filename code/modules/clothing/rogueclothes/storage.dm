@@ -221,6 +221,47 @@
 	sewrepair = FALSE
 	component_type = /datum/component/storage/concrete/roguetown/backpack
 
+/obj/item/storage/backpack/rogue/backpack/bagpack
+	name = "rucksack"
+	desc = "A sack tied with some rope. Can be flung over your shoulders, if it's tied shut."
+	icon_state = "rucksack_untied"
+	item_state = "rucksack"
+	component_type = /datum/component/storage/concrete/roguetown/sack/bag
+	max_integrity = 100
+	sewrepair = TRUE
+	var/tied = FALSE
+
+/obj/item/storage/backpack/rogue/backpack/bagpack/attack_right(mob/user)
+	tied = !tied
+	to_chat(user, span_info("I [tied ? "tighten" : "loosen"] the rucksack."))
+	playsound(src, 'sound/foley/equip/rummaging-01.ogg', 100)
+	update_icon()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	if(tied)
+		STR.click_gather = FALSE
+		STR.allow_quick_gather = FALSE
+		STR.allow_quick_empty = FALSE
+	else
+		STR.click_gather = TRUE
+		STR.allow_quick_gather = TRUE
+		STR.allow_quick_empty = TRUE
+
+/obj/item/storage/backpack/rogue/backpack/bagpack/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(!tied && (slot == SLOT_BACK_L || slot == SLOT_BACK_R))
+		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+		var/list/things = STR.contents()
+		if(length(things))
+			visible_message(span_warning("The loose bag empties as it is swung around [user]'s shoulder!"))
+			STR.quick_empty(user)
+
+/obj/item/storage/backpack/rogue/backpack/bagpack/update_icon()
+	. = ..()
+	if(tied)
+		icon_state = "rucksack_tied_sling"
+	else
+		icon_state = "rucksack_untied"
+
 /obj/item/storage/belt/rogue/leather/plaquegold/steward
 	name = "fancy gold belt"
 	desc = "A dark belt with real gold making up the buckle and highlights. How bougie."

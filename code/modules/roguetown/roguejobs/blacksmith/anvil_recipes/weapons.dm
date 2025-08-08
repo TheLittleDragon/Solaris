@@ -63,6 +63,14 @@
 	created_item = /obj/item/rogueweapon/stoneaxe/woodcut
 	craftdiff = 0
 
+/datum/anvil_recipe/weapons/iron/greataxe
+	name = "Iron Greataxe (+1 Iron, +1 Small Log)"
+	category = "Weapons"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/greataxe
+	craftdiff = 3
+
 /datum/anvil_recipe/weapons/iron/cudgel
 	name = "Cudgel (+1 Stick)"
 	category = "Weapons"
@@ -284,6 +292,20 @@
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/grown/log/tree/stick)
 	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/pick
+
+/datum/anvil_recipe/weapons/steel/greataxe
+	name = "Steel Greataxe (+1 Steel, +1 Small Log)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/greataxe/steel
+	craftdiff = 4
+
+/datum/anvil_recipe/weapons/steel/greataxe/doublehead
+	name = "Steel Double-Headed Greataxe (+2 Steel, +1 Small Log)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/greataxe/steel/doublehead
+	craftdiff = 4
 
 /datum/anvil_recipe/weapons/steel/billhook
 	name = "Billhook (+1 Small Log)"

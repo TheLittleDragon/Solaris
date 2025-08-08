@@ -10,6 +10,8 @@
 	var/quality = SMELTERY_LEVEL_NORMAL // To not ruin blacksmith recipes
 	grid_width = 32
 	grid_height = 32
+	var/sharpening_factor = 0
+	var/spark_chance = 0
 
 /obj/item/natural/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/natural/bundle))

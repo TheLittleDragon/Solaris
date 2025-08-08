@@ -45,10 +45,25 @@
 	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 	var/miss_text //THESE ARE FOR UNARMED MISSING ATTACKS
 	var/miss_sound //THESE ARE FOR UNARMED MISSING ATTACKS
+	var/allow_offhand = TRUE	//Do I need my offhand free while using this intent?
+	var/peel_divisor = 0		//How many consecutive peel hits this intent requires to peel a piece of coverage? May be overriden by armor thresholds if they're higher.
 	var/glow_intensity = null	//How much glow this intent has. Used for spells
 	var/glow_color = null // The color of the glow. Used for spells
 	var/mob_light = null // tracking mob_light
 	var/obj/effect/mob_charge_effect = null // The effect to be added (on top) of the mob while it is charging
+
+	var/list/static/bonk_animation_types = list(
+		BCLASS_BLUNT,
+		BCLASS_SMASH,
+	)
+	var/list/static/swipe_animation_types = list(
+		BCLASS_CUT,
+		BCLASS_CHOP,
+	)
+	var/list/static/thrust_animation_types = list(
+		BCLASS_STAB,
+		BCLASS_PICK,
+	)
 
 /datum/intent/Destroy()
 	if(chargedloop)
@@ -92,7 +107,19 @@
 			inspec += "Quick"
 		if(clickcd > CLICK_CD_MELEE)
 			inspec += "Slow"
-
+	if(blade_class == BCLASS_PEEL)
+		inspec += "\nThis intent will peel the coverage off of your target's armor in non-key areas after [peel_divisor] consecutive hits.\nSome armor may have higher thresholds."
+	if(!allow_offhand)
+		inspec += "\nThis intent requires a free off-hand."
+	if(blade_class == BCLASS_EFFECT)
+		var/datum/intent/effect/int = src
+		inspec += "\nThis intent will apply a status effect on a successful hit. Damage dealt is not required."
+		if(length(int.target_parts))
+			inspec += "\nWorks on these bodyparts: "
+			var/str
+			for(var/part in int.target_parts)
+				str +="|[bodyzone2readablezone(part)]|"
+			inspec += str
 	inspec += "<br>----------------------"
 
 	to_chat(user, "[inspec.Join()]")
@@ -145,6 +172,16 @@
 		if(0)
 			returned += list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	return returned
+
+/// returns the attack animation type this intent uses
+/datum/intent/proc/get_attack_animation_type()
+	if(blade_class in bonk_animation_types)
+		return ATTACK_ANIMATION_BONK
+	if(blade_class in swipe_animation_types)
+		return ATTACK_ANIMATION_SWIPE
+	if(blade_class in thrust_animation_types)
+		return ATTACK_ANIMATION_THRUST
+	return null
 
 /datum/intent/New(Mastermob, Masteritem)
 	..()
@@ -316,6 +353,11 @@
 	chargetime = 0
 	swingdelay = 0
 
+/datum/intent/stab/militia
+	name = "militia stab"
+	damfactor = 1.1
+	penfactor = 50
+
 /datum/intent/pick //now like icepick intent, we really went in a circle huh
 	name = "pick"
 	icon_state = "inpick"
@@ -327,6 +369,19 @@
 	blade_class = BCLASS_PICK
 	chargetime = 0
 	swingdelay = 12
+
+/datum/intent/pick/ranged
+	name = "ranged pick"
+	icon_state = "inpick"
+	attack_verb = list("stabs", "impales")
+	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
+	penfactor = 60
+	damfactor = 1.1
+	chargetime = 0.7
+	chargedrain = 2
+	reach = 2
+	no_early_release = TRUE
+	blade_class = BCLASS_PICK
 
 /datum/intent/shoot //shooting crossbows or other guns, no parrydrain
 	name = "shoot"
@@ -575,3 +630,22 @@
 	candodge = TRUE
 	canparry = TRUE
 	item_d_type = "stab"
+
+/datum/intent/effect
+	blade_class = BCLASS_EFFECT
+	var/datum/status_effect/intent_effect	//Status effect this intent will apply on a successful hit (damage not needed)
+	var/list/target_parts					//Targeted bodyparts which will apply the effect. Leave blank for anywhere on the body.
+
+/datum/intent/effect/daze
+	name = "dazing strike"
+	icon_state = "indaze"
+	attack_verb = list("dazes")
+	animname = "strike"
+	hitsound = list('sound/combat/hits/blunt/daze_hit.ogg')
+	chargetime = 0
+	penfactor = -50
+	swingdelay = 6
+	damfactor = 1
+	item_d_type = "blunt"
+	intent_effect = /datum/status_effect/debuff/dazed
+	target_parts = list(BODY_ZONE_HEAD)

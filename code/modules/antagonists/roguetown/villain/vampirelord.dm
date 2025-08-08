@@ -170,7 +170,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	icon_state = "vpants"
 	item_state = "vpants"
 	sewrepair = FALSE
-	armor = list("blunt" = 100, "slash" = 100, "stab" = 90, "piercing" = 0, "fire" = 0, "acid" = 0)
+	armor = ARMOR_VAMP
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	slot_flags = ITEM_SLOT_SHIRT
 	name = "regal silks"
 	desc = "A set of ornate robes with a sash coming across the breast."
-	body_parts_covered = CHEST|GROIN|LEGS|VITALS
+	body_parts_covered = COVERAGE_ALL_BUT_ARMS
 	icon_state = "vrobe"
 	item_state = "vrobe"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
 	name = "ancient chain shirt"
 	desc = ""
-	body_parts_covered = CHEST|GROIN|VITALS
+	body_parts_covered = COVERAGE_TORSO
 	armor_class = 2
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -209,10 +209,10 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "ancient ceremonial plate"
 	desc = ""
-	body_parts_covered = CHEST|GROIN|VITALS
+	body_parts_covered = COVERAGE_TORSO
 	icon_state = "vplate"
 	item_state = "vplate"
-	armor = list("blunt" = 100, "slash" = 100, "stab" = 90, "piercing" = 100, "fire" = 0, "acid" = 0)
+	armor = ARMOR_VAMP
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	nodismemsleeves = TRUE
 	max_integrity = 500
@@ -232,7 +232,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	color = null
 	blocksound = PLATEHIT
-	armor = list("blunt" = 100, "slash" = 100, "stab" = 90, "piercing" = 100, "fire" = 0, "acid" = 0)
+	armor = ARMOR_VAMP
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/roguetown/helmet/heavy/vampire

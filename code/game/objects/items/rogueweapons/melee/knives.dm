@@ -46,7 +46,8 @@
 	animname = "strike"
 	blade_class = BCLASS_BLUNT
 	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg', 'sound/combat/hits/kick/kick.ogg')
-	damfactor = 0.5
+	damfactor = 1
+	penfactor = -30
 	clickcd = 14
 	recovery = 10
 	item_d_type = "blunt"
@@ -201,6 +202,7 @@
 	desc = "This is a common dagger of iron."
 	icon_state = "idagger"
 	smeltresult = /obj/item/ingot/iron
+	blade_dulling = DULLING_SHAFT_REINFORCED
 
 /obj/item/rogueweapon/huntingknife/idagger/steel
 	name = "steel dagger"

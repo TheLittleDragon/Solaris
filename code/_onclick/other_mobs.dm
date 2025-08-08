@@ -28,11 +28,21 @@
 	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity) & COMPONENT_NO_ATTACK_HAND)
 		return
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity)
+	var/rmb_stam_penalty = 1
+	if(istype(rmb_intent, /datum/rmb_intent/strong) || istype(rmb_intent, /datum/rmb_intent/swift))
+		rmb_stam_penalty = 1.5	//Uses a modifer instead of a flat addition, less than weapons no matter what rn. 50% extra stam cost basically.
 	if(isliving(A))
 		var/mob/living/L = A
-		if(!used_intent.noaa)
+		if(!used_intent?.noaa)
 			playsound(get_turf(src), pick(GLOB.unarmed_swingmiss), 100, FALSE)
 //			src.emote("attackgrunt")
+		if(used_intent.releasedrain)
+			rogfat_add(ceil(used_intent.releasedrain * rmb_stam_penalty))
+		if(L.has_status_effect(/datum/status_effect/buff/clash) && L.get_active_held_item() && ishuman(L))
+			var/mob/living/carbon/human/H = L
+			var/obj/item/IM = L.get_active_held_item()
+			H.process_clash(src, IM)
+			return
 		if(L.checkmiss(src))
 			return
 		if(!L.checkdefense(used_intent, src))
@@ -85,21 +95,22 @@
 	. = ..()
 //	if(!user.Adjacent(src)) //alreadyu checked in rmb_on
 //		return
-	user.changeNext_move(CLICK_CD_MELEE)
 	user.face_atom(src)
 	if(user.cmode)
 		if(user.rmb_intent)
 			user.rmb_intent.special_attack(user, src)
 	else
+		user.changeNext_move(CLICK_CD_MELEE)
 		ongive(user, params)
 
 /turf/attack_right(mob/user, params)
 	. = ..()
-	user.changeNext_move(CLICK_CD_MELEE)
 	user.face_atom(src)
 	if(user.cmode)
 		if(user.rmb_intent)
 			user.rmb_intent.special_attack(user, src)
+	else
+		user.changeNext_move(CLICK_CD_MELEE)
 
 /atom/proc/ongive(mob/user, params)
 	return
@@ -362,10 +373,122 @@
 //				face_atom(A)
 //				A.ongive(src, params)
 			if(INTENT_KICK)
-				try_kick(A)
+				if(src.get_num_legs() < 2)
+					return
+				if(!A.Adjacent(src))
+					return
+				if(A == src)
+					return
+				if(IsOffBalanced())
+					to_chat(src, span_warning("I haven't regained my balance yet."))
+					return
+				changeNext_move(mmb_intent.clickcd)
+				face_atom(A)
+				if(ismob(A))
+					var/mob/living/M = A
+					if(src.used_intent)
+						src.do_attack_animation(M, visual_effect_icon = src.used_intent.animname)
+						playsound(src, pick(PUNCHWOOSH), 100, FALSE, -1)
+
+						sleep(src.used_intent.swingdelay)
+						if(has_status_effect(/datum/status_effect/buff/clash) && ishuman(src))
+							var/mob/living/carbon/human/H = src
+							H.bad_guard(span_warning("The kick throws my stance off!"))
+						if(M.has_status_effect(/datum/status_effect/buff/clash) && ishuman(M))
+							var/mob/living/carbon/human/HT = M
+							HT.bad_guard(span_warning("The kick throws my stance off!"))
+						if(QDELETED(src) || QDELETED(M))
+							return
+						if(!M.Adjacent(src))
+							return
+						if(src.incapacitated())
+							return
+						if(M.checkmiss(src))
+							return
+						if(M.checkdefense(src.used_intent, src))
+							return
+					if(M.checkmiss(src))
+						return
+					if(!M.checkdefense(mmb_intent, src))
+						if(ishuman(M))
+							var/mob/living/carbon/human/H = M
+							H.dna.species.kicked(src, H)
+						else
+							M.onkick(src)
+				else
+					A.onkick(src)
+				OffBalance(30)
 				return
 			if(INTENT_JUMP)
-				jump_action(A)
+				if(istype(src.loc, /turf/open/water))
+					to_chat(src, span_warning("I'm floating in [get_turf(src)]."))
+					return
+				if(!A || QDELETED(A) || !A.loc)
+					return
+				if(A == src || A == src.loc)
+					return
+				if(src.get_num_legs() < 2)
+					return
+				if(pulledby && pulledby != src)
+					to_chat(src, span_warning("I'm being grabbed."))
+					return
+				if(IsOffBalanced())
+					to_chat(src, span_warning("I haven't regained my balance yet."))
+					return
+				if(!(mobility_flags & MOBILITY_STAND))
+					if(!HAS_TRAIT(src, TRAIT_LEAPER))// The Jester cares not for such social convention.
+						to_chat(src, span_warning("I should stand up first."))
+						return
+				if(A.z != src.z)
+					if(!HAS_TRAIT(src, TRAIT_ZJUMP))
+						return
+				changeNext_move(mmb_intent.clickcd)
+				face_atom(A)
+				if(m_intent == MOVE_INTENT_RUN)
+					emote("leap", forced = TRUE)
+				else
+					emote("jump", forced = TRUE)
+				var/jadded
+				var/jrange
+				var/jextra = FALSE
+				var/is_sprinting = FALSE
+				if(m_intent == MOVE_INTENT_RUN)
+					OffBalance(30)
+					jadded = 15
+					jrange = 3
+					is_sprinting = TRUE
+					if(!HAS_TRAIT(src, TRAIT_LEAPER))// The Jester lands where the Jester wants.
+						jextra = TRUE
+				else
+					OffBalance(20)
+					jadded = 10
+					jrange = 2
+				if(ishuman(src))
+					var/mob/living/carbon/human/H = src
+					jadded += H.get_complex_pain()/50
+					if(!H.check_armor_skill() || H.legcuffed)
+						jadded += 50
+						jrange = 1
+				if(rogfat_add(min(jadded,100)))
+					if(jextra)
+						throw_at(A, jrange, 1, src, spin = FALSE)
+						while(src.throwing)
+							sleep(1)
+						throw_at(get_step(src, src.dir), 1, 1, src, spin = FALSE)
+					else
+						throw_at(A, jrange, 1, src, spin = FALSE)
+						while(src.throwing)
+							sleep(1)
+					if(!HAS_TRAIT(src, TRAIT_ZJUMP) && is_sprinting)	//Jesters and werewolves don't get immobilized at all
+						Immobilize((HAS_TRAIT(src, TRAIT_LEAPER) ? 5 : 10))	//Acrobatics get half the time
+					if(isopenturf(src.loc))
+						var/turf/open/T = src.loc
+						if(T.landsound)
+							playsound(T, T.landsound, 100, FALSE)
+						T.Entered(src)
+				else
+					throw_at(A, 1, 1, src, spin = FALSE)
+				return
 			if(INTENT_BITE)
 				if(!A.Adjacent(src))
 					return
@@ -741,13 +864,6 @@
 			ML.visible_message(span_danger("[src]'s bite misses [ML]!"), \
 							span_danger("I avoid [src]'s bite!"), span_hear("I hear jaws snapping shut!"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("My bite misses [ML]!"))
-
-/*
-	True Devil
-*/
-
-/mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity)
-	A.attack_hand(src)
 
 /*
 	Brain

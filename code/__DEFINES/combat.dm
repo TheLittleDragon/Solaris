@@ -71,6 +71,11 @@
 #define FAST_CUFFBREAK 1
 #define INSTANT_CUFFBREAK 2
 
+// animation types
+#define ATTACK_ANIMATION_BONK "bonk"
+#define ATTACK_ANIMATION_SWIPE "swipe"
+#define ATTACK_ANIMATION_THRUST "thrust"
+
 //Grab levels
 #define GRAB_PASSIVE				0
 #define GRAB_AGGRESSIVE				1
@@ -137,6 +142,7 @@
 #define SWORD_THRUST	 /datum/intent/sword/thrust
 #define SWORD_CHOP		 /datum/intent/sword/chop //2h swords only
 #define SWORD_STRIKE	 /datum/intent/sword/strike //mordhau grip
+#define SWORD_PEEL		/datum/intent/sword/peel
 
 #define ELFSWORD_CUT		/datum/intent/sword/cut/elf
 #define ELFSWORD_THRUST		/datum/intent/sword/thrust/elf
@@ -191,6 +197,8 @@
 #define BCLASS_PUNCH		"punch"
 #define BCLASS_BITE			"bite"
 #define BCLASS_BURN			"charring"
+#define BCLASS_PEEL			"peel"
+#define BCLASS_EFFECT		"effect"
 
 //Material class (what material is striking)
 #define MCLASS_GENERIC		1
@@ -210,6 +218,11 @@
 #define DULLING_BASHCHOP 3
 #define DULLING_PICK 4 //rockwalls
 #define DULLING_FLOOR 5 //floors, only attacked by overhead smash and chop intents like from 2hammers
+#define DULLING_SHAFT_WOOD 6
+#define DULLING_SHAFT_REINFORCED 7
+#define DULLING_SHAFT_METAL 8
+#define DULLING_SHAFT_GRAND 9
+#define DULLING_SHAFT_CONJURED 10
 //see get_complex_damage()
 
 //NOTE: INTENT_HOTKEY_* defines are not actual intents!

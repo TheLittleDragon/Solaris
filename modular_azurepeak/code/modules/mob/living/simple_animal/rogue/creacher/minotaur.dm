@@ -55,7 +55,7 @@
 	ai_controller = /datum/ai_controller/minotaur
 
 //	stat_attack = UNCONSCIOUS
-	remains_type = /obj/item/rogueweapon/stoneaxe/battle
+	remains_type = /obj/item/rogueweapon/greataxe/steel/doublehead
 
 /mob/living/simple_animal/hostile/retaliate/rogue/minotaur/Initialize()
 	. = ..()

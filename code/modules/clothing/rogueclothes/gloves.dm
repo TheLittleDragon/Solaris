@@ -2,6 +2,7 @@
 /obj/item/clothing/gloves/roguetown
 	slot_flags = ITEM_SLOT_GLOVES
 	body_parts_covered = HANDS
+	body_parts_inherent = HANDS
 	sleeved = 'icons/roguetown/clothing/onmob/gloves.dmi'
 	icon = 'icons/roguetown/clothing/gloves.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/gloves.dmi'
@@ -14,8 +15,9 @@
 	name = "leather gloves"
 	desc = ""
 	icon_state = "leather_gloves"
-	armor = list("blunt" = 30, "slash" = 10, "stab" = 20, "piercing" = 0, "fire" = 0, "acid" = 0)
+	armor = ARMOR_GLOVES_LEATHER
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
+	max_integrity = 100
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
@@ -50,11 +52,11 @@
 	name = "heavy leather gloves"
 	desc = ""
 	icon_state = "angle"
-	armor = list("blunt" = 50, "slash" = 25, "stab" = 40, "piercing" = 10, "fire" = 0, "acid" = 0)
+	armor = ARMOR_GLOVES_LEATHER_GOOD
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
-	max_integrity = 200
+	max_integrity = 300
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
@@ -67,11 +69,11 @@
 	desc = "A pair of protective gloves favored by lockshimmers, laborers, and smokers for maintaining \
 	manual dexterity over regular gloves."
 	icon_state = "roguegloves"
-	armor = list("blunt" = 50, "slash" = 25, "stab" = 40, "piercing" = 10, "fire" = 0, "acid" = 0)
+	armor = ARMOR_GLOVES_LEATHER_GOOD
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
-	max_integrity = 200
+	max_integrity = 80
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
@@ -83,7 +85,7 @@
 	name = "chain gauntlets"
 	desc = ""
 	icon_state = "cgloves"
-	armor = list("blunt" = 60, "slash" = 100, "stab" = 80, "piercing" = 20, "fire" = 0, "acid" = 0)
+	armor = ARMOR_GLOVES_CHAIN
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
 	resistance_flags = FIRE_PROOF
 	blocksound = CHAINHIT
@@ -105,7 +107,7 @@
 	name = "plate gauntlets"
 	desc = ""
 	icon_state = "gauntlets"
-	armor = list("blunt" = 90, "slash" = 100, "stab" = 80, "piercing" = 40, "fire" = 0, "acid" = 0)
+	armor = ARMOR_GLOVES_PLATE
 	prevent_crits = list(BCLASS_CHOP, BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	resistance_flags = FIRE_PROOF
 	blocksound = PLATEHIT
@@ -144,7 +146,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bkgloves"
 	item_state = "bkgloves"
-	armor = list("blunt" = 90, "slash" = 100, "stab" = 80, "piercing" = 50, "fire" = 0, "acid" = 0)
+	armor = ARMOR_GLOVES_PLATE_GOOD
 	prevent_crits = list(BCLASS_CHOP, BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	resistance_flags = FIRE_PROOF
 	blocksound = PLATEHIT
@@ -164,7 +166,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
 	icon_state = "welfhand"
 	item_state = "welfhand"
-	armor = list("blunt" = 90, "slash" = 10, "stab" = 100, "piercing" = 20, "fire" = 0, "acid" = 0)
+	armor = list("blunt" = 100, "slash" = 10, "stab" = 110, "piercing" = 20, "fire" = 0, "acid" = 0)//Resistant to blunt and stab, super weak to slash.
 	prevent_crits = list(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT

@@ -198,6 +198,18 @@
 		C.update_inv_legcuffed()
 		C.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN)
 
+/datum/status_effect/debuff/dazed
+	id = "dazed"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed
+	effectedstats = list("perception" = -2, "intelligence" = -2)
+	duration = 15 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/debuff/dazed
+	name = "Dazed"
+	desc = "You've been smacked on the head very hard. Which way is left, again?"
+	icon_state = "dazed"
+
 /atom/movable/screen/alert/status_effect/debuff/sleepytime
 	name = "Tired"
 	desc = "I should get some rest."

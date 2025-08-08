@@ -104,10 +104,11 @@
 //	if(force)
 //		user.emote("attackgrunt")
 	var/datum/intent/cached_intent = user.used_intent
-	if(user.used_intent.swingdelay)
-		if(!user.used_intent.noaa)
-			if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
-				user.do_attack_animation(M, visual_effect_icon = user.used_intent.animname)
+	if(isnull(user.mind))	//for AI only
+		if(user.used_intent.swingdelay)
+			if(!user.used_intent.noaa)
+				if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
+					user.do_attack_animation(M, user.used_intent.animname, user.used_intent.masteritem, used_intent = user.used_intent, simplified = TRUE)
 		sleep(user.used_intent.swingdelay)
 	if(user.a_intent != cached_intent)
 		return
@@ -123,12 +124,30 @@
 		if(M.checkmiss(user))
 			if(!user.used_intent.swingdelay)
 				if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
-					user.do_attack_animation(M, visual_effect_icon = user.used_intent.animname)
+					user.do_attack_animation(M, user.used_intent.animname, used_item = src, used_intent = user.used_intent, simplified = TRUE)
 			return
-	if(istype(user.rmb_intent, /datum/rmb_intent/strong))
-		user.rogfat_add(10)
-	if(istype(user.rmb_intent, /datum/rmb_intent/swift))
-		user.rogfat_add(10)
+	var/rmb_stam_penalty = 0
+	if(istype(user.rmb_intent, /datum/rmb_intent/strong) || istype(user.rmb_intent, /datum/rmb_intent/swift))
+		rmb_stam_penalty = 10
+	// Release drain on attacks besides unarmed attacks/grabs is 1, so it'll just be whatever the penalty is + 1.
+	// Unarmed attacks are the only ones right now that have differing releasedrain, see unarmed attacks for their calc.
+	user.rogfat_add(user.used_intent.releasedrain + rmb_stam_penalty)
+	var/bad_guard = FALSE
+	//We have Guard / Clash active, and are hitting someone who doesn't. Cheesing a 'free' hit with a defensive buff is a no-no. You get punished.
+	if(user.has_status_effect(/datum/status_effect/buff/clash) && !M.has_status_effect(/datum/status_effect/buff/clash))
+		bad_guard = TRUE
+	if(M.has_status_effect(/datum/status_effect/buff/clash) && M.get_active_held_item() && ishuman(M) && !bad_guard)
+		var/mob/living/carbon/human/HM = M
+		var/obj/item/IM = M.get_active_held_item()
+		var/obj/item/IU 
+		if(user.used_intent.masteritem)
+			IU = user.used_intent.masteritem
+		HM.process_clash(user, IM, IU)
+		return
+	if(bad_guard)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.bad_guard(span_suicide("I switched stances too quickly! It drains me!"), cheesy = TRUE)
 	if(M.checkdefense(user.used_intent, user))
 		if(M.d_intent == INTENT_PARRY)
 			if(!M.get_active_held_item() && !M.get_inactive_held_item()) //we parried with a bracer, redirect damage
@@ -145,11 +164,9 @@
 							playsound(M.loc,  "nodmg", 100, FALSE, -1)
 				log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)])")
 				add_fingerprint(user)
-		if(M.d_intent == INTENT_DODGE)
-			if(!user.used_intent.swingdelay)
-				if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
-					user.do_attack_animation(M, visual_effect_icon = user.used_intent.animname)
 		return
+
+
 
 	if(user.zone_selected == BODY_ZONE_PRECISE_R_INHAND)
 		var/offh = 0
@@ -194,13 +211,13 @@
 	if(item_flags & NOBLUDGEON)
 		return
 	if(O.attacked_by(src, user))
-		user.do_attack_animation(O)
+		user.do_attack_animation(O, simplified = TRUE)
 		return TRUE
 
 /obj/item/proc/attack_turf(turf/T, mob/living/user, multiplier)
 	if(T.max_integrity)
 		if(T.attacked_by(src, user, multiplier))
-			user.do_attack_animation(T)
+			user.do_attack_animation(T, simplified = TRUE)
 			return TRUE
 
 /atom/movable/proc/attacked_by()
@@ -308,6 +325,88 @@
 			newforce = newforce * (8+(mineskill*1.5))
 			shake_camera(user, 1, 1)
 			miner.mind.add_sleep_experience(/datum/skill/labor/mining, (miner.STAINT*0.2))
+		if(DULLING_SHAFT_CONJURED)
+			dullfactor = 1.2
+		if(DULLING_SHAFT_WOOD)	//Weak to cut / chop. No changes vs stab, resistant to blunt
+			switch(user.used_intent.blade_class)
+				if(BCLASS_CUT)
+					if(!I.remove_bintegrity(1))
+						dullfactor = 0.5
+					else
+						dullfactor = 1.3
+				if(BCLASS_CHOP)
+					if(!I.remove_bintegrity(1))
+						dullfactor = 0.5
+					else
+						dullfactor = 1.5
+				if(BCLASS_STAB)
+					dullfactor = 1
+				if(BCLASS_BLUNT)
+					dullfactor = 0.7
+				if(BCLASS_SMASH)
+					dullfactor = 0.5
+				if(BCLASS_PICK)
+					dullfactor = 0.5
+		if(DULLING_SHAFT_REINFORCED)	//Weak to stab. No changes vs blunt, resistant to cut / chop
+			switch(user.used_intent.blade_class)
+				if(BCLASS_CUT)
+					if(!I.remove_bintegrity(1))
+						dullfactor = 0
+					else
+						dullfactor = 0.5
+				if(BCLASS_CHOP)
+					if(!I.remove_bintegrity(1))
+						dullfactor = 0
+					else
+						dullfactor = 0.7
+				if(BCLASS_STAB)
+					dullfactor = 1.5
+				if(BCLASS_BLUNT)
+					dullfactor = 1
+				if(BCLASS_SMASH)
+					dullfactor = 1
+				if(BCLASS_PICK)
+					dullfactor = 0.7
+		if(DULLING_SHAFT_METAL)	//Very weak to blunt. No changes vs stab, highly resistant to cut / chop. Pick can actually damage it.
+			switch(user.used_intent.blade_class)
+				if(BCLASS_CUT)
+					if(!I.remove_bintegrity(1))
+						dullfactor = 0
+					else
+						dullfactor = 0.25
+				if(BCLASS_CHOP)
+					if(!I.remove_bintegrity(1))
+						dullfactor = 0
+					else
+						dullfactor = 0.4
+				if(BCLASS_STAB)
+					dullfactor = 0.75
+				if(BCLASS_BLUNT)
+					dullfactor = 1.3
+				if(BCLASS_SMASH)
+					dullfactor = 1.5
+				if(BCLASS_PICK)
+					dullfactor = 1
+		if(DULLING_SHAFT_GRAND)	//Resistant to all
+			switch(user.used_intent.blade_class)
+				if(BCLASS_CUT)
+					if(!I.remove_bintegrity(1))
+						dullfactor = 0
+					else
+						dullfactor = 0.5
+				if(BCLASS_CHOP)
+					if(!I.remove_bintegrity(1))
+						dullfactor = 0
+					else
+						dullfactor = 0.5
+				if(BCLASS_STAB)
+					dullfactor = 0.5
+				if(BCLASS_BLUNT)
+					dullfactor = 0.5
+				if(BCLASS_SMASH)
+					dullfactor = 1
+				if(BCLASS_PICK)
+					dullfactor = 0.5
 
 	newforce = (newforce * user.used_intent.damfactor) * dullfactor
 	if(user.used_intent.get_chargetime() && user.client?.chargedprog < 100)
@@ -546,8 +645,6 @@
 			if(istype(user.rmb_intent, /datum/rmb_intent/swift))
 				adf = round(adf * 0.6)
 			user.changeNext_move(adf)
-			if(get_dist(get_turf(user), get_turf(target)) <= user.used_intent.reach)
-				user.do_attack_animation(target, visual_effect_icon = user.used_intent.animname)
 			playsound(get_turf(src), pick(swingsound), 100, FALSE, -1)
 			user.aftermiss()
 		if(!proximity_flag && ismob(target) && !user.used_intent?.noaa) //this block invokes miss cost clicking on seomone who isn't adjacent to you
@@ -557,8 +654,6 @@
 			if(istype(user.rmb_intent, /datum/rmb_intent/swift))
 				adf = round(adf * 0.6)
 			user.changeNext_move(adf)
-			if(get_dist(get_turf(user), get_turf(target)) <= user.used_intent.reach)
-				user.do_attack_animation(target, visual_effect_icon = user.used_intent.animname)
 			playsound(get_turf(src), pick(swingsound), 100, FALSE, -1)
 			user.aftermiss()
 

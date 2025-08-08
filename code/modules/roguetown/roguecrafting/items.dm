@@ -339,6 +339,24 @@
 	tools = list(/obj/item/rogueweapon/huntingknife)
 	craftdiff = 3
 
+/datum/crafting_recipe/roguetown/woodshaft
+	name = "wood shaft x2"
+	result = /obj/item/shaft/wood
+	tools = list(/obj/item/rogueweapon/huntingknife)
+	reqs = list(/obj/item/grown/log/tree/small = 1)
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/reinforcedshaft
+	name = "reinforced shaft"
+	result = /obj/item/shaft/reinforced
+	tools = list(/obj/item/rogueweapon/hammer)
+	reqs = list(/obj/item/shaft/wood = 1,
+				/obj/item/natural/whetstone = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 2
+
+
 /datum/crafting_recipe/roguetown/survival/improvisedsaw
 	name = "improvised surgery saw (1 fiber + 1 stone + 1 stick)"
 	result = /obj/item/rogueweapon/surgery/saw/improv
@@ -375,3 +393,17 @@
 		/obj/item/natural/fur = 1
 		)
 	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/whetstone
+	name = "whetstone"
+	result = /obj/item/natural/whetstone
+	reqs = list(/obj/item/natural/stone = 1,
+				/obj/item/grown/log/tree/stake = 1)
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/rucksack
+	name = "rucksack"
+	result = /obj/item/storage/backpack/rogue/backpack/bagpack
+	reqs = list(/obj/item/storage/roguebag = 1,
+				/obj/item/rope = 1)
+	craftdiff = 0

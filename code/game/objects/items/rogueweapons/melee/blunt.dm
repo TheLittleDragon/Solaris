@@ -6,7 +6,8 @@
 	attack_verb = list("strikes", "hits")
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	chargetime = 0
-	penfactor = 15
+	penfactor = -70
+	damfactor = 1.1
 	swingdelay = 0
 	icon_state = "instrike"
 	item_d_type = "blunt"
@@ -16,7 +17,8 @@
 	blade_class = BCLASS_SMASH
 	attack_verb = list("smashes")
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	penfactor = 80
+	penfactor = -100
+	damfactor = 1.5
 	damfactor = 1.1
 	swingdelay = 10
 	icon_state = "insmash"
@@ -43,7 +45,7 @@
 	force = 20
 	force_wielded = 25
 	possible_item_intents = list(/datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/effect/daze)
 	name = "mace"
 	desc = "Helps anyone fall asleep."
 	icon_state = "mace"
@@ -59,13 +61,14 @@
 	associated_skill = /datum/skill/combat/maces
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/iron
-	gripped_intents = list(/datum/intent/mace/strike,/datum/intent/mace/smash)
 	parrysound = list('sound/combat/parry/parrygen.ogg')
 	swingsound = BLUNTWOOSH_MED
 	minstr = 7
 	wdefense = 2
 	wbalance = -1
-	blade_dulling = DULLING_BASHCHOP
+	blade_dulling = DULLING_SHAFT_METAL
+	intdamage_factor = 1.35
+	icon_angle_wielded = 50
 
 /obj/item/rogueweapon/mace/church
 	force = 25
@@ -75,7 +78,6 @@
 	icon_state = "churchmace"
 	wbalance = -1
 	smeltresult = /obj/item/ingot/steel
-	blade_dulling = DULLING_BASH
 	wdefense = 3
 
 /obj/item/rogueweapon/mace/steel
@@ -96,7 +98,7 @@
 	icon_state = "silverhammer"
 	force = 24
 	gripped_intents = null
-	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/effect/daze)
 	wdefense = 4
 	smeltresult = /obj/item/ingot/silver
 	smelt_bar_num = 2
@@ -165,6 +167,7 @@
 	possible_item_intents = list(/datum/intent/mace/strike/wood)
 	gripped_intents = list(/datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood)
 	smeltresult = /obj/item/ash
+	blade_dulling = DULLING_SHAFT_WOOD
 	minstr = 7
 	resistance_flags = FLAMMABLE
 
@@ -174,11 +177,11 @@
 
 /datum/intent/mace/strike/wood
 	hitsound = list('sound/combat/hits/blunt/woodblunt (1).ogg', 'sound/combat/hits/blunt/woodblunt (2).ogg')
-	penfactor = 10
+	penfactor = -60
 
 /datum/intent/mace/smash/wood
 	hitsound = list('sound/combat/hits/blunt/woodblunt (1).ogg', 'sound/combat/hits/blunt/woodblunt (2).ogg')
-	penfactor = 20
+	penfactor = -100
 
 
 /obj/item/rogueweapon/mace/cudgel
@@ -196,6 +199,7 @@
 	minstr = 7
 	wdefense = 1
 	resistance_flags = FLAMMABLE
+	blade_dulling = DULLING_SHAFT_WOOD
 	grid_width = 32
 	grid_height = 96
 
@@ -209,6 +213,7 @@
 	smeltresult = /obj/item/ingot/steel
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_NORMAL
+	blade_dulling = DULLING_SHAFT_REINFORCED
 	wbalance = 4
 	minstr = 7
 	wdefense = 5
@@ -236,6 +241,7 @@
 	wdefense = 5
 	wbalance = 0
 	associated_skill = /datum/skill/combat/swords
+	blade_dulling = DULLING_SHAFT_REINFORCED
 	resistance_flags = FLAMMABLE
 
 
@@ -295,7 +301,7 @@
 	force = 15
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/rangedthrust)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/rangedthrust, /datum/intent/effect/daze)
 	name = "Goedendag"
 	desc = "Good morning."
 	icon_state = "goedendag"
@@ -314,9 +320,11 @@
 	pixel_x = -16
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
+	blade_dulling = DULLING_SHAFT_WOOD
 	dropshrink = 0.6
 	bigboy = TRUE
 	gripsprite = TRUE
+	intdamage_factor = 0.5
 
 /obj/item/rogueweapon/mace/goden/getonmobprop(tag)
 	. = ..()
@@ -359,8 +367,9 @@
 	icon_state = "iwarhammer"
 	wbalance = -1
 	smeltresult = /obj/item/ingot/iron
-	blade_dulling = DULLING_BASH
+	blade_dulling = DULLING_SHAFT_REINFORCED
 	wdefense = 3
+	intdamage_factor = 0.3
 
 /obj/item/rogueweapon/mace/warhammer/steel
 	force = 25
@@ -369,6 +378,7 @@
 	desc = "A fine steel warhammer, makes a satisfying sound when paired with a knight's helm."
 	icon_state = "swarhammer"
 	smeltresult = /obj/item/ingot/steel
+	blade_dulling = DULLING_SHAFT_METAL
 	wdefense = 4
 
 /obj/item/rogueweapon/mace/warhammer/getonmobprop(tag)

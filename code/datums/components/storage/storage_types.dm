@@ -7,7 +7,7 @@
 
 /datum/component/storage/concrete/roguetown/backpack
 	screen_max_rows = 7
-	screen_max_columns = 4
+	screen_max_columns = 5
 	max_w_class = WEIGHT_CLASS_NORMAL
 	not_while_equipped = TRUE
 
@@ -102,6 +102,14 @@
 	allow_quick_gather = TRUE
 	allow_quick_empty = TRUE
 	insert_preposition = "in"
+
+
+/datum/component/storage/concrete/roguetown/sack/bag
+	dump_time = 10
+	not_while_equipped = TRUE
+	click_gather = FALSE
+	allow_quick_gather = FALSE
+	allow_quick_empty = FALSE
 
 /datum/component/storage/concrete/roguetown/saddle
 	screen_max_rows = 4
