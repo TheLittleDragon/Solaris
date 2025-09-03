@@ -18,7 +18,7 @@
 	noble_income = 20
 	min_pq = 1
 	max_pq = null
-	round_contrib_points = 3
+	round_contrib_points = 1
 	cmode_music = 'sound/music/combat_noble.ogg'
 
 /datum/job/roguetown/nobleman/after_spawn(mob/living/L, mob/M, latejoin)
